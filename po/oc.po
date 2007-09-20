@@ -21,25 +21,34 @@ msgstr ""
 "X-Launchpad-Export-Date: 2015-05-20 16:56+0000\n"
 "X-Project-Style: gnome\n"
 
-#: json-glib/json-glib-format.c:50
+#: ../json-glib/json-glib-format.c:50
 msgid "Prettify output"
 msgstr "Formatatge indentat"
 
-#: json-glib/json-glib-format.c:51
+#: ../json-glib/json-glib-format.c:51
 msgid "Indentation spaces"
 msgstr "Espacis d'indentacion"
 
-#: json-glib/json-glib-format.c:77 json-glib/json-glib-validate.c:63
+#. Translators: the first %s is the program name, the second one
+#. * is the URI of the file, the third is the error message.
+#.
+#: ../json-glib/json-glib-format.c:77 ../json-glib/json-glib-validate.c:63
 #, c-format
 msgid "%s: %s: error opening file: %s\n"
 msgstr "%s : %s : error de dobertura del fichièr : %s\n"
 
-#: json-glib/json-glib-format.c:89 json-glib/json-glib-validate.c:75
+#. Translators: the first %s is the program name, the second one
+#. * is the URI of the file, the third is the error message.
+#.
+#: ../json-glib/json-glib-format.c:89 ../json-glib/json-glib-validate.c:75
 #, c-format
 msgid "%s: %s: error parsing file: %s\n"
 msgstr "%s : %s : error d'analisi del fichièr : %s\n"
 
-#: json-glib/json-glib-format.c:108
+#. Translators: the first %s is the program name, the
+#. * second one is the URI of the file.
+#.
+#: ../json-glib/json-glib-format.c:108
 #, c-format
 msgid "%s: %s: error writing to stdout"
 msgstr "%s : %s : error d'escritura cap a stdout"
@@ -77,11 +86,13 @@ msgstr "Ensajatz « %s --help » per mai d'informacions."
 msgid "%s: missing files"
 msgstr "%s : fichièrs mancants"
 
-#: json-glib/json-glib-validate.c:118
+#. Translators: this message will appear after the usage string
+#. and before the list of options.
+#: ../json-glib/json-glib-validate.c:118
 msgid "Validate JSON files."
 msgstr "Validacion de fichièrs JSON."
 
-#: json-glib/json-glib-validate.c:119
+#: ../json-glib/json-glib-validate.c:119
 msgid "json-glib-validate validates JSON data at the given URI."
 msgstr "json-glib-validate valida de donadas JSON a l'URI indicada."
 
@@ -90,28 +101,28 @@ msgstr "json-glib-validate valida de donadas JSON a l'URI indicada."
 msgid "Expecting a JSON object, but the root node is of type `%s'"
 msgstr "Objècte de tipe JSON esperat mas lo nosèl raiç es de tipe « %s »"
 
-#: json-glib/json-gvariant.c:523
+#: ../json-glib/json-gvariant.c:523
 #, c-format
 msgid "Unexpected type '%s' in JSON node"
 msgstr "Tipe « %s » inesperat dins lo nosèl JSON"
 
-#: json-glib/json-gvariant.c:593
+#: ../json-glib/json-gvariant.c:593
 msgid "Missing elements in JSON array to conform to a tuple"
 msgstr "Elements mancants dins lo tablèu JSON per èsser confòrme a un tuple"
 
-#: json-glib/json-gvariant.c:621
+#: ../json-glib/json-gvariant.c:621
 msgid "Missing closing symbol ')' in the GVariant tuple type"
 msgstr "Simbòl tampant « ) » mancant dins lo tuple GVariant"
 
-#: json-glib/json-gvariant.c:629
+#: ../json-glib/json-gvariant.c:629
 msgid "Unexpected extra elements in JSON array"
 msgstr "Elements suplementaris inesperats dins lo tablèu JSON"
 
-#: json-glib/json-gvariant.c:908
+#: ../json-glib/json-gvariant.c:908
 msgid "Invalid string value converting to GVariant"
 msgstr "Cadena de caractèrs invalida per la conversion en GVariant"
 
-#: json-glib/json-gvariant.c:964
+#: ../json-glib/json-gvariant.c:964
 msgid ""
 "A GVariant dictionary entry expects a JSON object with exactly one member"
 msgstr ""
@@ -140,40 +151,40 @@ msgstr "%s:%d:%d: Error d'analisi : %s"
 msgid "JSON data must be UTF-8 encoded"
 msgstr "Las donadas JSON devon èsser encodadas en UTF-8"
 
-#: json-glib/json-path.c:388
+#: ../json-glib/json-path.c:388
 msgid "Only one root node is allowed in a JSONPath expression"
 msgstr "Un sol nosèl raiç d'autorizat dins una expression JSONPath"
 
-#: json-glib/json-path.c:397
+#: ../json-glib/json-path.c:397
 #, c-format
 msgid "Root node followed by invalid character '%c'"
 msgstr "Nosèl raiç seguit d'un caractèr invalid « %c »"
 
-#: json-glib/json-path.c:437
+#: ../json-glib/json-path.c:437
 msgid "Missing member name or wildcard after . character"
 msgstr "Nom de membre o caractèr joker mancant aprèp un caractèr « . »"
 
-#: json-glib/json-path.c:511
+#: ../json-glib/json-path.c:511
 #, c-format
 msgid "Malformed slice expression '%*s'"
 msgstr "Expression de talhon malformat « %*s »"
 
-#: json-glib/json-path.c:555
+#: ../json-glib/json-path.c:555
 #, c-format
 msgid "Invalid set definition '%*s'"
 msgstr "Definicion d'ensemble invalida « %*s »"
 
-#: json-glib/json-path.c:608
+#: ../json-glib/json-path.c:608
 #, c-format
 msgid "Invalid slice definition '%*s'"
 msgstr "Definicion de talha invalida « %*s »"
 
-#: json-glib/json-path.c:636
+#: ../json-glib/json-path.c:636
 #, c-format
 msgid "Invalid array index definition '%*s'"
 msgstr "Definicion d'indici de tablèu invalida « %*s »"
 
-#: json-glib/json-path.c:655
+#: ../json-glib/json-path.c:655
 #, c-format
 msgid "Invalid first character '%c'"
 msgstr "Primièr caractèr « %c » invalid"

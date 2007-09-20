@@ -235,3 +235,4 @@ msgstr "Uneko posizioak '%s' dauka, baina ez balio bat"
 #: json-glib/json-reader.c:970
 msgid "The current position does not hold a string type"
 msgstr "Uneko posizioak ez dauka kate motakorik"
+
