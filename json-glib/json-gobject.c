@@ -529,6 +529,14 @@ json_deserialize_pspec (GValue     *value,
 	    }
           break;
 
+        case G_TYPE_INT:
+	  if (G_VALUE_HOLDS (&node_value, G_TYPE_INT64))
+	    {
+	      g_value_set_int (value, (gint) g_value_get_int64 (&node_value));
+	      retval = TRUE;
+	    }
+          break;
+
         case G_TYPE_CHAR:
 	  if (G_VALUE_HOLDS (&node_value, G_TYPE_INT64))
 	    {
@@ -604,6 +612,48 @@ json_deserialize_pspec (GValue     *value,
 	      retval = TRUE;
 	    }
 
+          break;
+
+        case G_TYPE_ENUM:
+          {
+            gint enum_value = 0;
+
+            if (G_VALUE_HOLDS (&node_value, G_TYPE_INT64))
+              {
+                enum_value = g_value_get_int64 (&node_value);
+                retval = TRUE;
+              }
+            else if (G_VALUE_HOLDS (&node_value, G_TYPE_STRING))
+              {
+                retval = enum_from_string (G_VALUE_TYPE (value),
+                                           g_value_get_string (&node_value),
+                                           &enum_value);
+              }
+
+            if (retval)
+              g_value_set_enum (value, enum_value);
+          }
+          break;
+
+        case G_TYPE_FLAGS:
+          {
+            gint flags_value = 0;
+
+            if (G_VALUE_HOLDS (&node_value, G_TYPE_INT64))
+              {
+                flags_value = g_value_get_int64 (&node_value);
+                retval = TRUE;
+              }
+            else if (G_VALUE_HOLDS (&node_value, G_TYPE_STRING))
+              {
+                retval = flags_from_string (G_VALUE_TYPE (value),
+                                            g_value_get_string (&node_value),
+                                            &flags_value);
+              }
+
+            if (retval)
+              g_value_set_flags (value, flags_value);
+          }
           break;
 
         case G_TYPE_ENUM:
@@ -775,6 +825,22 @@ json_serialize_pspec (const GValue *real_value,
       else
         g_warning ("Boxed type '%s' is not handled by JSON-GLib",
                    g_type_name (G_VALUE_TYPE (real_value)));
+      break;
+
+    case G_TYPE_OBJECT:
+      {
+        GObject *object = g_value_get_object (real_value);
+
+        retval = json_node_alloc ();
+
+        if (object != NULL)
+          {
+            json_node_init (retval, JSON_NODE_OBJECT);
+            json_node_take_object (retval, json_gobject_dump (object));
+          }
+        else
+          json_node_init_null (retval);
+      }
       break;
 
     case G_TYPE_OBJECT:
@@ -1013,6 +1079,8 @@ json_gobject_to_data (GObject *gobject,
   g_object_unref (gen);
 
   json_node_free (root);
+
+  json_node_unref (root);
 
   return data;
 }

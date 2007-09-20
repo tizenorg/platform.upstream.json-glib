@@ -44,6 +44,19 @@
 
 G_DEFINE_BOXED_TYPE (JsonArray, json_array, json_array_ref, json_array_unref);
 
+GType
+json_array_get_type (void)
+{
+  static GType array_type = 0;
+
+  if (G_UNLIKELY (!array_type))
+    array_type = g_boxed_type_register_static (g_intern_static_string ("JsonArray"),
+                                               (GBoxedCopyFunc) json_array_ref,
+                                               (GBoxedFreeFunc) json_array_unref);
+
+  return array_type;
+}
+
 /**
  * json_array_new: (constructor)
  *
@@ -659,6 +672,130 @@ json_array_remove_element (JsonArray *array,
   g_return_if_fail (index_ < array->elements->len);
 
   json_node_free (g_ptr_array_remove_index (array->elements, index_));
+}
+
+/**
+ * json_array_foreach_element:
+ * @array: a #JsonArray
+ * @func: (scope call): the function to be called on each element
+ * @data: (closure): data to be passed to the function
+ *
+ * Iterates over all elements of @array and calls @func on
+ * each one of them.
+ *
+ * It is safe to change the value of a #JsonNode of the @array
+ * from within the iterator @func, but it is not safe to add or
+ * remove elements from the @array.
+ *
+ * Since: 0.8
+ */
+void
+json_array_foreach_element (JsonArray        *array,
+                            JsonArrayForeach  func,
+                            gpointer          data)
+{
+  gint i;
+
+  g_return_if_fail (array != NULL);
+  g_return_if_fail (func != NULL);
+
+  for (i = 0; i < array->elements->len; i++)
+    {
+      JsonNode *element_node;
+
+      element_node = g_ptr_array_index (array->elements, i);
+
+      (* func) (array, i, element_node, data);
+    }
+}
+
+/**
+ * json_array_hash:
+ * @key: (type JsonArray): a JSON array to hash
+ *
+ * Calculate a hash value for the given @key (a #JsonArray).
+ *
+ * The hash is calculated over the array and all its elements, recursively. If
+ * the array is immutable, this is a fast operation; otherwise, it scales
+ * proportionally with the length of the array.
+ *
+ * Returns: hash value for @key
+ * Since: 1.2
+ */
+guint
+json_array_hash (gconstpointer key)
+{
+  JsonArray *array;  /* unowned */
+  guint hash = 0;
+  guint i;
+
+  g_return_val_if_fail (key != NULL, 0);
+
+  array = (JsonArray *) key;
+
+  /* If the array is immutable, we can use the calculated hash. */
+  if (array->immutable)
+    return array->immutable_hash;
+
+  /* Otherwise, calculate the hash. */
+  for (i = 0; i < array->elements->len; i++)
+    {
+      JsonNode *node = g_ptr_array_index (array->elements, i);
+      hash ^= (i ^ json_node_hash (node));
+    }
+
+  return hash;
+}
+
+/**
+ * json_array_equal:
+ * @a: (type JsonArray): a JSON array
+ * @b: (type JsonArray): another JSON array
+ *
+ * Check whether @a and @b are equal #JsonArrays, meaning they have the same
+ * number of elements, and the values of elements in corresponding positions
+ * are equal.
+ *
+ * Returns: %TRUE if @a and @b are equal; %FALSE otherwise
+ * Since: 1.2
+ */
+gboolean
+json_array_equal (gconstpointer a,
+                  gconstpointer b)
+{
+  JsonArray *array_a, *array_b;  /* unowned */
+  guint length_a, length_b, i;
+
+  g_return_val_if_fail (a != NULL, FALSE);
+  g_return_val_if_fail (b != NULL, FALSE);
+
+  array_a = (JsonArray *) a;
+  array_b = (JsonArray *) b;
+
+  /* Identity comparison. */
+  if (array_a == array_b)
+    return TRUE;
+
+  /* Check lengths. */
+  length_a = json_array_get_length (array_a);
+  length_b = json_array_get_length (array_b);
+
+  if (length_a != length_b)
+    return FALSE;
+
+  /* Check elements. */
+  for (i = 0; i < length_a; i++)
+    {
+      JsonNode *child_a, *child_b;  /* unowned */
+
+      child_a = json_array_get_element (array_a, i);
+      child_b = json_array_get_element (array_b, i);
+
+      if (!json_node_equal (child_a, child_b))
+        return FALSE;
+    }
+
+  return TRUE;
 }
 
 /**

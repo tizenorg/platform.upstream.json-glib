@@ -207,6 +207,11 @@ msgstr "Неправильний перший символ «%c»"
 
 #: ../json-glib/json-reader.c:456
 #, c-format
+msgid "Invalid first character '%c'"
+msgstr "Неправильний перший символ «%c»"
+
+#: ../json-glib/json-reader.c:468
+#, c-format
 msgid "The current node is of type '%s', but an array or an object was expected."
 msgstr "Поточний вузол має тип «%s», однак масив або об'єкт не були очікуваними."
 

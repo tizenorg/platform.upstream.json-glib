@@ -28,6 +28,13 @@
 #error "Only <json-glib/json-glib.h> can be included directly."
 #endif
 
+#ifndef __JSON_TYPES_H__
+#define __JSON_TYPES_H__
+
+#if !defined(__JSON_GLIB_INSIDE__) && !defined(JSON_COMPILATION)
+#error "Only <json-glib/json-glib.h> can be included directly."
+#endif
+
 #include <glib-object.h>
 #include <json-glib/json-version-macros.h>
 
@@ -95,6 +102,15 @@ G_BEGIN_DECLS
 #define JSON_TYPE_NODE          (json_node_get_type ())
 #define JSON_TYPE_OBJECT        (json_object_get_type ())
 #define JSON_TYPE_ARRAY         (json_array_get_type ())
+
+/**
+ * JsonNode:
+ *
+ * A generic container of JSON data types. The contents of the #JsonNode
+ * structure are private and should only be accessed via the provided
+ * functions and never directly.
+ */
+typedef struct _JsonNode        JsonNode;
 
 /**
  * JsonNode:
@@ -212,6 +228,23 @@ JSON_AVAILABLE_IN_1_0
 JsonNode *            json_node_copy            (JsonNode     *node);
 JSON_AVAILABLE_IN_1_0
 void                  json_node_free            (JsonNode     *node);
+
+JSON_AVAILABLE_IN_1_0
+JsonNodeType          json_node_get_node_type   (JsonNode     *node);
+JSON_AVAILABLE_IN_1_0
+GType                 json_node_get_value_type  (JsonNode     *node);
+JSON_AVAILABLE_IN_1_0
+void                  json_node_set_parent      (JsonNode     *node,
+                                                 JsonNode     *parent);
+JSON_AVAILABLE_IN_1_0
+JsonNode *            json_node_get_parent      (JsonNode     *node);
+JSON_AVAILABLE_IN_1_0
+const gchar *         json_node_type_name       (JsonNode     *node);
+
+JSON_AVAILABLE_IN_1_2
+JsonNode *            json_node_ref             (JsonNode     *node);
+JSON_AVAILABLE_IN_1_2
+void                  json_node_unref           (JsonNode     *node);
 
 JSON_AVAILABLE_IN_1_0
 JsonNodeType          json_node_get_node_type   (JsonNode     *node);

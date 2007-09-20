@@ -266,6 +266,57 @@ json_node_init_double (JsonNode *node,
   return node;
 }
 
+GType
+json_node_get_type (void)
+{
+  static GType node_type = 0;
+
+  if (G_UNLIKELY (node_type == 0))
+    node_type = g_boxed_type_register_static (g_intern_static_string ("JsonNode"),
+                                              (GBoxedCopyFunc) json_node_copy,
+                                              (GBoxedFreeFunc) json_node_free);
+
+  return node_type;
+}
+
+/**
+ * json_node_get_value_type:
+ * @node: a #JsonNode
+ *
+ * Returns the #GType of the payload of the node.
+ *
+ * Return value: a #GType for the payload.
+ *
+ * Since: 0.4
+ */
+GType
+json_node_get_value_type (JsonNode *node)
+{
+  g_return_val_if_fail (node != NULL, G_TYPE_INVALID);
+
+  switch (node->type)
+    {
+    case JSON_NODE_OBJECT:
+      return JSON_TYPE_OBJECT;
+
+    case JSON_NODE_ARRAY:
+      return JSON_TYPE_ARRAY;
+
+    case JSON_NODE_NULL:
+      return G_TYPE_INVALID;
+
+    case JSON_NODE_VALUE:
+      if (node->data.value)
+        return JSON_VALUE_TYPE (node->data.value);
+      else
+        return G_TYPE_INVALID;
+
+    default:
+      g_assert_not_reached ();
+      return G_TYPE_INVALID;
+    }
+}
+
 /**
  * json_node_init_boolean:
  * @node: the #JsonNode to initialize
@@ -622,6 +673,24 @@ json_node_get_value (JsonNode *node,
     }
 }
 
+        case G_TYPE_DOUBLE:
+          g_value_set_double (value, json_value_get_double (node->data.value));
+          break;
+
+        case G_TYPE_BOOLEAN:
+          g_value_set_boolean (value, json_value_get_boolean (node->data.value));
+          break;
+
+        case G_TYPE_STRING:
+          g_value_set_string (value, json_value_get_string (node->data.value));
+          break;
+
+        default:
+          break;
+        }
+    }
+}
+
 /**
  * json_node_set_value:
  * @node: a #JsonNode initialized to %JSON_NODE_VALUE
@@ -636,6 +705,9 @@ json_node_set_value (JsonNode     *node,
   g_return_if_fail (node != NULL);
   g_return_if_fail (JSON_NODE_TYPE (node) == JSON_NODE_VALUE);
   g_return_if_fail (G_VALUE_TYPE (value) != G_TYPE_INVALID);
+
+  if (node->data.value == NULL)
+    node->data.value = json_value_alloc ();
 
   if (node->data.value == NULL)
     node->data.value = json_value_alloc ();
