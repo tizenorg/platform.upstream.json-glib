@@ -1,7 +1,3 @@
-#
-# Please submit bugfixes or comments via http://bugs.tizen.org/
-#
-
 Name:           json-glib
 Version:        0.14.2
 Release:        0
@@ -13,7 +9,6 @@ Source0:        http://download.gnome.org/sources/json-glib/0.14/%{name}-%{versi
 Source99:       baselibs.conf
 BuildRequires:  gobject-introspection-devel
 BuildRequires:  pkgconfig(glib-2.0)
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 %description
 JSON is a lightweight data-interchange format.It is easy for humans to
