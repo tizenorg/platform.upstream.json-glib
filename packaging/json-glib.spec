@@ -42,11 +42,11 @@ GValue for ease of development. It also provides integration with the
 GObject classes for direct serialization into, and deserialization from,
 JSON data streams.
 
-%package -n typelib-1_0-Json-1_0
+%package -n typelib-Json
 Summary:        Library for JavaScript Object Notation format -- Introspection bindings
 Group:          System/Libraries
 
-%description -n typelib-1_0-Json-1_0
+%description -n typelib-Json
 JSON is a lightweight data-interchange format.It is easy for humans to
 read and write. It is easy for machines to parse and generate.
 
@@ -65,7 +65,7 @@ This package provides the GObject Introspection bindings for JSON-GLib.
 Summary:        Library for JavaScript Object Notation format - Development Files
 Group:          Development/Libraries/C and C++
 Requires:       libjson-glib = %{version}
-Requires:       typelib-1_0-Json-1_0 = %{version}
+Requires:       typelib-Json = %{version}
 
 %description devel
 JSON is a lightweight data-interchange format.It is easy for humans to
@@ -106,7 +106,7 @@ mv %{name}-1.0.lang %{name}.lang
 %doc COPYING
 %{_libdir}/*.so.*
 
-%files -n typelib-1_0-Json-1_0
+%files -n typelib-Json
 %defattr(-,root,root)
 %{_libdir}/girepository-1.0/Json-1.0.typelib
 
