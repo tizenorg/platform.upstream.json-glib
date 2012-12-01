@@ -1,4 +1,5 @@
-%define enable_introspection 0
+%bcond_with introspection
+
 Name:           json-glib
 Version:        0.14.2
 Release:        0
@@ -8,7 +9,7 @@ Url:            http://live.gnome.org/JsonGlib
 Group:          Development/Libraries/C and C++
 Source0:        http://download.gnome.org/sources/json-glib/0.14/%{name}-%{version}.tar.bz2
 Source99:       baselibs.conf
-%if 0%{?enable_introspection}
+%if %{with introspection}
 BuildRequires:  gobject-introspection-devel
 %endif
 BuildRequires:  pkgconfig(glib-2.0)
@@ -68,7 +69,7 @@ This package provides the GObject Introspection bindings for JSON-GLib.
 Summary:        Library for JavaScript Object Notation format - Development Files
 Group:          Development/Libraries/C and C++
 Requires:       libjson-glib = %{version}
-%if 0%{?enable_introspection}
+%if %{with introspection}
 Requires:       typelib-Json = %{version}
 %endif
 
@@ -111,7 +112,7 @@ mv %{name}-1.0.lang %{name}.lang
 %license COPYING
 %{_libdir}/*.so.*
 
-%if 0%{?enable_introspection}
+%if %{with introspection}
 %files -n typelib-Json
 %defattr(-,root,root)
 %{_libdir}/girepository-1.0/Json-1.0.typelib
@@ -122,7 +123,7 @@ mv %{name}-1.0.lang %{name}.lang
 %{_includedir}/%{name}-1.0
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
-%if 0%{?enable_introspection}
+%if %{with introspection}
 %{_datadir}/gir-1.0/*.gir
 %endif
 %dir %{_datadir}/gtk-doc
