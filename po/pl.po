@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: json-glib\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=json-"
 "glib\n"
-"POT-Creation-Date: 2011-10-26 12:31+0100\n"
+"POT-Creation-Date: 2012-06-30 15:20+0100\n"
 "PO-Revision-Date: 2011-09-09 16:28+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
@@ -72,31 +72,31 @@ msgstr "Dane JSON są puste"
 msgid "%s:%d: Parse error: %s"
 msgstr "%s:%d: błąd przetwarzania: %s"
 
-#: json-glib/json-path.c:380
+#: json-glib/json-path.c:375
 msgid "Only one root node is allowed in a JSONPath expression"
 msgstr "Dozwolony jest tylko jeden węzeł główny w wyrażeniu JSONPath"
 
-#: json-glib/json-path.c:389
+#: json-glib/json-path.c:384
 #, c-format
 msgid "Root node followed by invalid character '%c'"
 msgstr "Po węźle głównym występuje nieprawidłowy znak \"%c\""
 
-#: json-glib/json-path.c:495
+#: json-glib/json-path.c:490
 #, c-format
 msgid "Malformed slice expression '%*s'"
 msgstr "Błędnie sformatowane wyrażenie plasterka \"%*s\""
 
-#: json-glib/json-path.c:539
+#: json-glib/json-path.c:534
 #, c-format
 msgid "Invalid set definition '%*s'"
 msgstr "Nieprawidłowe określenie zestawu \"%*s\""
 
-#: json-glib/json-path.c:592
+#: json-glib/json-path.c:587
 #, c-format
 msgid "Invalid slice definition '%*s'"
 msgstr "Nieprawidłowe określenie plasterka \"%*s\""
 
-#: json-glib/json-path.c:620
+#: json-glib/json-path.c:615
 #, c-format
 msgid "Invalid array index definition '%*s'"
 msgstr "Nieprawidłowe określenie indeksu tablicy \"%*s\""

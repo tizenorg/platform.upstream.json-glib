@@ -6,10 +6,10 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: json-glib 0.14.2\n"
+"Project-Id-Version: json-glib 0.15.2\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=json-"
 "glib\n"
-"POT-Creation-Date: 2011-10-26 12:31+0100\n"
+"POT-Creation-Date: 2012-06-30 15:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,31 +67,31 @@ msgstr ""
 msgid "%s:%d: Parse error: %s"
 msgstr ""
 
-#: json-glib/json-path.c:380
+#: json-glib/json-path.c:375
 msgid "Only one root node is allowed in a JSONPath expression"
 msgstr ""
 
-#: json-glib/json-path.c:389
+#: json-glib/json-path.c:384
 #, c-format
 msgid "Root node followed by invalid character '%c'"
 msgstr ""
 
-#: json-glib/json-path.c:495
+#: json-glib/json-path.c:490
 #, c-format
 msgid "Malformed slice expression '%*s'"
 msgstr ""
 
-#: json-glib/json-path.c:539
+#: json-glib/json-path.c:534
 #, c-format
 msgid "Invalid set definition '%*s'"
 msgstr ""
 
-#: json-glib/json-path.c:592
+#: json-glib/json-path.c:587
 #, c-format
 msgid "Invalid slice definition '%*s'"
 msgstr ""
 
-#: json-glib/json-path.c:620
+#: json-glib/json-path.c:615
 #, c-format
 msgid "Invalid array index definition '%*s'"
 msgstr ""

@@ -280,7 +280,7 @@ Loads a JSON stream from the content of <em class="parameter"><code>filename</co
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>return location for a <span class="type">GError</span>, or <a href="/home/ebassi/gnome3/install/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>
+<td>return location for a <span class="type">GError</span>, or <code class="literal">NULL</code>
 </td>
 </tr>
 <tr>
@@ -322,7 +322,7 @@ parser will be destroyed each time.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>return location for a <span class="type">GError</span>, or <a href="/home/ebassi/gnome3/install/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>
+<td>return location for a <span class="type">GError</span>, or <code class="literal">NULL</code>
 </td>
 </tr>
 <tr>
@@ -345,7 +345,7 @@ of error, <em class="parameter"><code>error</code></em> is set accordingly and <
 Loads the contents of an input stream and parses them.
 </p>
 <p>
-If <em class="parameter"><code>cancellable</code></em> is not <a href="/home/ebassi/gnome3/install/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>, then the operation can be cancelled by
+If <em class="parameter"><code>cancellable</code></em> is not <code class="literal">NULL</code>, then the operation can be cancelled by
 triggering the <em class="parameter"><code>cancellable</code></em> object from another thread. If the
 operation was cancelled, the error <code class="literal">G_IO_ERROR_CANCELLED</code> will be set
 on the passed <em class="parameter"><code>error</code></em>.
@@ -365,12 +365,12 @@ on the passed <em class="parameter"><code>error</code></em>.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>a <span class="type">GCancellable</span>, or <a href="/home/ebassi/gnome3/install/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+<td>a <span class="type">GCancellable</span>, or <code class="literal">NULL</code>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>the return location for a <span class="type">GError</span>, or <a href="/home/ebassi/gnome3/install/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>
+<td>the return location for a <span class="type">GError</span>, or <code class="literal">NULL</code>
 </td>
 </tr>
 <tr>
@@ -418,7 +418,7 @@ of the operation.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>a <span class="type">GCancellable</span>, or <a href="/home/ebassi/gnome3/install/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+<td>a <span class="type">GCancellable</span>, or <code class="literal">NULL</code>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
 </td>
 </tr>
 <tr>
@@ -459,7 +459,7 @@ Finishes an asynchronous stream loading started with
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>the return location for a <span class="type">GError</span> or <a href="/home/ebassi/gnome3/install/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>
+<td>the return location for a <span class="type">GError</span> or <code class="literal">NULL</code>
 </td>
 </tr>
 <tr>
@@ -596,14 +596,14 @@ used.
 <tr>
 <td><p><span class="term"><em class="parameter"><code>variable_name</code></em> :</span></p></td>
 <td>Return location for the variable
-name, or <a href="/home/ebassi/gnome3/install/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
+name, or <code class="literal">NULL</code>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
 <code class="literal">TRUE</code> if there was an assignment, <code class="literal">FALSE</code> otherwise. If
-<em class="parameter"><code>variable_name</code></em> is not <a href="/home/ebassi/gnome3/install/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> it will be set to the name of the variable
+<em class="parameter"><code>variable_name</code></em> is not <code class="literal">NULL</code> it will be set to the name of the variable
 used in the assignment. The string is owned by <a class="link" href="JsonParser.html" title="JsonParser"><span class="type">JsonParser</span></a> and should
 never be modified or freed.</td>
 </tr>

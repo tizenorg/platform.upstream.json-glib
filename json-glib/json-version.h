@@ -48,7 +48,7 @@
  *
  * Json minor version component (e.g. 2 if %JSON_VERSION is 1.2.3)
  */
-#define JSON_MINOR_VERSION              (14)
+#define JSON_MINOR_VERSION              (15)
 
 /**
  * JSON_MICRO_VERSION:
@@ -62,7 +62,7 @@
  *
  * Json version.
  */
-#define JSON_VERSION                    (0.14.2)
+#define JSON_VERSION                    (0.15.2)
 
 /**
  * JSON_VERSION_S:
@@ -70,7 +70,7 @@
  * Json version, encoded as a string, useful for printing and
  * concatenation.
  */
-#define JSON_VERSION_S                  "0.14.2"
+#define JSON_VERSION_S                  "0.15.2"
 
 /**
  * JSON_VERSION_HEX:

@@ -292,12 +292,7 @@ json_path_finalize (GObject *gobject)
 {
   JsonPath *self = JSON_PATH (gobject);
 
-#if GLIB_CHECK_VERSION (2, 28, 0)
   g_list_free_full (self->nodes, path_node_free);
-#else
-  g_list_foreach (self->nodes, (GFunc) path_node_free, NULL);
-  g_list_free (self->nodes);
-#endif
 
   G_OBJECT_CLASS (json_path_parent_class)->finalize (gobject);
 }
@@ -493,7 +488,7 @@ json_path_compile (JsonPath    *path,
                             g_set_error (error, JSON_PATH_ERROR,
                                          JSON_PATH_ERROR_INVALID_QUERY,
                                          _("Malformed slice expression '%*s'"),
-                                         end_p - p,
+                                         (int)(end_p - p),
                                          p + 1);
                             goto fail;
                           }
@@ -537,7 +532,7 @@ json_path_compile (JsonPath    *path,
                             g_set_error (error, JSON_PATH_ERROR,
                                          JSON_PATH_ERROR_INVALID_QUERY,
                                          _("Invalid set definition '%*s'"),
-                                         end_p - p,
+                                         (int)(end_p - p),
                                          p + 1);
                             goto fail;
                           }
@@ -590,7 +585,7 @@ json_path_compile (JsonPath    *path,
                         g_set_error (error, JSON_PATH_ERROR,
                                      JSON_PATH_ERROR_INVALID_QUERY,
                                      _("Invalid slice definition '%*s'"),
-                                     end_p - p,
+                                     (int)(end_p - p),
                                      p + 1);
                         goto fail;
                       }
@@ -618,7 +613,7 @@ json_path_compile (JsonPath    *path,
                     g_set_error (error, JSON_PATH_ERROR,
                                  JSON_PATH_ERROR_INVALID_QUERY,
                                  _("Invalid array index definition '%*s'"),
-                                 end_p - p,
+                                 (int)(end_p - p),
                                  p + 1);
                     goto fail;
                   }
@@ -711,14 +706,7 @@ json_path_compile (JsonPath    *path,
 #endif /* JSON_ENABLE_DEBUG */
 
   if (path->nodes != NULL)
-    {
-#if GLIB_CHECK_VERSION (2, 28, 0)
-      g_list_free_full (path->nodes, path_node_free);
-#else
-      g_list_foreach (path->nodes, (GFunc) path_node_free, NULL);
-      g_list_free (path->nodes);
-#endif
-    }
+    g_list_free_full (path->nodes, path_node_free);
 
   path->nodes = nodes;
   path->is_compiled = (path->nodes != NULL);
@@ -726,12 +714,7 @@ json_path_compile (JsonPath    *path,
   return path->nodes != NULL;
 
 fail:
-#if GLIB_CHECK_VERSION (2, 28, 0)
   g_list_free_full (nodes, path_node_free);
-#else
-  g_list_foreach (nodes, (GFunc) path_node_free, NULL);
-  g_list_free (nodes);
-#endif
 
   return FALSE;
 }

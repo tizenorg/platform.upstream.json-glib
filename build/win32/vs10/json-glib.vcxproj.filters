@@ -21,6 +21,7 @@
     <ClCompile Include="..\..\..\json-glib\./json-gboxed.c"><Filter>Sources</Filter></ClCompile>
     <ClCompile Include="..\..\..\json-glib\./json-generator.c"><Filter>Sources</Filter></ClCompile>
     <ClCompile Include="..\..\..\json-glib\./json-gobject.c"><Filter>Sources</Filter></ClCompile>
+    <ClCompile Include="..\..\..\json-glib\./json-gvariant.c"><Filter>Sources</Filter></ClCompile>
     <ClCompile Include="..\..\..\json-glib\./json-node.c"><Filter>Sources</Filter></ClCompile>
     <ClCompile Include="..\..\..\json-glib\./json-object.c"><Filter>Sources</Filter></ClCompile>
     <ClCompile Include="..\..\..\json-glib\./json-parser.c"><Filter>Sources</Filter></ClCompile>
@@ -28,7 +29,7 @@
     <ClCompile Include="..\..\..\json-glib\./json-reader.c"><Filter>Sources</Filter></ClCompile>
     <ClCompile Include="..\..\..\json-glib\./json-scanner.c"><Filter>Sources</Filter></ClCompile>
     <ClCompile Include="..\..\..\json-glib\./json-serializable.c"><Filter>Sources</Filter></ClCompile>
-    <ClCompile Include="..\..\..\json-glib\./json-gvariant.c"><Filter>Sources</Filter></ClCompile>
+    <ClCompile Include="..\..\..\json-glib\./json-value.c"><Filter>Sources</Filter></ClCompile>
     <ClCompile Include="..\..\..\json-glib\json-enum-types.c"><Filter>Sources</Filter></ClCompile>
     <ClCompile Include="..\..\..\json-glib\json-marshal.c"><Filter>Sources</Filter></ClCompile>
   </ItemGroup>

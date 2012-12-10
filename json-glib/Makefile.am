@@ -10,18 +10,17 @@ DIST_SUBDIRS = tests
 
 NULL =
 
-INCLUDES = -I$(top_srcdir)
+INCLUDES = -I$(top_srcdir) -I$(top_builddir)
 
 AM_CPPFLAGS = \
 	-DPREFIX=\""$(prefix)"\" 	\
 	-DLIBDIR=\""$(libdir)"\" 	\
 	-DJSON_COMPILATION=1		\
-	-DJSON_DISABLE_DEPRECATED	\
 	-DG_LOG_DOMAIN=\"Json\" 	\
 	$(JSON_DEBUG_CFLAGS) 		\
 	$(NULL)
 
-AM_CFLAGS = $(JSON_CFLAGS) $(MAINTAINER_CFLAGS) $(GCOV_CFLAGS)
+AM_CFLAGS = $(JSON_CFLAGS) $(MAINTAINER_CFLAGS) $(JSON_GCOV_CFLAGS)
 
 BUILT_SOURCES =
 
@@ -32,11 +31,11 @@ source_h = \
 	$(top_srcdir)/json-glib/json-builder.h		\
 	$(top_srcdir)/json-glib/json-generator.h 	\
 	$(top_srcdir)/json-glib/json-gobject.h 		\
+	$(top_srcdir)/json-glib/json-gvariant.h		\
 	$(top_srcdir)/json-glib/json-parser.h 		\
 	$(top_srcdir)/json-glib/json-path.h		\
 	$(top_srcdir)/json-glib/json-reader.h		\
 	$(top_srcdir)/json-glib/json-types.h 		\
-	$(top_srcdir)/json-glib/json-gvariant.h		\
 	$(NULL)
 
 source_h_private = \
@@ -53,6 +52,7 @@ source_c = \
 	$(srcdir)/json-gboxed.c		\
 	$(srcdir)/json-generator.c 	\
 	$(srcdir)/json-gobject.c 	\
+	$(srcdir)/json-gvariant.c	\
 	$(srcdir)/json-node.c 		\
 	$(srcdir)/json-object.c 	\
 	$(srcdir)/json-parser.c 	\
@@ -60,7 +60,7 @@ source_c = \
 	$(srcdir)/json-reader.c		\
 	$(srcdir)/json-scanner.c 	\
 	$(srcdir)/json-serializable.c	\
-	$(srcdir)/json-gvariant.c	\
+	$(srcdir)/json-value.c		\
 	$(NULL)
 
 # glib-mkenums rules
@@ -78,7 +78,7 @@ lib_LTLIBRARIES = libjson-glib-1.0.la
 
 libjson_glib_1_0_la_LIBADD = $(JSON_LIBS)
 libjson_glib_1_0_la_SOURCES = $(source_c) $(source_h) $(source_h_private) $(BUILT_SOURCES)
-libjson_glib_1_0_la_LDFLAGS = $(JSON_LT_LDFLAGS) $(GCOV_LDFLAGS) -export-dynamic -export-symbols-regex "^json.*" -rpath $(libdir)
+libjson_glib_1_0_la_LDFLAGS = $(JSON_LT_LDFLAGS) $(JSON_GCOV_LDADD) -export-dynamic -export-symbols-regex "^json.*" -rpath $(libdir)
 
 jsonincludedir = $(includedir)/json-glib-1.0/json-glib
 jsoninclude_DATA = \
@@ -92,6 +92,12 @@ EXTRA_DIST += json-version.h.in json-glib.h json-version.h
 
 TESTS_ENVIRONMENT = srcdir="$(srcdir)" json_all_c_sources="$(source_c)"
 
+if OS_LINUX
+TESTS = abicheck.sh
+endif
+
+EXTRA_DIST += abicheck.sh
+
 # intospection
 -include $(INTROSPECTION_MAKEFILE)
 
@@ -104,7 +110,7 @@ Json_1_0_gir_NAMESPACE = Json
 Json_1_0_gir_VERSION = 1.0
 Json_1_0_gir_LIBS = libjson-glib-1.0.la
 Json_1_0_gir_FILES = $(source_h) $(source_c)
-Json_1_0_gir_CFLAGS = $(INCLUDES) $(AM_CPPFLAGS) $(JSON_CFLAGS) -UJSON_DISABLE_DEPRECATED
+Json_1_0_gir_CFLAGS = $(INCLUDES) $(AM_CPPFLAGS) $(JSON_CFLAGS)
 Json_1_0_gir_INCLUDES = GObject-2.0 Gio-2.0
 Json_1_0_gir_SCANNERFLAGS = --warn-all --pkg-export json-glib-1.0 --c-include "json-glib/json-glib.h"
 
@@ -155,6 +161,3 @@ dist-hook: ../build/win32/vs9/json-glib.vcproj ../build/win32/vs10/json-glib.vcx
 DISTCLEANFILES += ../build/win32/vs9/json-glib.vcproj	\
 		  ../build/win32/vs10/json-glib.vcxproj	\
 		  ../build/win32/vs10/json-glib.vcxproj.filters
-
-gcov_sources = $(source_c)
-include $(top_srcdir)/build/autotools/Makefile.am.gcov

@@ -32,6 +32,14 @@
 
 G_BEGIN_DECLS
 
+#ifdef JSON_DISABLE_DEPRECATION_WARNINGS
+#define JSON_DEPRECATED
+#define JSON_DEPRECATED_FOR(x)
+#else
+#define JSON_DEPRECATED         G_DEPRECATED
+#define JSON_DEPRECATED_FOR(x)  G_DEPRECATED_FOR(x)
+#endif
+
 /**
  * JSON_NODE_TYPE:
  * @node: a #JsonNode
@@ -225,11 +233,10 @@ JsonObject *          json_object_new                (void);
 JsonObject *          json_object_ref                (JsonObject  *object);
 void                  json_object_unref              (JsonObject  *object);
 
-#ifndef JSON_DISABLE_DEPRECATED
+JSON_DEPRECATED_FOR(json_object_set_member)
 void                  json_object_add_member         (JsonObject  *object,
                                                       const gchar *member_name,
-                                                      JsonNode    *node) G_GNUC_DEPRECATED;
-#endif /* JSON_DISABLE_DEPRECATED */
+                                                      JsonNode    *node);
 
 void                  json_object_set_member         (JsonObject  *object,
                                                       const gchar *member_name,

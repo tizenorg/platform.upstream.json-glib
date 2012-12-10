@@ -1,90 +1,516 @@
-commit 6d64c9a4525001700b437af09676013954eb6eb5
+commit 2d129e5d700db4e0932b3cdd0260ab173f13901e
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sat Jun 30 15:19:49 2012 +0100
+
+    Release JSON-GLib 0.15.2 (snapshot)
+
+ configure.ac |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 4bb7b70c1ec13eb67b3984b684b2ca45b340ee9b
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sat Jun 30 15:19:07 2012 +0100
+
+    docs: Add missing symbols
+    
+    The deprecation macros should be in the private section.
+
+ doc/reference/json-glib-sections.txt |    2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 9c5c46228d67884a0c26557f7471c5c24da14baa
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sat Jun 30 15:04:58 2012 +0100
+
+    NEWS: Update
+
+ NEWS |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+commit 460a9f3e290be0d5139571492c54ce2b7078cb1f
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sat Jun 30 15:04:16 2012 +0100
+
+    build: Drop dependency on gnome-autogen.sh
+    
+    Use autoreconf instead.
+
+ autogen.sh |   49 ++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 40 insertions(+), 9 deletions(-)
+
+commit c6011722e55c9f03fa43e213b467ee3c1b89b2ef
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sat Jun 30 14:52:31 2012 +0100
+
+    symbols: Add missing functions
+
+ json-glib/json-glib.symbols |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
+
+commit f91117fcc066fb20204aa34c979d7fb199f0f38a
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sat Jun 30 14:50:51 2012 +0100
+
+    build: Add abicheck.sh
+    
+    The abicheck.sh script is used to check that the actural ABI we expose
+    in our shared library is the same as the expected one we encode inside
+    the json-glib.symbols file.
+    
+    Using abicheck.sh at check time, we can verify that: a) the symbols file
+    is up to date and b) we're not unintentionally leaking private symbols
+    to the outside world.
+
+ configure.ac          |   13 ++++++++++++-
+ json-glib/Makefile.am |    6 ++++++
+ json-glib/abicheck.sh |    6 ++++++
+ 3 files changed, 24 insertions(+), 1 deletion(-)
+
+commit d52cd977c725f7f8aa22eef91b6305255357eaf2
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sat Jun 30 14:49:42 2012 +0100
+
+    scanner: Mark all symbols as internal
+    
+    The JsonScanner API is purely internal; the symbols it exposes should
+    not end up in the shared library ABI.
+
+ json-glib/json-scanner.h |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+commit b6aad8b53e9250c6b7e9c8c7302c5f8bde3a2c72
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sat Jun 30 14:39:13 2012 +0100
+
+    Improve test coverage
+
+ json-glib/json-node.c    |    9 ++++-----
+ json-glib/tests/node.c   |   18 ++++++++++++++++++
+ json-glib/tests/object.c |    2 ++
+ 3 files changed, 24 insertions(+), 5 deletions(-)
+
+commit 9fd65a138d6ec46b94eaf807f9c87ea5ada11cf0
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sat Jun 30 14:04:31 2012 +0100
+
+    Use lcov instead of gcov for test coverage reports
+    
+    With lcov we get nicer reporting tools, with HTML output.
+
+ .gitignore                       |    2 +
+ Makefile.am                      |   26 ++++++++-
+ README.md                        |    1 +
+ build/autotools/Makefile.am      |    1 -
+ build/autotools/Makefile.am.gcov |   35 ------------
+ configure.ac                     |  112 +++++++++++++++++++++++++++++++-------
+ json-glib/Makefile.am            |    7 +--
+ 7 files changed, 120 insertions(+), 64 deletions(-)
+
+commit c135d9ea1b143382fe1372be547cf5ea76444445
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sat Jun 30 13:45:53 2012 +0100
+
+    tests: Add more coverage to JsonNode
+
+ json-glib/tests/node.c |  113 +++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 107 insertions(+), 6 deletions(-)
+
+commit c836800166f2b40e605bb497d7d6e884ae85254c
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sat Jun 30 13:26:04 2012 +0100
+
+    node: Replace GValue with JsonValue
+    
+    Given our needs, GValue is terribly overengineered. We do not need
+    transformability, and we only have four types of data which won't be
+    extended. At the same time, GValue is lacking: it can only be copied
+    around, whereas everything else inside a JsonNode is reference counted.
+    
+    We can now use the newly introduced JsonValue to replace our usage of
+    GValue to store values inside a JsonNode, giving us a simpler, reference
+    counted storage type.
+
+ json-glib/json-node.c          |  177 +++++++++++++++++++---------------------
+ json-glib/json-types-private.h |    2 +-
+ 2 files changed, 83 insertions(+), 96 deletions(-)
+
+commit 7bd24bd628df97d216436e03237fc27f85a6aa8b
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sat Jun 30 13:22:47 2012 +0100
+
+    Add JsonValue
+    
+    Given its ECMAScript inheritance, JSON allows only four types of values:
+    
+      - integer numbers
+      - floating point numbers
+      - booleans
+      - strings
+    
+    We can efficiently represent a JSON value using a simple, reference
+    counted structure, that behaves similarly to GValue but without the
+    baggage of the whole type system.
+    
+    For the time being, we should keep the whole JsonValue internal: we
+    already specify typed public accessors, so there's no need to complicate
+    the API any further.
+
+ json-glib/Makefile.am          |    5 +-
+ json-glib/json-types-private.h |   78 ++++++++++++++-
+ json-glib/json-value.c         |  216 ++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 296 insertions(+), 3 deletions(-)
+
+commit a62619788bbcc9035fb36e58308b28829f5650d3
+Author: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Date:   Sat Jun 30 10:27:03 2012 +0700
+
+    Added Vietnamese translation
+
+ po/vi.po |  166 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 166 insertions(+)
+
+commit 487a67e2469386751eda951222b927c9ffc2fb06
+Author: Dimitris Spingos <dmtrs32@gmail.com>
+Date:   Fri Jun 22 00:05:09 2012 +0300
+
+    Added Greek translation
+
+ po/el.po |  178 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 178 insertions(+)
+
+commit 59247e9f8b519c97d9e4ebf67b1b117d0c1b4d66
+Author: Yuri Kozlov <yuray@komyakino.ru>
+Date:   Sun Jun 17 20:33:51 2012 +0400
+
+    Added Russian translation
+
+ po/ru.po |  170 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 170 insertions(+)
+
+commit 1a7db5b528868bdf73b1e2a648134120a28bfe20
+Author: Colin Walters <walters@verbum.org>
+Date:   Fri Jun 8 11:20:12 2012 -0400
+
+    path: Pass int width for printf field width, not long
+
+ json-glib/json-path.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit 2eb2fc40034496fa517feeb717c3ca114490c31f
+Author: Luca Ferretti <lferrett@gnome.org>
+Date:   Sat May 19 18:49:03 2012 +0200
+
+    l10n: Added Italian translation
+
+ po/it.po |  172 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 172 insertions(+)
+
+commit cecb20c5e7955f62a57df802230b80d74b4d51ce
+Author: Andika Triwidada <andika@gmail.com>
+Date:   Sat May 19 12:50:25 2012 +0700
+
+    Moved id.po to proper directory
+
+ id.po    |  171 --------------------------------------------------------------
+ po/id.po |  171 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 171 insertions(+), 171 deletions(-)
+
+commit ed9212a8219d0f953a5f73c1b8db099e6e0977d8
+Author: Andika Triwidada <andika@gmail.com>
+Date:   Sat May 19 12:43:48 2012 +0700
+
+    Added Indonesian translation
+
+ id.po |  171 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 171 insertions(+)
+
+commit f3fba7486037639d37c4eb58ca9ca1a7702737ad
+Author: A S Alam <aalam@users.sf.net>
+Date:   Wed May 16 07:32:24 2012 +0530
+
+    Added Punjabi Translaiton
+
+ po/pa.po |  169 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 169 insertions(+)
+
+commit a62e8a14314dbe41073c16a88b6e3d2bc491cbc0
+Author: Fran Diéguez <fran.dieguez@mabishu.com>
+Date:   Sat Mar 24 18:03:36 2012 +0100
+
+    Added Galician translations
+    
+    Signed-off-by: Fran Diéguez <fran.dieguez@mabishu.com>
+
+ po/gl.po |  168 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 168 insertions(+)
+
+commit 6f4b0d9286c546658af9cee4fc8c075f4f713ff1
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Thu Mar 15 16:52:48 2012 +0800
+
+    Fix "install" paths in VS property sheets
+
+ build/win32/vs10/json-glib.props  |    2 +-
+ build/win32/vs9/json-glib.vsprops |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 2913b0b55481768d5f6dcbbeaa7dbd468cbcf0ac
+Author: Gabriel Speckhahn <gabspeck@gmail.com>
+Date:   Thu Feb 16 12:48:35 2012 -0200
+
+    Updated Brazilian Portuguese translation
+
+ po/pt_BR.po |  170 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 170 insertions(+)
+
+commit 64fa2598e614163fa1dd71d6d74ea2b71180cd82
+Author: Daniel Nylander <po@danielnylander.se>
+Date:   Sun Jan 22 00:38:39 2012 +0100
+
+    Added Swedish translation
+
+ po/sv.po |  170 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 170 insertions(+)
+
+commit 31bac4804acba9795cd33d510725ea27a39aac23
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sat Jan 14 22:16:52 2012 +0000
+
+    Remove JSON_DISABLE_DEPRECATED
+    
+    We have deprecations warnings from the compiler, now.
+
+ json-glib/Makefile.am       |    2 +-
+ json-glib/json-glib.symbols |    6 ------
+ json-glib/json-gobject.h    |    3 ---
+ json-glib/json-types.h      |    2 --
+ 4 files changed, 1 insertion(+), 12 deletions(-)
+
+commit 16f9213dc29390a933b0142ea0a39d44a7a0ab02
+Author: Ryan Lortie <desrt@desrt.ca>
+Date:   Mon Jan 9 16:16:57 2012 +0100
+
+    Prevent .po file updates on simple 'make'
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=661128
+
+ autogen.sh |    4 ++++
+ 1 file changed, 4 insertions(+)
+
+commit 424244569257c280c1926deadf266aa564b795ff
+Author: Ryan Lortie <desrt@desrt.ca>
+Date:   Mon Jan 9 16:15:06 2012 +0100
+
+    autogen.sh: remove out-of-tree check
+    
+    Don't verify from autogen.sh that we are in the source tree -- this
+    breaks out-of-tree builds in a rather direct way.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=667454
+
+ autogen.sh |    7 -------
+ 1 file changed, 7 deletions(-)
+
+commit fce3e04b970ec58f9d9a8ba2e5fb9712665ec17b
+Author: Matej Urbančič <mateju@svn.gnome.org>
+Date:   Mon Dec 26 18:50:43 2011 +0100
+
+    Updated Slovenian translation
+
+ po/sl.po |   70 +++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 35 insertions(+), 35 deletions(-)
+
+commit b9a774d95058ae00aca03b3994f0ffc48cf50699
+Author: Kjartan Maraas <kmaraas@gnome.org>
+Date:   Mon Dec 19 09:46:02 2011 +0100
+
+    Added Norwegian bokmål translation
+
+ po/nb.po |  165 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 165 insertions(+)
+
+commit 7f343fc7c0571905afe39c06bec19edd56885620
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:   Tue Dec 6 20:22:20 2011 +0100
+
+    Updated Spanish translation
+
+ po/es.po |   29 +++++++++++++++++------------
+ 1 file changed, 17 insertions(+), 12 deletions(-)
+
+commit 0b7a5b7639163573055c569109cbc91ebd77bd77
+Author: Matej Urbančič <mateju@svn.gnome.org>
+Date:   Fri Nov 25 18:21:43 2011 +0100
+
+    Added Slovenian translation
+
+ po/sl.po |  175 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 175 insertions(+)
+
+commit dab93ffeb85429157851402c51246066f95f25eb
+Author: Marek Černocký <marek@manet.cz>
+Date:   Tue Nov 22 10:33:51 2011 +0100
+
+    Czech translation
+
+ po/cs.po |  167 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 167 insertions(+)
+
+commit 432f1b2184e0e574f3e09591f540f995a465a326
+Author: Muhammet Kara <muhammet.k@gmail.com>
+Date:   Wed Nov 16 12:20:54 2011 +0200
+
+    [l10n]Added Turkish translation
+
+ po/tr.po |  170 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 170 insertions(+)
+
+commit 9e4c685e9aa284cf67c4331942edfb8b5ace2c50
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Tue Nov 15 16:43:28 2011 +0800
+
+    Fix VS property sheets
+    
+    The $(GlibEtcInstallRoot)\include\glib-2.0 needs to be specified in
+    "AdditionalIncludeDirectories" as well so that we will not mistakenly
+    pick up glibconfig.h from a GLib version and other GLib headers from
+    another version accidently.
+
+ build/win32/vs10/json-glib.props  |    4 ++--
+ build/win32/vs9/json-glib.vsprops |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+commit 89d65bb4c610b87b483b20ebb958043ea1b9d191
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:   Mon Nov 14 14:57:27 2011 +0100
+
+    Updated Spanish translation
+
+ po/es.po |  167 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 167 insertions(+)
+
+commit 84f987e94a44517a6052b7e91ed2e3c42660e295
+Author: Mario Blättermann <mariobl@gnome.org>
+Date:   Sun Nov 13 16:53:05 2011 +0100
+
+    [l10n] Added German translation
+
+ po/de.po |  172 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 172 insertions(+)
+
+commit 88e5fdd588fe3a70e1e262bc7b414e3e527e21b6
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
-Date:   Wed Oct 26 12:32:10 2011 +0100
+Date:   Fri Nov 11 15:08:08 2011 +0000
 
-    Release JSON-GLib 0.14.2
+    docs: Use markdown in the README
 
- NEWS         |    5 +++++
- configure.ac |    4 ++--
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ README    |  103 --------------------------------------------------------
+ README.md |  112 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 112 insertions(+), 103 deletions(-)
 
-commit 86bf97d993e638f0131fbf17360d03bc7b34e4a0
+commit 7636e9de9414304f940837ee828d23e4608e9f32
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
 Date:   Mon Oct 17 11:19:57 2011 +0100
 
     docs: Fix typo in JsonObject's description
     
     https://bugzilla.gnome.org/show_bug.cgi?id=660893
-    (cherry picked from commit 7636e9de9414304f940837ee828d23e4608e9f32)
-    
-    Signed-off-by: Emmanuele Bassi <ebassi@linux.intel.com>
 
  json-glib/json-object.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-commit 45a2f813243652ee2ee82de07348b3218d308861
+commit 2cb5836b99fd4f03e88568de492d1a12841c4176
+Author: Emmanuele Bassi <ebassi@linux.intel.com>
+Date:   Mon Oct 17 11:06:38 2011 +0100
+
+    Bump up the GLib dependency
+    
+    It's the development cycle, we can start using GLib 2.31.
+
+ configure.ac           |    2 +-
+ json-glib/json-types.h |    6 ------
+ 2 files changed, 1 insertion(+), 7 deletions(-)
+
+commit c2429c07107edd6acf95e80b82d968771c669c35
+Author: Emmanuele Bassi <ebassi@linux.intel.com>
+Date:   Mon Oct 17 10:52:43 2011 +0100
+
+    Use the new GLib deprecation scheme
+    
+    Instead of using a defined symbol to remove the deprecated functions
+    from the library, we should use compiler warnings.
+
+ json-glib/Makefile.am    |    1 -
+ json-glib/json-gobject.h |    6 ++++--
+ json-glib/json-types.h   |   19 +++++++++++++++++--
+ 3 files changed, 21 insertions(+), 5 deletions(-)
+
+commit f0dad4508b63359123926f699a66aead9c782ce1
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Mon Oct 17 15:39:40 2011 +0800
+
+    Update VS property sheets
+    
+    Say goodbye to G_DISABLE_DEPRECATED and the build errors that it triggers
+    as warnings are now issued during the use of deprecated GLib items instead.
+
+ build/win32/vs10/json-glib.props  |    2 +-
+ build/win32/vs9/json-glib.vsprops |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 4ab8059df6ad106bf8958642aa1126925d79128c
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
 Date:   Wed Oct 12 12:31:27 2011 +0100
 
     Use g_value_[sg]et_schar() with GLib ≥ 2.31
     
     The non-explicitly signed variant is deprecated.
-    (cherry picked from commit 4ab8059df6ad106bf8958642aa1126925d79128c)
-    
-    Signed-off-by: Emmanuele Bassi <ebassi@linux.intel.com>
 
  json-glib/json-gobject.c |   10 +++++++++-
- 1 files changed, 9 insertions(+), 1 deletions(-)
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-commit 692d8275b0d2a7883af4088c95a8403d902ffd10
+commit f904ad102004258dc7b839b93a7904517cc4c623
 Author: Matthias Clasen <mclasen@redhat.com>
 Date:   Wed Oct 12 07:15:23 2011 -0400
 
     Adapt to the demise of single includes in GLib
-    (cherry picked from commit f904ad102004258dc7b839b93a7904517cc4c623)
-    
-    Signed-off-by: Emmanuele Bassi <ebassi@linux.intel.com>
 
  json-glib/json-scanner.h   |    4 +---
  json-glib/tests/gvariant.c |    2 +-
  json-glib/tests/node.c     |    2 +-
  3 files changed, 3 insertions(+), 5 deletions(-)
 
-commit e95d570170a89c1175adf06720ba1efad96372bd
-Author: Emmanuele Bassi <ebassi@linux.intel.com>
-Date:   Mon Oct 17 11:00:52 2011 +0100
-
-    Conditionally use g_list_free_full()
-    
-    JSON-GLib depends on GLib ≥ 2.26, and g_list_free_full() was introduced
-    in GLib 2.28, so we have to check against the GLib version if we want to
-    use it.
-    
-    https://bugzilla.gnome.org/show_bug.cgi?id=661244
-
- json-glib/json-path.c |   19 ++++++++++++++++++-
- 1 files changed, 18 insertions(+), 1 deletions(-)
-
-commit d498c15566cba0123d35d271b727542309ba7d83
+commit d23aa2f10c6580f503dfc6969f8550db9576367f
 Author: Chun-wei Fan <fanchunwei@src.gnome.org>
-Date:   Tue Sep 27 15:21:06 2011 +0800
+Date:   Tue Sep 27 15:22:00 2011 +0800
 
     Update VS9 property sheet
     
-    Seperate intermediate folders to avoid errors/warnings due to files in use
-    during compilation.
+    Separate intermediate folders so that errors/warnings caused by in-use files
+    during compilation can be avoided.
 
  build/win32/vs9/json-glib.vsprops |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-commit 3543fd3220d5ab567be5d924ef94ee69ae93d5e7
+commit 941aff3788ed5ab32e577bcad626150f5e20ce7e
+Author: Colin Walters <walters@verbum.org>
+Date:   Thu Sep 22 13:51:09 2011 -0400
+
+    build: Fix srcdir != builddir
+    
+    We need to find the generated version.h in the builddir.
+
+ json-glib/Makefile.am |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit c6fed3b02fb10f4fc76b594f15c56eab6ce7c591
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
-Date:   Mon Sep 19 14:41:39 2011 +0100
+Date:   Mon Sep 19 14:40:54 2011 +0100
 
-    Post-release version bump to 0.14.1
+    Post-branch version bump to 0.15.1
 
  configure.ac |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit 35279b587f0b884fd606be77fd06e4fef919a300
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -92,7 +518,7 @@ Date:   Mon Sep 19 14:37:45 2011 +0100
 
     Release JSON-GLib 0.14.0
 
- configure.ac |    4 +-
+ configure.ac |    4 ++--
  po/pl.po     |   74 +++++++++++++++++++++++++++++-----------------------------
  2 files changed, 39 insertions(+), 39 deletions(-)
 
@@ -103,7 +529,7 @@ Date:   Fri Sep 9 16:27:37 2011 +0200
     Added Polish translation
 
  po/pl.po |  172 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 172 insertions(+), 0 deletions(-)
+ 1 file changed, 172 insertions(+)
 
 commit 67a460d9ea8b485e740d1df34943b8df974f4255
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -112,7 +538,7 @@ Date:   Fri Sep 9 15:00:41 2011 +0100
     Post-release version bump to 0.13.91
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 1cb4ed1fac84026a19b35ce10c54df8a6ed12959
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -122,7 +548,7 @@ Date:   Fri Sep 9 14:57:13 2011 +0100
 
  NEWS         |    2 ++
  configure.ac |    2 +-
- 2 files changed, 3 insertions(+), 1 deletions(-)
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
 commit 18a83ddad87c92ae78010c678a516087ba012859
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -131,7 +557,7 @@ Date:   Fri Sep 9 14:58:17 2011 +0100
     build: Fix the path to the 'missing' script
 
  Makefile.am |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 9f75475871cc8723e0a41d6c8971f741a405cb9f
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -145,8 +571,8 @@ Date:   Fri Sep 9 14:00:36 2011 +0100
     
     https://bugzilla.gnome.org/show_bug.cgi?id=658632
 
- json-glib/json-reader.c |  177 ++++++++++++++++++++++++++++++++++++++++------
- json-glib/json-reader.h |   10 +++-
+ json-glib/json-reader.c |  177 +++++++++++++++++++++++++++++++++++++++++------
+ json-glib/json-reader.h |   10 ++-
  2 files changed, 163 insertions(+), 24 deletions(-)
 
 commit e7f2d505de39a9dbdea1a5879c13408c7a394a18
@@ -160,7 +586,7 @@ Date:   Wed Aug 31 13:33:41 2011 +0800
 
  build/win32/vs10/README.txt |    5 +++++
  build/win32/vs9/README.txt  |    5 +++++
- 2 files changed, 10 insertions(+), 0 deletions(-)
+ 2 files changed, 10 insertions(+)
 
 commit c2f5b8bc64f9ac06b2dda8662924d88cc759718e
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -195,7 +621,7 @@ Date:   Sun Jul 31 02:38:08 2011 -0400
     round gint64 numbers as valid values for float/double properties.
 
  json-glib/json-gobject.c |   22 +++++++++++++++++++++-
- 1 files changed, 21 insertions(+), 1 deletions(-)
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
 commit 996d89911d71f54f9a476242f1bd43c077d4428c
 Author: Tristan Van Berkom <tristan.van.berkom@gmail.com>
@@ -208,7 +634,7 @@ Date:   Wed Jul 13 15:27:07 2011 -0400
     we fail to deserialize construct-only properties.
 
  json-glib/json-gobject.c |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 commit 4315308a19e4cf474451cecf8b69aceddda91f49
 Author: Tristan Van Berkom <tristan.van.berkom@gmail.com>
@@ -238,7 +664,7 @@ Date:   Thu Jul 7 16:35:21 2011 -0400
       Failed to deserialize property "foo" of type "int" on object "bar"
 
  json-glib/json-gobject.c |   42 ++++++++++++++++++++++++++++++------------
- 1 files changed, 30 insertions(+), 12 deletions(-)
+ 1 file changed, 30 insertions(+), 12 deletions(-)
 
 commit 24fa4503ad5d85bf60027bd77c434b2a596b1c17
 Author: Laurent Bigonville <bigon@bigon.be>
@@ -248,8 +674,8 @@ Date:   Wed Jul 6 12:34:56 2011 +0200
     
     Fix casting issue in Gvariant creation on some architectures.
 
- json-glib/json-gvariant.c |   46 +++++++++++++++++++++++++++++++++++++++-----
- 1 files changed, 40 insertions(+), 6 deletions(-)
+ json-glib/json-gvariant.c |   46 +++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 40 insertions(+), 6 deletions(-)
 
 commit dd3c30c5821f9f6bac4cc9016c49c7e6250377eb
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -260,8 +686,8 @@ Date:   Tue Jul 5 15:07:20 2011 +0100
     Use a structure to keep the testable expressions and their results
     together.
 
- json-glib/tests/path.c |   74 ++++++++++++++++++++++++++++++-----------------
- 1 files changed, 47 insertions(+), 27 deletions(-)
+ json-glib/tests/path.c |   74 ++++++++++++++++++++++++++++++------------------
+ 1 file changed, 47 insertions(+), 27 deletions(-)
 
 commit acb33a7e6bd3d05d36e7278fafdcb4c35ec88388
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -270,7 +696,7 @@ Date:   Tue Jul 5 14:23:13 2011 +0100
     build: Replace AC_HELP_STRING with AS_HELP_STRING
 
  configure.ac |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit c296ca9ed06b8e4b54a4bd8003593b3a98b94f6b
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -281,7 +707,7 @@ Date:   Tue Jul 5 14:22:13 2011 +0100
     To compensate for AC_HELP_STRING()'s braindamage.
 
  configure.ac |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit 1fb457af51a5632956fd679deca0021becb5468b
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -290,7 +716,7 @@ Date:   Tue Jul 5 14:22:01 2011 +0100
     build: Clean up configure.ac's preamble
 
  configure.ac |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 commit 75e370e53cb5d31d4a366fc5f126583872f1349a
 Author: Chun-wei Fan <fanchunwei@src.gnome.org>
@@ -305,7 +731,7 @@ Date:   Wed Jun 29 14:29:12 2011 +0800
  build/win32/vs10/README.txt  |   87 ++++++++++++++++++++++++++++++++++++++++++
  build/win32/vs9/Makefile.am  |    1 +
  build/win32/vs9/README.txt   |   86 +++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 175 insertions(+), 0 deletions(-)
+ 4 files changed, 175 insertions(+)
 
 commit 7da6eb52937588537754be7e0b496f51077165d2
 Author: Chun-wei Fan <fanchunwei@src.gnome.org>
@@ -320,7 +746,7 @@ Date:   Wed Jun 29 12:54:52 2011 +0800
     correctly :|
 
  build/win32/vs10/json-glib.sln |  332 ++++++++++++++++++++--------------------
- 1 files changed, 166 insertions(+), 166 deletions(-)
+ 1 file changed, 166 insertions(+), 166 deletions(-)
 
 commit 4ef07b2c6e7d4d444f8ec6ce93c27f7189b942a0
 Author: Travis Reitter <treitter@gmail.com>
@@ -333,7 +759,7 @@ Date:   Thu Jun 23 16:54:38 2011 -0700
     Closes: bgo#653295 - json-glib tests need to link against libgobject-2
 
  json-glib/tests/Makefile.am |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 commit c9ac9ce2d417210ccb06d0445a809ce9cd57c7a5
 Author: Chun-wei Fan <fanchunwei@src.gnome.org>
@@ -344,7 +770,7 @@ Date:   Mon Jun 20 11:59:57 2011 +0800
     Make up for missed backslash
 
  build/win32/vs10/json-glib.props |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 230801c694169e50ca45df7df431adbdb89cab18
 Author: Chun-wei Fan <fanchunwei@src.gnome.org>
@@ -435,7 +861,7 @@ Date:   Mon Jun 20 00:04:30 2011 +0800
      stuff accordingly.
     -Clean up projects a little bit.
 
- build/win32/vs10/Makefile.am                    |   36 +++---
+ build/win32/vs10/Makefile.am                    |   36 ++---
  build/win32/vs10/array-test.vcxproj             |  172 ----------------------
  build/win32/vs10/array-test.vcxproj.filters     |   14 --
  build/win32/vs10/array.vcxproj                  |  171 ++++++++++++++++++++++
@@ -455,7 +881,7 @@ Date:   Mon Jun 20 00:04:30 2011 +0800
  build/win32/vs10/gvariant.vcxproj.filters       |   14 ++
  build/win32/vs10/install.vcxproj                |    1 -
  build/win32/vs10/json-glib.props                |    1 -
- build/win32/vs10/json-glib.sln                  |   18 ++--
+ build/win32/vs10/json-glib.sln                  |   18 +--
  build/win32/vs10/json-glib.vcxprojin            |    1 -
  build/win32/vs10/node-test.vcxproj              |  172 ----------------------
  build/win32/vs10/node-test.vcxproj.filters      |   14 --
@@ -488,7 +914,7 @@ Date:   Sun Jun 19 12:18:04 2011 +0100
 
     build/vs9: Update after the changes in json-glib/tests
 
- build/win32/vs9/Makefile.am           |   24 +++---
+ build/win32/vs9/Makefile.am           |   24 ++---
  build/win32/vs9/array-test.vcproj     |  157 -------------------------------
  build/win32/vs9/array.vcproj          |  157 +++++++++++++++++++++++++++++++
  build/win32/vs9/boxed.vcproj          |    2 +-
@@ -547,7 +973,7 @@ Date:   Sun Jun 19 12:00:01 2011 +0100
     docs: Add index for symbols added in the 0.13 cycle
 
  doc/reference/json-glib-docs.xml |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+ 1 file changed, 5 insertions(+)
 
 commit cc2543e101ca8fa41989bc8eb296f8d11b5b9cad
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -564,7 +990,7 @@ Date:   Wed Jun 15 11:30:28 2011 +0100
     on a separate line.
 
  configure.ac |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 commit c106aa5b0fc0ca408328b95ba721eef6a9d560d2
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -573,7 +999,7 @@ Date:   Wed Jun 15 11:12:38 2011 +0100
     Post-release version bump to 0.13.5
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 02b3ee77a35624a3d6e478ae3700100cb24bf18f
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -583,7 +1009,7 @@ Date:   Wed Jun 15 11:08:37 2011 +0100
 
  NEWS         |    6 ++++++
  configure.ac |    2 +-
- 2 files changed, 7 insertions(+), 1 deletions(-)
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
 commit f37878ec1759283f78a6d580c1f78e9039717862
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -593,7 +1019,7 @@ Date:   Wed Jun 15 11:08:12 2011 +0100
 
  doc/reference/json-glib-sections.txt |    4 ++++
  json-glib/json-gobject.h             |    6 ++++++
- 2 files changed, 10 insertions(+), 0 deletions(-)
+ 2 files changed, 10 insertions(+)
 
 commit c994a9bfdc13aba1b7c5fd019853c68fb38148a6
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -636,7 +1062,7 @@ Date:   Fri Jun 3 11:18:27 2011 +0100
     build: Remove deprecation disabling for GLib
 
  json-glib/Makefile.am |    1 -
- 1 files changed, 0 insertions(+), 1 deletions(-)
+ 1 file changed, 1 deletion(-)
 
 commit 65a95198a4a1bca7b418af1639c4bb24b09947c5
 Author: Chun-wei Fan <fanchunwei@src.gnome.org>
@@ -666,7 +1092,7 @@ Date:   Fri Jun 3 15:01:16 2011 +0800
     machinery (commit 67edce08670ce1da4956f87948985434ac5ae2ca)
 
  build/win32/config.h.win32.in |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+ 1 file changed, 3 insertions(+)
 
 commit d93260c477930140f2ecf2927bd9f2a2d7f4f905
 Author: Chun-wei Fan <fanchunwei@src.gnome.org>
@@ -678,7 +1104,7 @@ Date:   Fri Jun 3 14:47:42 2011 +0800
 
  build/win32/vs10/json-glib.props  |    2 ++
  build/win32/vs9/json-glib.vsprops |    1 +
- 2 files changed, 3 insertions(+), 0 deletions(-)
+ 2 files changed, 3 insertions(+)
 
 commit c3b367ca8bac245712f8390acab1b38a314972a9
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -687,7 +1113,7 @@ Date:   Wed Jun 1 17:10:17 2011 +0100
     serializable: Fix introspection annotations
 
  json-glib/json-serializable.c |   25 +++++++++++++++++++++++++
- 1 files changed, 25 insertions(+), 0 deletions(-)
+ 1 file changed, 25 insertions(+)
 
 commit aee5a7fbb70e5cb714bcfef79a96c000f62e80db
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -715,7 +1141,7 @@ Date:   Wed Jun 1 13:35:16 2011 +0100
     Update the ignore file for the po directory
 
  po/.gitignore |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ 1 file changed, 1 insertion(+)
 
 commit 8863766ca4792383dad0e48550f8fb79d4c104e4
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -765,7 +1191,7 @@ Date:   Wed Jun 1 12:49:28 2011 +0100
     serialization, to keep the number of JSON object members down.
 
  json-glib/json-gobject.c |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
+ 1 file changed, 7 insertions(+)
 
 commit 8c424cc133575282371bff8d17295662267049e9
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -777,7 +1203,7 @@ Date:   Wed Jun 1 12:48:20 2011 +0100
     values than the default ones from the GParamSpec.
 
  json-glib/tests/serialize-complex.c |   22 +++++++++++-----------
- 1 files changed, 11 insertions(+), 11 deletions(-)
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
 commit 96b1e6b50f355c04e794ad7366bd33b9c3d1f81b
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -803,8 +1229,8 @@ Date:   Wed Jun 1 12:36:08 2011 +0100
     
     The validation broke the test suite; it'll need some more work.
 
- json-glib/json-path.c |   77 +++++++++++++-----------------------------------
- 1 files changed, 21 insertions(+), 56 deletions(-)
+ json-glib/json-path.c |   77 ++++++++++++++-----------------------------------
+ 1 file changed, 21 insertions(+), 56 deletions(-)
 
 commit e8fa85705e48d03742eb351addbad53be4d8e60b
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -814,8 +1240,8 @@ Date:   Wed Jun 1 07:55:17 2011 +0100
     
     Especially for the slice syntax.
 
- json-glib/json-path.c |   77 +++++++++++++++++++++++++++++++++++-------------
- 1 files changed, 56 insertions(+), 21 deletions(-)
+ json-glib/json-path.c |   77 +++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 56 insertions(+), 21 deletions(-)
 
 commit 295c469329d040b4d311e9c295bec908856190d6
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -824,7 +1250,7 @@ Date:   Wed Jun 1 07:54:48 2011 +0100
     symbols: Add JsonPath public entry points
 
  json-glib/json-glib.symbols |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+ 1 file changed, 6 insertions(+)
 
 commit 257209ab47ebcbf36006dd3aa3fcee5545381c6f
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -898,7 +1324,7 @@ Date:   Sat May 28 14:36:43 2011 +0100
  json-glib/json-path.c       |  856 +++++++++++++++++++++++++++++++++++++++++++
  json-glib/json-path.h       |   97 +++++
  json-glib/tests/Makefile.am |    1 +
- json-glib/tests/path-test.c |  143 +++++++
+ json-glib/tests/path-test.c |  143 ++++++++
  8 files changed, 1104 insertions(+), 2 deletions(-)
 
 commit b5bd47727c960990ba98902ee2d7099491a4178a
@@ -913,14 +1339,14 @@ Date:   Mon May 30 14:26:54 2011 +0800
 
  build/win32/vs10/Makefile.am                   |    2 +
  build/win32/vs10/gvariant-test.vcxproj         |  159 ++++++++++++++++++++++++
- build/win32/vs10/gvariant-test.vcxproj.filters |   14 ++
+ build/win32/vs10/gvariant-test.vcxproj.filters |   14 +++
  build/win32/vs10/json-glib.props               |    2 +
  build/win32/vs10/json-glib.sln                 |   10 ++
  build/win32/vs9/Makefile.am                    |    1 +
  build/win32/vs9/gvariant-test.vcproj           |  147 ++++++++++++++++++++++
- build/win32/vs9/json-glib.sln                  |   14 ++
+ build/win32/vs9/json-glib.sln                  |   14 +++
  build/win32/vs9/json-glib.vsprops              |    1 +
- 9 files changed, 350 insertions(+), 0 deletions(-)
+ 9 files changed, 350 insertions(+)
 
 commit 3a1d817fd39b4b4d2bdbc93257be535c5b29780f
 Author: Chun-wei Fan <fanchunwei@src.gnome.org>
@@ -931,7 +1357,7 @@ Date:   Mon May 30 13:07:53 2011 +0800
     Added the JSON-GLib gvariant-related APIs.
 
  json-glib/json-glib.symbols |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+ 1 file changed, 4 insertions(+)
 
 commit 1b7f20fe88a6647e61964db063eba071114a6f66
 Author: Chun-wei Fan <fanchunwei@src.gnome.org>
@@ -946,7 +1372,7 @@ Date:   Mon May 30 12:53:47 2011 +0800
     This has been checked with "make distcheck" on Fedora 15
 
  Makefile.am |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 54172e25e8b62075f0aef98d21e17619466ff30f
 Author: Chun-wei Fan <fanchunwei@src.gnome.org>
@@ -1008,8 +1434,8 @@ Date:   Sat May 28 11:38:18 2011 +0100
     Clean up some odd code, and add a unit for the empty object case outlined
     in bug 651271.
 
- json-glib/tests/builder-test.c |   52 +++++++++++++++++++++++++++++++++++----
- 1 files changed, 46 insertions(+), 6 deletions(-)
+ json-glib/tests/builder-test.c |   52 +++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 46 insertions(+), 6 deletions(-)
 
 commit d784cc6825607c517d7565049108d1f908a1d71b
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -1023,7 +1449,7 @@ Date:   Sat May 28 11:36:55 2011 +0100
     https://bugzilla.gnome.org/show_bug.cgi?id=651271
 
  json-glib/json-builder.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ 1 file changed, 1 insertion(+)
 
 commit e20a8b0faeb45d1ae2f1bd12d49d31d12e357b24
 Author: Alexandre Mazari <scaroo@gmail.com>
@@ -1037,7 +1463,7 @@ Date:   Tue Mar 22 17:28:55 2011 +0100
     Signed-off-by: Emmanuele Bassi <ebassi@gnome.org>
 
  json-glib/json-gvariant.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit 4e41d26586991d2977c846fa4871b6df39fe4106
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -1054,12 +1480,12 @@ Date:   Sat May 28 11:05:57 2011 +0100
  json-glib/tests/boxed.c             |  264 +++++++++++++++++++++++
  json-glib/tests/serialize-complex.c |  293 +++++++++++++++++++++++++
  json-glib/tests/serialize-full.c    |  402 +++++++++++++++++++++++++++++++++++
- json-glib/tests/serialize-simple.c  |  166 ++++++++++++++
+ json-glib/tests/serialize-simple.c  |  166 +++++++++++++++
  tests/Makefile.am                   |   34 ---
  tests/test-serialize-boxed.c        |  264 -----------------------
  tests/test-serialize-complex.c      |  293 -------------------------
  tests/test-serialize-full.c         |  402 -----------------------------------
- tests/test-serialize-simple.c       |  166 --------------
+ tests/test-serialize-simple.c       |  166 ---------------
  12 files changed, 1142 insertions(+), 1203 deletions(-)
 
 commit 8d98b99b945423085232d358492e97399c9fd071
@@ -1082,7 +1508,7 @@ Date:   Thu May 19 08:32:03 2011 +0100
     Add ignore file under build/win32
 
  build/win32/.gitignore |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+ 1 file changed, 4 insertions(+)
 
 commit f4651885961bf3ccc8d475cdc86af051fe1101f6
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1091,7 +1517,7 @@ Date:   Wed May 18 13:44:07 2011 +0100
     doap: Add the download-page resource
 
  json-glib.doap |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ 1 file changed, 2 insertions(+)
 
 commit 8ef7da62a7575ebb04c69b9d98fd24efb840ab3b
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1100,7 +1526,7 @@ Date:   Wed May 18 13:39:38 2011 +0100
     Post-release version bump to 0.13.3
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit aa793a4fbcc4d44d367ba84d3782823885fec045
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1110,7 +1536,7 @@ Date:   Wed May 18 13:37:38 2011 +0100
 
  NEWS         |   12 ++++++++++++
  configure.ac |    2 +-
- 2 files changed, 13 insertions(+), 1 deletions(-)
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
 commit 595bdd9cc160f10edefb9e54f45cb4727f39ac24
 Merge: 46a8e57 d3db7ac
@@ -1128,7 +1554,7 @@ Date:   Tue May 3 00:20:12 2011 +0900
     This fixes deserialization to match serialization (bug 648539)
 
  json-glib/json-gobject.c |   14 +++++++++++++-
- 1 files changed, 13 insertions(+), 1 deletions(-)
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
 commit 9824a32a803bd194208d460068ce5ba91d776686
 Author: Tristan Van Berkom <tristan.van.berkom@gmail.com>
@@ -1137,7 +1563,7 @@ Date:   Sat Apr 23 18:15:37 2011 +0900
     Warn from json_gobject_deserialize() if a listed property cannot be deserialized.
 
  json-glib/json-gobject.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+ 1 file changed, 3 insertions(+)
 
 commit 254e8e969968e7ed5f594238a980b20c6fabc46e
 Author: Bastien Nocera <hadess@hadess.net>
@@ -1146,7 +1572,7 @@ Date:   Thu Apr 21 02:29:53 2011 +0100
     reader: Fix bug in example usage
 
  json-glib/json-reader.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 46a8e576f2fae9563219fcd72a9866826e684559
 Author: Chun-wei Fan <fanchunwei@src.gnome.org>
@@ -1186,7 +1612,7 @@ Date:   Wed Apr 13 00:34:05 2011 +0800
  .../win32/vs10/test-serialize-full.vcxproj.filters |   14 ++
  build/win32/vs10/test-serialize-simple.vcxproj     |  171 +++++++++++++++++
  .../vs10/test-serialize-simple.vcxproj.filters     |   14 ++
- 27 files changed, 2678 insertions(+), 0 deletions(-)
+ 27 files changed, 2678 insertions(+)
 
 commit 6c74292e66be25840612d7ee6871f1668010eada
 Author: Chun-wei Fan <fanchunwei@src.gnome.org>
@@ -1238,11 +1664,11 @@ Date:   Wed Apr 13 00:02:48 2011 +0800
     These are the updated VS 2008 Project files and property sheets
     themselves.  x64 compiling support is also added
 
- build/win32/vs9/array-test.vcproj             |  132 ++++-------
+ build/win32/vs9/array-test.vcproj             |  132 ++++------
  build/win32/vs9/builder-test.vcproj           |  134 ++++-------
  build/win32/vs9/generator-test.vcproj         |  134 ++++-------
- build/win32/vs9/install.vcproj                |   44 +++--
- build/win32/vs9/json-glib.sln                 |  115 +++++++++-
+ build/win32/vs9/install.vcproj                |   44 ++--
+ build/win32/vs9/json-glib.sln                 |  115 ++++++++-
  build/win32/vs9/json-glib.vcproj              |  317 -------------------------
  build/win32/vs9/json-glib.vcprojin            |  204 ++++++++++++++++
  build/win32/vs9/json-glib.vsprops             |   20 +-
@@ -1265,7 +1691,7 @@ Date:   Tue Apr 12 08:53:26 2011 +0100
     JSON-GLib uses the GNOME Bugzilla instance.
 
  json-glib.doap |   19 +------------------
- 1 files changed, 1 insertions(+), 18 deletions(-)
+ 1 file changed, 1 insertion(+), 18 deletions(-)
 
 commit 0ff8f784848ad34c37bd60ad92791c6f76944803
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1276,7 +1702,7 @@ Date:   Tue Apr 12 08:41:20 2011 +0100
     Building against JSON-GLib requires GIO.
 
  json-glib.pc.in |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 8b060cd9144990aae6531982bad66050fafcb658
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1287,7 +1713,7 @@ Date:   Fri Apr 8 15:17:19 2011 +0100
     Instead of manual iteration, let's use the function GList provides us.
 
  json-glib/json-object.c |   13 +++----------
- 1 files changed, 3 insertions(+), 10 deletions(-)
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
 commit 2158cecee6fe1da8786afe2fad94d1098f879786
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1300,7 +1726,7 @@ Date:   Wed Mar 23 11:35:28 2011 +0000
     facilities from autoconf.
 
  configure.ac |   20 +++++++++++---------
- 1 files changed, 11 insertions(+), 9 deletions(-)
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
 commit 992d966572e3e498031578558ac307d0f4909246
 Author: Rob Taylor <rob.taylor@codethink.co.uk>
@@ -1315,7 +1741,7 @@ Date:   Tue Mar 15 09:09:11 2011 +0000
     Signed-off-by: Emmanuele Bassi <ebassi@linux.intel.com>
 
  json-glib/json-gvariant.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit af70f34b3fc46a4c464418ebd6a16d9a1f18af8a
 Author: Eduardo Lima Mitev <elima@igalia.com>
@@ -1326,8 +1752,8 @@ Date:   Thu Jan 27 16:58:48 2011 +0100
     https://bugzilla.gnome.org/show_bug.cgi?id=640729
 
  json-glib/json-generator.c       |   35 +++++++++++------
- json-glib/tests/builder-test.c   |    6 +-
- json-glib/tests/generator-test.c |   34 ++++++++--------
+ json-glib/tests/builder-test.c   |    6 +--
+ json-glib/tests/generator-test.c |   34 ++++++++---------
  json-glib/tests/gvariant-test.c  |   78 +++++++++++++++++++-------------------
  4 files changed, 82 insertions(+), 71 deletions(-)
 
@@ -1351,7 +1777,7 @@ Date:   Tue Feb 15 16:16:46 2011 +0000
     random values.
 
  json-glib/tests/object-test.c |   29 +++++++++++++++++++++++++++++
- 1 files changed, 29 insertions(+), 0 deletions(-)
+ 1 file changed, 29 insertions(+)
 
 commit 1a633159a593c962233a5ef4660e31e60eed96d9
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1372,7 +1798,7 @@ Date:   Tue Feb 15 16:12:38 2011 +0000
     https://bugzilla.gnome.org/show_bug.cgi?id=642383
 
  json-glib/json-object.c |   21 +++++++++++++++++++++
- 1 files changed, 21 insertions(+), 0 deletions(-)
+ 1 file changed, 21 insertions(+)
 
 commit a125a724894a08a8d8053fdd2db92d0ad8e2dfd4
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1385,7 +1811,7 @@ Date:   Sun Feb 6 23:10:54 2011 +0000
     one.
 
  json-glib/json-reader.c |   15 ++++++---------
- 1 files changed, 6 insertions(+), 9 deletions(-)
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
 commit 2c5f4563c54fa273ffd8dbe02b60a12c4b54b977
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1400,7 +1826,7 @@ Date:   Sun Feb 6 12:22:49 2011 +0000
  json-glib/json-reader.c              |   32 ++++++++++++++++++++++++++++++++
  json-glib/json-reader.h              |    1 +
  json-glib/tests/reader-test.c        |    1 +
- 5 files changed, 36 insertions(+), 0 deletions(-)
+ 5 files changed, 36 insertions(+)
 
 commit b2880f5a4dad07ff96a9b6578ffc5d677f75eb94
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1439,7 +1865,7 @@ Date:   Fri Feb 4 19:18:22 2011 +0000
  json-glib/json-reader.c              |   46 ++++++++++++++++++++++++++++++++++
  json-glib/json-reader.h              |    1 +
  json-glib/tests/reader-test.c        |   19 ++++++++++++++
- 5 files changed, 68 insertions(+), 0 deletions(-)
+ 5 files changed, 68 insertions(+)
 
 commit eb14f92019bde75947a98f5578167af6b6a17974
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1455,7 +1881,7 @@ Date:   Wed Jan 26 16:58:56 2011 +0000
     so we should adhere to it.
 
  json-glib/json-gvariant.c |   67 ++++++++++++++++++++++++---------------------
- 1 files changed, 36 insertions(+), 31 deletions(-)
+ 1 file changed, 36 insertions(+), 31 deletions(-)
 
 commit 212b243c07721242da3dc2c0e6dfe979f73ee5c6
 Author: Eduardo Lima Mitev <elima@igalia.com>
@@ -1473,7 +1899,7 @@ Date:   Tue Nov 9 16:45:30 2010 +0100
  json-glib/json-gvariant.h            |   46 ++
  json-glib/tests/Makefile.am          |    4 +
  json-glib/tests/gvariant-test.c      |  233 ++++++
- 8 files changed, 1594 insertions(+), 0 deletions(-)
+ 8 files changed, 1594 insertions(+)
 
 commit 822b6be848f3ad53ad113f0ce317b01f1a91a54f
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1486,7 +1912,7 @@ Date:   Sat Jan 15 18:36:34 2011 +0000
     anyway.
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 7c07a6549df1ae1b4826bf40f70c62768ce7e35b
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1495,7 +1921,7 @@ Date:   Mon Jan 10 11:56:32 2011 +0000
     build: Fix previous commit
 
  configure.ac |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
+ 1 file changed, 7 insertions(+)
 
 commit bb67e146c9e883185d264e693cc4a07d1a60d191
 Author: Fan, Chun-wei <fanc999%40yahoo.com.tw>
@@ -1521,7 +1947,7 @@ Date:   Mon Jan 10 11:49:16 2011 +0000
  build/win32/vs9/install.vcproj                |   71 ++++++
  build/win32/vs9/json-glib.sln                 |   80 +++++++
  build/win32/vs9/json-glib.vcproj              |  317 +++++++++++++++++++++++++
- build/win32/vs9/json-glib.vsprops             |   93 +++++++
+ build/win32/vs9/json-glib.vsprops             |   93 ++++++++
  build/win32/vs9/node-test.vcproj              |  189 +++++++++++++++
  build/win32/vs9/object-test.vcproj            |  187 +++++++++++++++
  build/win32/vs9/parser-test.vcproj            |  189 +++++++++++++++
@@ -1530,7 +1956,7 @@ Date:   Mon Jan 10 11:49:16 2011 +0000
  build/win32/vs9/test-serialize-complex.vcproj |  188 +++++++++++++++
  build/win32/vs9/test-serialize-full.vcproj    |  189 +++++++++++++++
  build/win32/vs9/test-serialize-simple.vcproj  |  189 +++++++++++++++
- 20 files changed, 2822 insertions(+), 1 deletions(-)
+ 20 files changed, 2822 insertions(+), 1 deletion(-)
 
 commit c7cd46b8320157e223009aa2a7204461c7d301d5
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1540,7 +1966,7 @@ Date:   Mon Jan 10 11:48:26 2011 +0000
 
  json-glib/Makefile.am       |    2 +
  json-glib/json-glib.symbols |  163 +++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 165 insertions(+), 0 deletions(-)
+ 2 files changed, 165 insertions(+)
 
 commit 4549af3210461a07dc84a30433a0a23764618e4c
 Author: Evan Nemerson <evan@coeus-group.com>
@@ -1551,7 +1977,7 @@ Date:   Sat Nov 20 16:25:41 2010 -0800
     Bug #635398
 
  json-glib/Makefile.am |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit f89a50e24d2088061eb7d975db7e6f39beaf853d
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1562,7 +1988,7 @@ Date:   Mon Jan 10 11:16:17 2011 +0000
     Check if we're setting the same node, to avoid a needless replace.
 
  json-glib/json-object.c |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
+ 1 file changed, 10 insertions(+)
 
 commit e828cba563f2584e848994935478a7ffd21728df
 Author: Luca Bruno <lucabru@src.gnome.org>
@@ -1591,7 +2017,7 @@ Date:   Mon Jan 10 10:45:39 2011 +0000
     https://bugzilla.gnome.org/show_bug.cgi?id=637244
 
  json-glib/json-generator.c |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 commit 3dbab961e675d0684df1121906ae3588d09653e6
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1603,7 +2029,7 @@ Date:   Mon Jan 10 10:43:58 2011 +0000
     especially when dealing with IEEE machine-neutral values.
 
  json-glib/tests/builder-test.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit 567d7fb4dff83c9e37e64ef8611f0231fa181c34
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1614,7 +2040,7 @@ Date:   Tue Dec 14 16:35:24 2010 +0000
     Use modern API to deal with properties installation and notification.
 
  json-glib/json-reader.c |   35 +++++++++++++++--------------------
- 1 files changed, 15 insertions(+), 20 deletions(-)
+ 1 file changed, 15 insertions(+), 20 deletions(-)
 
 commit 9aed6f5a455109186ae56ec1c3e558505644d57f
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1628,10 +2054,10 @@ Date:   Tue Dec 14 16:26:10 2010 +0000
     While we're at it, we should also use modern API for installing and
     notifying of property changes.
 
- doc/reference/json-glib-sections.txt |   11 ++-
+ doc/reference/json-glib-sections.txt |   11 +-
  json-glib/json-generator.c           |  256 ++++++++++++++++++++++++++++------
- json-glib/json-generator.h           |   35 +++--
- 3 files changed, 246 insertions(+), 56 deletions(-)
+ json-glib/json-generator.h           |   37 +++--
+ 3 files changed, 247 insertions(+), 57 deletions(-)
 
 commit de991a0c6dc4d0b3c366248e20ba6853bd2c3e92
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1644,7 +2070,7 @@ Date:   Tue Dec 14 11:39:04 2010 +0000
     comprehensive test suite.
 
  json-glib/tests/generator-test.c |   58 ++++++++++++++++++++++++++++++++++++++
- 1 files changed, 58 insertions(+), 0 deletions(-)
+ 1 file changed, 58 insertions(+)
 
 commit 4add0e081b8f58dec1cd68152d846be87942091e
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1656,7 +2082,7 @@ Date:   Tue Dec 14 11:37:25 2010 +0000
     that completely went under the radar for all this time.
 
  json-glib/json-generator.c |   15 ++++++++++-----
- 1 files changed, 10 insertions(+), 5 deletions(-)
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
 commit 20a16d5b9ecabe68ee18655b2ff3bdb17136c6f1
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1668,7 +2094,7 @@ Date:   Tue Oct 19 09:59:38 2010 +0100
     three times.
 
  build/autotools/Makefile.am.gtest |   21 ++++++++++++---------
- 1 files changed, 12 insertions(+), 9 deletions(-)
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
 commit dc262a09572328342164ebb23ad698b5cb3cd8ff
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1677,7 +2103,7 @@ Date:   Tue Oct 19 09:49:20 2010 +0100
     Use G_DEFINE_INTERFACE()
 
  json-glib/json-serializable.c |   35 +++++++----------------------------
- 1 files changed, 7 insertions(+), 28 deletions(-)
+ 1 file changed, 7 insertions(+), 28 deletions(-)
 
 commit 80665415cd945f3dafed6925c9975f36b916a80f
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1707,7 +2133,7 @@ Date:   Wed Sep 29 17:25:18 2010 +0100
     build: Use -no-undefined when compiling on win32
 
  configure.ac |   13 +++++++++++++
- 1 files changed, 13 insertions(+), 0 deletions(-)
+ 1 file changed, 13 insertions(+)
 
 commit 5332217481b3e5fee73710bb50886fbc52a632a4
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1716,7 +2142,7 @@ Date:   Sat Sep 25 12:02:36 2010 +0100
     Post-branch version bump to 0.13.1
 
  configure.ac |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit 6b4d49b8024f672d62a7059c083455ad31f7d0eb
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1725,7 +2151,7 @@ Date:   Sat Sep 25 11:59:23 2010 +0100
     Post-release version bump to 0.12.1
 
  configure.ac |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit 661a7497cc88aebdee32bf31c219d457ca143590
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1751,7 +2177,7 @@ Date:   Sat Sep 25 11:50:38 2010 +0100
     after that.
 
  json-glib/json-gobject.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit d480f2e77e3dc0d00fc617686b306f96353b7177
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1763,7 +2189,7 @@ Date:   Sat Sep 25 11:49:41 2010 +0100
     anyway.
 
  tests/test-serialize-full.c |   15 +--------------
- 1 files changed, 1 insertions(+), 14 deletions(-)
+ 1 file changed, 1 insertion(+), 14 deletions(-)
 
 commit ff5dd56e4f864d0c015dcd66fa852f9cf7cf90dd
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1818,7 +2244,7 @@ Date:   Thu Sep 9 10:24:53 2010 -0400
     introspection: Export json-glib-1.0 pkg-config file
 
  json-glib/Makefile.am |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit d05e919208a47c18d001ac08900b4d2837efd4b4
 Author: Luca Bruno <lethalman88@gmail.com>
@@ -1827,7 +2253,7 @@ Date:   Sun Aug 15 20:30:21 2010 +0200
     docs: Add transfer none annotation to JsonBuilder return values.
 
  json-glib/json-builder.c |   22 +++++++++++-----------
- 1 files changed, 11 insertions(+), 11 deletions(-)
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
 commit 2c3062cbd79826b184a6f613c519e69f3ddc1ec6
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1835,8 +2261,8 @@ Date:   Sun Aug 15 18:46:02 2010 +0100
 
     builder: Add Since: annotations
 
- json-glib/json-builder.h |   50 +++++++++++++++++++++++++--------------------
- 1 files changed, 28 insertions(+), 22 deletions(-)
+ json-glib/json-builder.h |   54 +++++++++++++++++++++++++---------------------
+ 1 file changed, 30 insertions(+), 24 deletions(-)
 
 commit 2d7550948dfb2e5907b851bc2c4bd296a7526086
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1850,7 +2276,7 @@ Date:   Sun Aug 15 18:44:13 2010 +0100
     JSON definition.
 
  json-glib/json-gobject.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit be48afe5801a541996bb64437c278088e70258f6
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1859,7 +2285,7 @@ Date:   Sun Aug 15 18:43:49 2010 +0100
     build: Use maintainer-clean for removing ignore files
 
  build/autotools/Makefile.am.gitignore |   11 ++++++++---
- 1 files changed, 8 insertions(+), 3 deletions(-)
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 commit 5732cadfab58435ded4e88b0733c1a46aa0dcd2d
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1884,7 +2310,7 @@ Date:   Sat Aug 14 12:26:29 2010 +0100
     docs: Add 0.12 symbols index to the API reference
 
  doc/reference/json-glib-docs.xml |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+ 1 file changed, 5 insertions(+)
 
 commit 9ed8d5e7fe96b9dcf82ddbba7de2db40d415cbaf
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1895,7 +2321,7 @@ Date:   Sat Aug 14 12:24:59 2010 +0100
     A JsonReader is useless without a root JsonNode to start walking the
     tree from.
 
- json-glib/json-reader.c       |   96 +++++++++++++++++++++++++++++++++++++---
+ json-glib/json-reader.c       |   96 +++++++++++++++++++++++++++++++++++++----
  json-glib/json-reader.h       |    2 +-
  json-glib/tests/reader-test.c |    4 +-
  3 files changed, 91 insertions(+), 11 deletions(-)
@@ -1907,7 +2333,7 @@ Date:   Sat Aug 14 09:40:44 2010 +0100
     docs: Add the RFC draft for JSON schema
 
  doc/draft-zyp-json-schema-02.txt | 1345 ++++++++++++++++++++++++++++++++++++++
- 1 files changed, 1345 insertions(+), 0 deletions(-)
+ 1 file changed, 1345 insertions(+)
 
 commit 0281176789b38973b1723f752070cb0e7340055d
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1923,7 +2349,7 @@ Date:   Thu Aug 12 16:09:45 2010 +0100
  doc/reference/json-glib-sections.txt |    2 +-
  json-glib/json-reader.c              |   90 +++++++++++-----------------------
  json-glib/json-reader.h              |    6 +--
- json-glib/tests/reader-test.c        |   11 +++-
+ json-glib/tests/reader-test.c        |   11 ++++-
  4 files changed, 41 insertions(+), 68 deletions(-)
 
 commit 149d2f3925ca798886f2137ae73488f7e2e6386b
@@ -1947,7 +2373,7 @@ Date:   Thu Aug 12 15:35:17 2010 +0100
     docs: Update NEWS
 
  NEWS |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ 1 file changed, 2 insertions(+)
 
 commit 23866cb9935e9b9f7c88b26cdfc13ff95edfbe00
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1957,8 +2383,8 @@ Date:   Thu Aug 12 15:34:09 2010 +0100
 
  doc/reference/json-glib-docs.xml     |    1 +
  doc/reference/json-glib-sections.txt |   41 ++++++++++++++++++++++++++++++++++
- doc/reference/json-glib.types        |    2 +
- 3 files changed, 44 insertions(+), 0 deletions(-)
+ doc/reference/json-glib.types        |    2 ++
+ 3 files changed, 44 insertions(+)
 
 commit 10e5a1d38113b7b6e7c71da76ff11219baf1022d
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -1990,7 +2416,7 @@ Date:   Wed Aug 11 14:42:25 2010 -0500
     Bug #626669
 
  json-glib/tests/Makefile.am |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 commit 7f85693922d1e2614bcce9219d2c6521580dd360
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2013,7 +2439,7 @@ Date:   Mon Aug 2 17:49:32 2010 +0100
     Post-release version bump to 0.11.3
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit ff7a8ff73ee214d385c64501c8b5dc682ccad1cf
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2022,7 +2448,7 @@ Date:   Mon Aug 2 17:40:29 2010 +0100
     Release 0.11.2 (0.12.0-rc1)
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 8a91b052fba48ae6f4a61115e2fa6839e7a21509
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2045,7 +2471,7 @@ Date:   Mon Aug 2 17:42:09 2010 +0100
     build: Fix introspection dependencies
 
  json-glib/Makefile.am |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit def6d5612fbb33f9b02df80294651f5a28a83ccc
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2054,7 +2480,7 @@ Date:   Mon Aug 2 17:15:36 2010 +0100
     Update the NEWS file
 
  NEWS |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ 1 file changed, 2 insertions(+)
 
 commit 385e6278477dfd35d591f8343deb1de2827ac2ff
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2063,7 +2489,7 @@ Date:   Mon Aug 2 17:15:22 2010 +0100
     docs: Update the dependencies in the README file
 
  README |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit 5e19ed2523441afd12c45a8b3f19d10fc9a37335
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2074,7 +2500,7 @@ Date:   Mon Aug 2 17:14:52 2010 +0100
     GIO landed in GLib 2.16, so we don't need the version bump to 2.20.
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit d9b2845572123ed79a6626d90d2d2298c9c3d5a7
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2089,7 +2515,7 @@ Date:   Mon Aug 2 17:07:36 2010 +0100
 
  doc/reference/json-glib-sections.txt |    1 +
  json-glib/json-generator.c           |   37 ++++++++++++++++++++++++++++++++++
- json-glib/json-generator.h           |   22 ++++++++++++-------
+ json-glib/json-generator.h           |   22 ++++++++++++--------
  3 files changed, 52 insertions(+), 8 deletions(-)
 
 commit c7c288b89175b1f9545d6ddff25609b7bb243041
@@ -2099,7 +2525,7 @@ Date:   Mon Aug 2 17:04:38 2010 +0100
     Fix the include for json-types.h
 
  json-glib/json-parser.h |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit e6ea3a6bae044ec7874dfde3b50bb337f00bb3be
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2110,7 +2536,7 @@ Date:   Mon Aug 2 16:41:18 2010 +0100
  json-glib/tests/Makefile.am      |    2 +
  json-glib/tests/parser-test.c    |   78 ++++++++++++++++++++++++++++++++++++++
  json-glib/tests/stream-load.json |    1 +
- 3 files changed, 81 insertions(+), 0 deletions(-)
+ 3 files changed, 81 insertions(+)
 
 commit 8cac7f2b6987803e36ff6abe012cd3e017b5b960
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2119,7 +2545,7 @@ Date:   Mon Aug 2 16:40:36 2010 +0100
     docs: Add the new JsonParser stream API
 
  doc/reference/json-glib-sections.txt |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+ 1 file changed, 3 insertions(+)
 
 commit 107e53b2daa27b99fb629dd1e2bf9bfd2729b3dd
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2131,8 +2557,8 @@ Date:   Mon Aug 2 16:39:04 2010 +0100
     asynchronously) to retrieve the JSON data and parse it.
 
  json-glib/json-parser.c |  258 +++++++++++++++++++++++++++++++++++++++++++++++
- json-glib/json-parser.h |   43 +++++---
- 2 files changed, 286 insertions(+), 15 deletions(-)
+ json-glib/json-parser.h |   49 +++++----
+ 2 files changed, 289 insertions(+), 18 deletions(-)
 
 commit b164bb5180749aaff385f5d61866875bfbf9c552
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2141,7 +2567,7 @@ Date:   Mon Aug 2 16:38:01 2010 +0100
     build: Use the GIO prefix for cross-references
 
  doc/reference/Makefile.am |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 commit 6d317b129169352111ab16a0df9aee8b9aa5284b
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2152,7 +2578,7 @@ Date:   Mon Aug 2 16:37:32 2010 +0100
     Bump up the dependencies to be able to use GIO.
 
  configure.ac |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 commit 84230dd03b5db34da5ccef0a4926e18c22124952
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2161,7 +2587,7 @@ Date:   Wed Jul 21 23:50:09 2010 +0100
     docs: Fix up the cgit URL
 
  README |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 commit 67ad0f21ca554edcd6633014b0bce7dd8d216191
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2170,7 +2596,7 @@ Date:   Wed Jul 21 23:49:56 2010 +0100
     Update NEWS for the next stable release
 
  NEWS |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
+ 1 file changed, 10 insertions(+)
 
 commit 465880e5ccaca086fd1b881bd7175658d627318c
 Author: Colin Walters <walters@verbum.org>
@@ -2181,7 +2607,7 @@ Date:   Tue Jul 6 10:49:27 2010 -0400
     Fixes parallel builds.
 
  json-glib/Makefile.am |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ 1 file changed, 2 insertions(+)
 
 commit 66e5f619d55433985460e8c641beb98e85832451
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2215,7 +2641,7 @@ Date:   Wed Jun 9 21:31:06 2010 +0200
  json-glib/json-glib.h          |    1 +
  json-glib/tests/Makefile.am    |    3 +
  json-glib/tests/builder-test.c |  121 +++++++
- 7 files changed, 910 insertions(+), 0 deletions(-)
+ 7 files changed, 910 insertions(+)
 
 commit 3f8c8f99126dc1a70d847eded13afd4b64395250
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2226,9 +2652,9 @@ Date:   Wed Jun 16 11:54:55 2010 +0100
     We should not warn when asking for a string, array or object if the
     contents were 'null'.
 
- json-glib/json-array.c        |   42 ++++++++++++++++++++++++++++++--------
- json-glib/json-object.c       |   45 ++++++++++++++++++++++++++++++++--------
- json-glib/tests/object-test.c |    4 +++
+ json-glib/json-array.c        |   42 +++++++++++++++++++++++++++++---------
+ json-glib/json-object.c       |   45 ++++++++++++++++++++++++++++++++---------
+ json-glib/tests/object-test.c |    4 ++++
  3 files changed, 73 insertions(+), 18 deletions(-)
 
 commit 471bcf28589e0929984c4e6a097ae273b017b3f0
@@ -2250,7 +2676,7 @@ Date:   Fri May 28 11:57:18 2010 +0100
     Signed-off-by: Emmanuele Bassi <ebassi@linux.intel.com>
 
  json-glib.pc.in |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 commit 70b9235b50dd4257e0bf196e07f65807d65f8091
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2261,7 +2687,7 @@ Date:   Fri May 28 11:50:01 2010 +0100
     JsonNode is fully opaque, so there are no fields to annotate.
 
  json-glib/json-types.h |    1 -
- 1 files changed, 0 insertions(+), 1 deletions(-)
+ 1 file changed, 1 deletion(-)
 
 commit aaf08f5c1a08c8aaec2436653114996b98ee1f8c
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2280,15 +2706,15 @@ Date:   Fri May 28 11:35:05 2010 +0100
     • Use gobject-introspection's Makefile rules, and update introspection.m4
 
  README                             |    4 +-
- build/autotools/Makefile.am        |    3 -
+ build/autotools/Makefile.am        |    3 --
  build/autotools/Makefile.am.silent |    6 ---
  build/autotools/introspection.m4   |    6 +++
  build/autotools/shave-libtool.in   |   69 -------------------------------
  build/autotools/shave.in           |   79 ------------------------------------
  build/autotools/shave.m4           |   77 -----------------------------------
- configure.ac                       |   44 +++++--------------
- json-glib/Makefile.am              |   43 ++++++-------------
- 9 files changed, 34 insertions(+), 297 deletions(-)
+ configure.ac                       |   46 ++++++---------------
+ json-glib/Makefile.am              |   47 ++++++++-------------
+ 9 files changed, 37 insertions(+), 300 deletions(-)
 
 commit 6231cf027a8f9c3b11324c1d49a350ba55353123
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2304,7 +2730,7 @@ Date:   Wed May 26 08:43:10 2010 +0100
     EPIC. FAIL.
 
  json-glib/json-parser.c |    9 ++++++---
- 1 files changed, 6 insertions(+), 3 deletions(-)
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 commit fcd07918d3ed2b31b047900da9d2fed23dddf7da
 Author: Eiichi Sato <eiichi.for.public@gmail.com>
@@ -2317,7 +2743,7 @@ Date:   Sat Apr 10 01:52:10 2010 +0900
     Signed-off-by: Emmanuele Bassi <ebassi@linux.intel.com>
 
  json-glib/json-scanner.c |   16 +++++++++++++++-
- 1 files changed, 15 insertions(+), 1 deletions(-)
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
 commit 37a7931f91f8d79def3f4895bc349ba621a826a1
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2329,7 +2755,7 @@ Date:   Wed Apr 14 23:19:58 2010 +0100
     be ignored by gtk-doc.
 
  doc/reference/Makefile.am |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 commit 28edd58ddfd719d107d89aa364dc208b0126c90f
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2340,7 +2766,7 @@ Date:   Wed Apr 14 23:19:28 2010 +0100
     There is no such thing as a 'JsonArrary' type.
 
  json-glib/json-parser.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit d40045bd855bfcb73c10967d894a8e91f8675409
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2349,7 +2775,7 @@ Date:   Wed Apr 14 23:17:28 2010 +0100
     docs: Fix typo in JsonParserError annotation
 
  json-glib/json-parser.h |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit b55d139ed0368f368c6c9c8f8adfab4c91f1f508
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2364,7 +2790,7 @@ Date:   Sat Apr 3 14:59:00 2010 +0100
     Thanks to: Michael Stapelberg <michael@stapelberg.de>
 
  json-glib/json-parser.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 24567790d30e314ee519c8f3756b3514c0c3fd31
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2403,8 +2829,8 @@ Date:   Fri Mar 19 15:40:48 2010 +0000
     The code is fairly cleaner, now; and, most of all, still passes the
     validation test suite - which is, you know... nice.
 
- json-glib/json-parser.c |  480 +++++++++++++++++++----------------------------
- 1 files changed, 196 insertions(+), 284 deletions(-)
+ json-glib/json-parser.c |  488 +++++++++++++++++++----------------------------
+ 1 file changed, 200 insertions(+), 288 deletions(-)
 
 commit 9ce82f8052290f3956c3d80c8739c214da314d42
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2419,9 +2845,9 @@ Date:   Fri Mar 19 11:04:00 2010 +0000
     
     This, frankly, is quite stupid.
 
- json-glib/json-parser.c       |   49 ++++++++++++++++++++++++++++++++--------
- json-glib/json-parser.h       |    8 ++++++
- json-glib/tests/parser-test.c |   18 +++++++-------
+ json-glib/json-parser.c       |   49 ++++++++++++++++++++++++++++++++---------
+ json-glib/json-parser.h       |    8 +++++++
+ json-glib/tests/parser-test.c |   18 +++++++--------
  3 files changed, 56 insertions(+), 19 deletions(-)
 
 commit 9d7c58b4fb5edeb8e9413acc9d509447e13962e5
@@ -2444,7 +2870,7 @@ Date:   Thu Mar 18 17:11:11 2010 +0000
     parser-test: Add a case for double parsing in JsonObject
 
  json-glib/tests/parser-test.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 commit 54756457de3f01d1a487fc6b90c5bd9b5b50bcf3
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2456,8 +2882,8 @@ Date:   Thu Mar 18 17:09:38 2010 +0000
     bare value parsing that is also provided by json_parse_value(). We
     should kill it off to avoid redundant code.
 
- json-glib/json-parser.c |   57 +---------------------------------------------
- 1 files changed, 2 insertions(+), 55 deletions(-)
+ json-glib/json-parser.c |   57 ++---------------------------------------------
+ 1 file changed, 2 insertions(+), 55 deletions(-)
 
 commit 3355987049560b4d31af22476a7c2b20c9d6665b
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2468,7 +2894,7 @@ Date:   Thu Mar 18 17:08:44 2010 +0000
     Print out the values we are parsing, for debug purposes.
 
  json-glib/json-parser.c |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
+ 1 file changed, 8 insertions(+)
 
 commit f622ee8d8ba54ddea6fbb7311a905ffab7842e8d
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2486,7 +2912,7 @@ Date:   Thu Mar 18 17:05:57 2010 +0000
     Epic reading fail.
 
  json-glib/json-generator.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 90d6e0b8c334b3fd7995c126f07dd61ba0a9e0fb
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2498,7 +2924,7 @@ Date:   Thu Mar 18 15:26:19 2010 +0000
     object with a nested array and nested object definitions.
 
  json-glib/tests/parser-test.c |   21 ++++++++++++++++++++-
- 1 files changed, 20 insertions(+), 1 deletions(-)
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
 commit f4c57ac4227c4edb8a4cecb784e871fbd5649ad1
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2511,7 +2937,7 @@ Date:   Thu Mar 18 15:24:39 2010 +0000
     or an object member definition.
 
  json-glib/json-parser.c |   44 ++++++++++++++++++++++++--------------------
- 1 files changed, 24 insertions(+), 20 deletions(-)
+ 1 file changed, 24 insertions(+), 20 deletions(-)
 
 commit b3435c6a05ecee58c64dce669ce7e44f829afc98
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2526,7 +2952,7 @@ Date:   Thu Mar 18 15:21:29 2010 +0000
  json-glib/Makefile.am  |    4 +++-
  json-glib/json-debug.c |   37 +++++++++++++++++++++++++++++++++++++
  json-glib/json-debug.h |   45 +++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 85 insertions(+), 1 deletions(-)
+ 3 files changed, 85 insertions(+), 1 deletion(-)
 
 commit 88ac0d5111eb528e4c396e4c169ceee4fb046e62
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2535,7 +2961,7 @@ Date:   Fri Mar 5 19:23:49 2010 +0000
     tests: Add another trailing comma invalid test
 
  json-glib/tests/parser-test.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 commit c22c1151e418af9506547804d4bc9fddb60bc0f1
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2546,7 +2972,7 @@ Date:   Mon Mar 1 17:42:41 2010 +0000
     Verify that invalid JSON will trigger a parser error.
 
  json-glib/tests/parser-test.c |   53 +++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 53 insertions(+), 0 deletions(-)
+ 1 file changed, 53 insertions(+)
 
 commit 26668fe238a52a7fd8374f409fc277aaa8efa826
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2559,7 +2985,7 @@ Date:   Mon Mar 1 17:41:14 2010 +0000
     barewords and wrong array and object closing braces.
 
  json-glib/json-parser.c |  117 +++++++++++++++++++++++++++++++----------------
- 1 files changed, 78 insertions(+), 39 deletions(-)
+ 1 file changed, 78 insertions(+), 39 deletions(-)
 
 commit 7d156366e9062349fbe58344712a055839449098
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2574,7 +3000,7 @@ Date:   Sun Jan 24 19:09:28 2010 +0000
       • dist-bzip2: generate a bz2 tarball when distchecking
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit ea666891cb1e6fc9e527ce6c93a306bc97145f16
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2587,7 +3013,7 @@ Date:   Sun Jan 24 18:58:28 2010 +0000
     update the example in the documentation.
 
  json-glib/json-gboxed.c |   11 ++++++-----
- 1 files changed, 6 insertions(+), 5 deletions(-)
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 commit 4c15bf185dcd55ae5daf6b68d2b58d32e9ac9d5c
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2601,7 +3027,7 @@ Date:   Sun Jan 10 10:00:32 2010 +0000
     --enable-maintainer-flags are turned off.
 
  configure.ac |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit c09c2dc1c54c83fea4ef93486081fe3fab35452c
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2613,7 +3039,7 @@ Date:   Sun Jan 10 09:59:14 2010 +0000
     initialize every member of the structure ourselves.
 
  json-glib/json-object.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ 1 file changed, 1 insertion(+)
 
 commit cdffa0eacb52479e04460d8436a08ccecce91edf
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2624,7 +3050,7 @@ Date:   Sat Jan 2 23:57:31 2010 +0000
     The AM_CPPFLAGS variable is for pre-processor flags.
 
  tests/Makefile.am |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 commit f20523412e737c2dfae92ba4b9bd86177fd018a0
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2636,7 +3062,7 @@ Date:   Sat Jan 2 23:56:42 2010 +0000
     library.
 
  json-glib/tests/Makefile.am |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 7b72cad780fdeb42ac1d847210bd2022376f2875
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2646,8 +3072,8 @@ Date:   Sat Jan 2 23:50:40 2010 +0000
     
     Use typed accessors instead of using GValues all around.
 
- json-glib/tests/generator-test.c |  141 ++++++-------------------------------
- 1 files changed, 23 insertions(+), 118 deletions(-)
+ json-glib/tests/generator-test.c |  145 +++++++-------------------------------
+ 1 file changed, 25 insertions(+), 120 deletions(-)
 
 commit 3c33b61738d74b732805b497accec830b1a05796
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2659,7 +3085,7 @@ Date:   Fri Jan 1 18:23:16 2010 +0000
     are iterating on is the same returned by the get_elements() method.
 
  json-glib/tests/array-test.c |   22 +++++++++++++++++-----
- 1 files changed, 17 insertions(+), 5 deletions(-)
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
 commit c8cc10985c3e7aac5ca1c03a7b443951929ed0cb
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2671,7 +3097,7 @@ Date:   Fri Jan 1 18:02:03 2010 +0000
     have a similar rule in the top source directory as well.
 
  Makefile.am |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+ 1 file changed, 3 insertions(+)
 
 commit 060eddb098dd2b442f986a39aad2e7bf8c777a15
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2684,7 +3110,7 @@ Date:   Tue Dec 29 23:35:00 2009 +0000
     garantee the order of a JsonObject members.
 
  json-glib/tests/generator-test.c |  102 +++++++++++++++++++++-----------------
- 1 files changed, 56 insertions(+), 46 deletions(-)
+ 1 file changed, 56 insertions(+), 46 deletions(-)
 
 commit 37a9c9544447c4a8ac36d80dd58bd38f80b0aa3c
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2693,7 +3119,7 @@ Date:   Tue Dec 29 23:02:23 2009 +0000
     Update the ignore file
 
  .gitignore |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 commit e32a157f97d96293f6f4061e7d0008d90ff16258
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2746,7 +3172,7 @@ Date:   Tue Dec 29 21:56:42 2009 +0000
     Bump to 0.11
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit dae32677d140a3ba6a15e1198b53ea0b3e1716b0
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2755,7 +3181,7 @@ Date:   Tue Dec 29 15:35:21 2009 +0000
     Post-release version bump to 0.10.1
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 5aff66e8fae3e28c9cb6b74696170154eed303a7
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2764,7 +3190,7 @@ Date:   Tue Dec 29 15:33:28 2009 +0000
     Release 0.10.0
 
  configure.ac |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit 7258a776ea90ea4b2dcc6f1e4e440bb09c581a12
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2773,7 +3199,7 @@ Date:   Tue Dec 29 15:31:22 2009 +0000
     build: Enable introspection when distchecking
 
  Makefile.am |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 80c5178127052e600146ca889500e263da4ebf10
 Author: Vincent Untz <vuntz@gnome.org>
@@ -2791,7 +3217,7 @@ Date:   Sun Dec 27 02:09:44 2009 +0100
     Signed-off-by: Emmanuele Bassi <ebassi@linux.intel.com>
 
  json-glib/json-gobject.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit e3a57eae397926ad23e216996eda164ed6c15c63
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2800,7 +3226,7 @@ Date:   Sun Nov 29 12:50:58 2009 +0000
     Post-release bump to 0.9.3
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 4477758b73a0712fdef5e7907f6b6f4e0878428e
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2809,7 +3235,7 @@ Date:   Sun Nov 29 12:34:41 2009 +0000
     Release 0.9.2 (0.10.0-rc1)
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 654f99c6b0d771cc6b4c68790ab164b0f691307d
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2818,7 +3244,7 @@ Date:   Sun Nov 29 12:34:08 2009 +0000
     Update NEWS
 
  NEWS |   15 +++++++++++++++
- 1 files changed, 15 insertions(+), 0 deletions(-)
+ 1 file changed, 15 insertions(+)
 
 commit 307605046cf89ef922d1d1e7c7b95405f3ecfdfb
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2827,7 +3253,7 @@ Date:   Sun Nov 29 12:48:25 2009 +0000
     docs: Fix annotation for json_gobject_to_data()
 
  json-glib/json-gobject.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit e7eb3ca4a9de1c7348dc82f528cf0858f52849dd
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2836,7 +3262,7 @@ Date:   Sun Nov 29 12:37:04 2009 +0000
     docs: Add missing to/from_data methods
 
  doc/reference/json-glib-sections.txt |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ 1 file changed, 2 insertions(+)
 
 commit 27bb2c060a7b2ecc4839719d39b2044efe4c3e7a
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2845,7 +3271,7 @@ Date:   Sun Nov 29 12:46:27 2009 +0000
     docs: Add release notes to the README
 
  README |   12 ++++++++++--
- 1 files changed, 10 insertions(+), 2 deletions(-)
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
 commit 780d82310c47c3f07bcbaab2cefbea0d6decb899
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2854,7 +3280,7 @@ Date:   Sun Nov 29 12:33:45 2009 +0000
     docs: Update the README
 
  README |   27 ++++++++++++++++-----------
- 1 files changed, 16 insertions(+), 11 deletions(-)
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
 commit d122f9b8c09ad7e82b1a70da5d65ebba2111e6cc
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2865,7 +3291,7 @@ Date:   Sun Nov 29 12:33:01 2009 +0000
     Make the output of the summary a little bit nicer.
 
  configure.ac |   27 ++++++++++++++++++++-------
- 1 files changed, 20 insertions(+), 7 deletions(-)
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
 commit e4c4480036a82cc5177fc1f184c18019af0e805e
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2877,7 +3303,7 @@ Date:   Sun Nov 29 12:31:54 2009 +0000
     version allows us to pass the .la file to g-ir-scanner.
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 4445bdb04d5eebc145a1db82aa5b811e8d4ed048
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2890,7 +3316,7 @@ Date:   Sat Nov 28 19:13:27 2009 +0000
     function registration.
 
  json-glib/json-gobject.h |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 793e827feaa9be3c4ffbe5c0425ac6bcc0c9e6d1
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2899,7 +3325,7 @@ Date:   Sat Nov 28 19:06:36 2009 +0000
     build: Clean up json-glib/Makefile.am rules
 
  json-glib/Makefile.am |   24 ++++--------------------
- 1 files changed, 4 insertions(+), 20 deletions(-)
+ 1 file changed, 4 insertions(+), 20 deletions(-)
 
 commit 97584658672fe4709fc7c3b24a44b477112322f7
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2908,7 +3334,7 @@ Date:   Sat Nov 28 17:39:37 2009 +0000
     build: Fix out-of-tree enum types file generation
 
  build/autotools/Makefile.am.enums |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit 3cf919e9c7f3201305a1a63a3c270e422a37efed
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2950,9 +3376,9 @@ Date:   Mon Nov 23 22:20:58 2009 +0000
  doc/reference/json-glib-sections.txt |    3 +-
  json-glib/json-gboxed.c              |  115 ++++++++++++++++++++++------------
  json-glib/json-gobject.c             |    4 +-
- json-glib/json-gobject.h             |   59 +++++++++---------
- tests/test-serialize-boxed.c         |    7 +-
- 5 files changed, 112 insertions(+), 76 deletions(-)
+ json-glib/json-gobject.h             |   63 ++++++++++---------
+ tests/test-serialize-boxed.c         |    7 ++-
+ 5 files changed, 114 insertions(+), 78 deletions(-)
 
 commit 61d54cc9e2a3098e876e700a9248428f400a5368
 Author: Tristan Van Berkom <tristan.van.berkom@gmail.com>
@@ -2973,7 +3399,7 @@ Date:   Thu Nov 12 12:59:03 2009 +0000
     Signed-off-by: Emmanuele Bassi <ebassi@linux.intel.com>
 
  json-glib/json-gobject.c |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 commit 63dc03da507a216c0764bc0e50fc62b2b77dc1b2
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -2990,7 +3416,7 @@ Date:   Thu Nov 12 12:38:29 2009 +0000
     simplify the required code.
 
  doc/reference/json-glib-sections.txt |    4 ++
- json-glib/json-gobject.h             |   28 +++++++---
+ json-glib/json-gobject.h             |   28 +++++++----
  json-glib/json-serializable.c        |   92 ++++++++++++++++++++++++++++++++++
  3 files changed, 115 insertions(+), 9 deletions(-)
 
@@ -3004,7 +3430,7 @@ Date:   Thu Nov 12 12:03:13 2009 +0000
     JSON_DISABLE_DEPRECATED.
 
  json-glib/json-gobject.h |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit 3c7811bf24d4b957da730949af6795b728db5bad
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3015,7 +3441,7 @@ Date:   Thu Nov 12 12:02:41 2009 +0000
     Make sure that JSON-GLib is built without using deprecated API.
 
  json-glib/Makefile.am |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ 1 file changed, 1 insertion(+)
 
 commit 923311ee52b77f53c5c529e497ea2a24efaf23ea
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3042,7 +3468,7 @@ Date:   Thu Nov 12 11:57:45 2009 +0000
     what we expect it to be when it is parsed.
 
  tests/test-serialize-complex.c |   32 ++++++++++++++++++++++++++++++++
- 1 files changed, 32 insertions(+), 0 deletions(-)
+ 1 file changed, 32 insertions(+)
 
 commit 7cebdd008a02e6cef0514f40327f94eba2a2088e
 Author: Cornelius Hald <hald@icandy.de>
@@ -3061,7 +3487,7 @@ Date:   Thu Nov 12 11:37:54 2009 +0000
     Signed-off-by: Emmanuele Bassi <ebassi@linux.intel.com>
 
  json-glib/json-generator.c |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 commit 30d4efb775cb416212c00e3ececb0f0147739f40
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3087,7 +3513,7 @@ Date:   Thu Nov 12 11:27:36 2009 +0000
     build: Add more flags to the maintainer cflags list
 
  configure.ac |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 commit ecc185d1c542f6ff41f84be026dc380f611a5d6e
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3100,7 +3526,7 @@ Date:   Thu Nov 12 10:09:17 2009 +0000
     enumeration data from the GEnumClass.
 
  json-glib/json-enum-types.c.in |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 84f5af58c23b174cc9708e81ce8ccbfffa6e68eb
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3116,7 +3542,7 @@ Date:   Fri Oct 30 10:46:32 2009 +0000
     the hash table only for storage and lookup purposes.
 
  json-glib/json-object.c |   55 ++++++-----------------------------------------
- 1 files changed, 7 insertions(+), 48 deletions(-)
+ 1 file changed, 7 insertions(+), 48 deletions(-)
 
 commit a25a1ded25e5d1f605cffd6da7a5e036151aa70c
 Author: Mathias Hasselmann <mathias.hasselmann@gmx.de>
@@ -3129,7 +3555,7 @@ Date:   Thu Oct 29 14:01:04 2009 +0000
     Signed-off-by: Emmanuele Bassi <ebassi@linux.intel.com>
 
  tests/test-parser.c |   38 +++++++++++++++++++++++++++++++++-----
- 1 files changed, 33 insertions(+), 5 deletions(-)
+ 1 file changed, 33 insertions(+), 5 deletions(-)
 
 commit 026ea0357fbe95e2acd43555e3b5d00e329c9740
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3141,7 +3567,7 @@ Date:   Thu Oct 29 13:59:44 2009 +0000
     the tokenizer in order to place them into the JsonNode.
 
  json-glib/json-parser.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ 1 file changed, 1 insertion(+)
 
 commit 578111be53065a2bbeda73865bfa4e178f185649
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3157,7 +3583,7 @@ Date:   Wed Oct 28 16:54:34 2009 +0000
     well: json-glib/json-object.h does not exist.
 
  json-glib/Makefile.am |   11 ++++++++---
- 1 files changed, 8 insertions(+), 3 deletions(-)
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 commit 8f8ce87730fc0bf102a707e84c4f6106b215cfab
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3186,7 +3612,7 @@ Date:   Wed Oct 28 16:23:39 2009 +0000
     json_gobject_from_data() correctly uses gssize instead.
 
  json-glib/json-gobject.c |   63 +++++++++++++++++++++++++++++++++++++++++++---
- json-glib/json-gobject.h |   10 +++++++
+ json-glib/json-gobject.h |   10 ++++++++
  2 files changed, 69 insertions(+), 4 deletions(-)
 
 commit 00b4d200849e232cd904d23d3593d6f95252b483
@@ -3204,7 +3630,7 @@ Date:   Wed Oct 28 16:05:19 2009 +0000
 
  doc/reference/json-glib-sections.txt |    4 +-
  json-glib/json-gobject.c             |   82 ++++++++++++++++++++++------------
- json-glib/json-gobject.h             |   10 ++--
+ json-glib/json-gobject.h             |   10 ++---
  3 files changed, 61 insertions(+), 35 deletions(-)
 
 commit fc0607c740b153acc96e4df12a12b042e08e831b
@@ -3216,8 +3642,8 @@ Date:   Wed Oct 28 12:01:21 2009 +0000
     The json-boxed and json-serializable sections are missing the
     long description for the API reference.
 
- json-glib/json-gboxed.c       |   49 +++++++++++++++++++++++++++++++++++++---
- json-glib/json-serializable.c |    5 +++-
+ json-glib/json-gboxed.c       |   49 +++++++++++++++++++++++++++++++++++++----
+ json-glib/json-serializable.c |    5 ++++-
  2 files changed, 49 insertions(+), 5 deletions(-)
 
 commit 498827110f3d635e545c7351732551676a06a1bf
@@ -3227,7 +3653,7 @@ Date:   Wed Oct 28 10:07:39 2009 +0000
     docs: Add the 0.10 symbols index
 
  doc/reference/json-glib-docs.xml |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+ 1 file changed, 5 insertions(+)
 
 commit 0979bbceb654c5e4b5dadf1e6f7e85bb9df87ca5
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3254,7 +3680,7 @@ Date:   Tue Oct 27 20:57:52 2009 +0000
     docs: Documentation fixes for gtk-doc
 
  json-glib/json-gboxed.c |    8 +++++---
- 1 files changed, 5 insertions(+), 3 deletions(-)
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 commit c176f70e593c9cfb4901cd9f27ce54b8aa7152f2
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3302,7 +3728,7 @@ Date:   Tue Oct 27 18:03:11 2009 +0000
     we are iterating over.
 
  json-glib/json-gobject.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit ff986ee5b8df45255f4f5ab01be0bbad893bc55e
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3340,7 +3766,7 @@ Date:   Tue Oct 27 17:53:34 2009 +0000
     Obviously, the whole machinery works only for GBoxed types that
     register the serialization and deserialization functions.
 
- .gitignore                   |   68 ++++++-----
+ .gitignore                   |   68 +++++------
  json-glib/json-gobject.c     |  264 +++++++++++++++++++++++++++++++++++++++++-
  json-glib/json-gobject.h     |   37 ++++++
  tests/Makefile.am            |    8 +-
@@ -3357,7 +3783,7 @@ Date:   Tue Oct 27 17:43:38 2009 +0000
 
  json-glib/json-node.c          |   23 ++++++++++++++++++++++-
  json-glib/json-types-private.h |    2 ++
- 2 files changed, 24 insertions(+), 1 deletions(-)
+ 2 files changed, 24 insertions(+), 1 deletion(-)
 
 commit 3f8990f7a4c362590f19e427aae2f68f27303fe6
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3369,7 +3795,7 @@ Date:   Tue Oct 27 17:42:14 2009 +0000
     updated.
 
  json-glib/json-gobject.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 8e550ac4dbb5500a40c7adad88868ede40397db7
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3378,7 +3804,7 @@ Date:   Tue Oct 27 17:41:38 2009 +0000
     Fix compiler warnings (remove unused variables)
 
  json-glib/json-gobject.c |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 commit 3b994a52d9c34f67e4ac52aa4bb0c380789fbd60
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3389,7 +3815,7 @@ Date:   Tue Oct 27 17:40:55 2009 +0000
     Apparently, the MAINTAINER_CFLAGS were ignored.
 
  configure.ac |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ 1 file changed, 1 insertion(+)
 
 commit 0810711a7fbb915ba9397a66e77babb30765d090
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3400,7 +3826,7 @@ Date:   Tue Oct 27 17:40:23 2009 +0000
     Use the Automake macro to enable per-target compiler flags.
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit d664f886372afbe1d54e633240e7b7e06ebc45c8
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3429,7 +3855,7 @@ Date:   Tue Oct 27 14:01:24 2009 +0000
     path.
 
  json-glib/json-gobject.c    |   98 ++++++++++++++++++++++++++++++++++++++-----
- tests/test-serialize-full.c |   11 +++--
+ tests/test-serialize-full.c |   11 ++---
  2 files changed, 93 insertions(+), 16 deletions(-)
 
 commit 2616938c7c042fced9be197205a535a8b420534e
@@ -3454,19 +3880,19 @@ Date:   Tue Oct 27 11:57:38 2009 +0000
 
  .gitignore                          |    4 +-
  Makefile.am                         |    5 +-
- Makefile.decl                       |   61 -------------------------
+ Makefile.decl                       |   61 ------------------------
  build/Makefile.am                   |   12 ++++-
  build/autotools/Makefile.am         |   21 +++++++--
  build/autotools/Makefile.am.enums   |   43 +++++++++++++++++
- build/autotools/Makefile.am.gtest   |   61 +++++++++++++++++++++++++
+ build/autotools/Makefile.am.gtest   |   61 ++++++++++++++++++++++++
  build/autotools/Makefile.am.marshal |   45 ++++++++++++++++++
  build/autotools/Makefile.am.silent  |   17 +++++++
  doc/Makefile.am                     |   12 ++++-
  doc/reference/Makefile.am           |    5 +-
- json-glib/Makefile.am               |   86 +++++++++++------------------------
+ json-glib/Makefile.am               |   88 +++++++++++------------------------
  json-glib/tests/Makefile.am         |   12 +++--
- tests/Makefile.am                   |   15 +++----
- 14 files changed, 251 insertions(+), 148 deletions(-)
+ tests/Makefile.am                   |   15 +++---
+ 14 files changed, 252 insertions(+), 149 deletions(-)
 
 commit 5406301b0e3bf74c0d7ae47a618c416d5c6dc29d
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3478,7 +3904,7 @@ Date:   Tue Oct 27 11:30:55 2009 +0000
     defined using GParamSpecObject.
 
  json-glib/json-gobject.c |   14 ++++++++++++++
- 1 files changed, 14 insertions(+), 0 deletions(-)
+ 1 file changed, 14 insertions(+)
 
 commit 3a2176ebf96b33716d1b50068ca44b1d3cd9b0c8
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3492,7 +3918,7 @@ Date:   Tue Oct 27 11:29:32 2009 +0000
     the object.
 
  tests/test-serialize-simple.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit 1ff48cdc5d773925bda1ddf8bc904a9ea6a5e643
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3505,7 +3931,7 @@ Date:   Tue Oct 27 11:18:51 2009 +0000
     part of json_serialize_gobject() into its own private function.
 
  json-glib/json-gobject.c |  113 +++++++++++++++++++++++++---------------------
- 1 files changed, 61 insertions(+), 52 deletions(-)
+ 1 file changed, 61 insertions(+), 52 deletions(-)
 
 commit 27afed8dc89bf9562c3536f0a053d250e70eea4d
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3524,8 +3950,8 @@ Date:   Tue Oct 27 10:30:27 2009 +0000
     GObject has been updated to include a property holding a
     GObject.
 
- json-glib/json-gobject.c    |   14 +++++++++-
- tests/test-serialize-full.c |   58 +++++++++++++++++++++++++++++++++++++-----
+ json-glib/json-gobject.c    |   14 ++++++++++-
+ tests/test-serialize-full.c |   58 +++++++++++++++++++++++++++++++++++++------
  2 files changed, 64 insertions(+), 8 deletions(-)
 
 commit 317447b52455c56b0123168ab127ce026d7d0c22
@@ -3539,7 +3965,7 @@ Date:   Tue Oct 27 10:20:42 2009 +0000
     the parsing.
 
  json-glib/json-gobject.c |  152 +++++++++++++++++++++++++---------------------
- 1 files changed, 83 insertions(+), 69 deletions(-)
+ 1 file changed, 83 insertions(+), 69 deletions(-)
 
 commit cba7db96581343e3cbd8e5eb067026efb8cac24e
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -3586,7 +4012,7 @@ Date:   Mon Sep 28 14:02:14 2009 +0100
 
  json-glib/tests/object-test.c |   13 +++++++++++++
  tests/test-parser.c           |    1 +
- 2 files changed, 14 insertions(+), 0 deletions(-)
+ 2 files changed, 14 insertions(+)
 
 commit 5181bf24bf3cde743de590ab3ffa0471df9e4799
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3595,7 +4021,7 @@ Date:   Tue Sep 22 15:42:34 2009 +0100
     Post-branch bump to 0.9.1
 
  configure.ac |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit 3f83767109979c660469b3b5862fbd04469a8011
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3618,7 +4044,7 @@ Date:   Tue Sep 22 15:34:18 2009 +0100
     will be correct.
 
  json-glib/json-parser.c |   16 ++++++++++++++--
- 1 files changed, 14 insertions(+), 2 deletions(-)
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
 commit f99cf3d3d038eff786f85409f3d04736e2068e74
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3627,7 +4053,7 @@ Date:   Tue Sep 22 15:34:07 2009 +0100
     [parser] Whitespace clean up
 
  json-glib/json-parser.c |   11 ++++++-----
- 1 files changed, 6 insertions(+), 5 deletions(-)
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 commit 6c20aae2b49a6d64db5e7d1ff3a82950ea9dc58a
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3670,7 +4096,7 @@ Date:   Sun Sep 6 17:15:46 2009 +0100
     be moved to its own function to avoid duplication.
 
  json-glib/json-parser.c |  199 +++++++++++++++++++----------------------------
- tests/test-parser.c     |    9 +-
+ tests/test-parser.c     |    9 ++-
  2 files changed, 86 insertions(+), 122 deletions(-)
 
 commit d3f005c27d9a8a46259205f2f8077fb01a6a3609
@@ -3686,7 +4112,7 @@ Date:   Sun Sep 6 14:44:18 2009 +0100
     for us, like the annotations glossary and the object tree.
 
  doc/reference/json-glib-docs.xml |   17 +++++++++++++++++
- 1 files changed, 17 insertions(+), 0 deletions(-)
+ 1 file changed, 17 insertions(+)
 
 commit 7442a3011a860f12cbd40b6687b699b0b648d6b7
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3711,7 +4137,7 @@ Date:   Sun Aug 16 05:52:46 2009 +0100
     commit 8a7e0f381dc7e49745680df92ebb428f18bf4832.
 
  json-glib/json-object.c |    6 +-----
- 1 files changed, 1 insertions(+), 5 deletions(-)
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
 commit 9362ccc891c914dbcf1be6bd067b0b37ae688057
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3720,7 +4146,7 @@ Date:   Thu Aug 13 15:10:27 2009 +0100
     [docs] Generate new symbols index for 0.6 and 0.8
 
  doc/reference/json-glib-docs.xml |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
+ 1 file changed, 8 insertions(+)
 
 commit 087bfe83412dca8de1b2dd67c74f490e44ecb96a
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3729,7 +4155,7 @@ Date:   Thu Aug 13 15:10:07 2009 +0100
     [docs] Remove the version number from the title
 
  doc/reference/json-glib-docs.xml |   11 ++++++++---
- 1 files changed, 8 insertions(+), 3 deletions(-)
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 commit c7d31d55b50b23c6c1067cb3541f73dddc12127a
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3741,7 +4167,7 @@ Date:   Thu Aug 13 15:08:56 2009 +0100
     right namespace of JSON-GLib, and create a useful index.
 
  doc/reference/Makefile.am |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit be07ba7b983b34231ad2f0fd7fe60ae47b14ce7e
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3749,7 +4175,7 @@ Date:   Thu Aug 13 14:51:42 2009 +0100
 
     [docs] Rename main file to json-glib-docs.xml
 
- doc/reference/Makefile.am         |   36 +++++----
+ doc/reference/Makefile.am         |   36 ++++----
  doc/reference/json-glib-docs.sgml |  163 -------------------------------------
  doc/reference/json-glib-docs.xml  |  163 +++++++++++++++++++++++++++++++++++++
  3 files changed, 182 insertions(+), 180 deletions(-)
@@ -3761,7 +4187,7 @@ Date:   Wed Aug 12 16:09:33 2009 +0100
     Post-release version bump to 0.7.7
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit d5922b42604c09ba7ebcb0adc1566d0a33a99808
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3770,7 +4196,7 @@ Date:   Wed Aug 12 16:06:40 2009 +0100
     [release] 0.7.6 (brown paper bag)
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 9a647104ca77d4c4272845fed4bfae028098afd3
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3795,7 +4221,7 @@ Date:   Wed Aug 12 14:08:35 2009 +0100
     Post-release version bump to 0.7.5
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit c1c691fc6b58a990ee9bb17504189064051d5a12
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3804,7 +4230,7 @@ Date:   Wed Aug 12 13:56:08 2009 +0100
     [release] 0.7.4
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 12bc49ea08c50da9a7ed53c475fe873421432ebe
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3813,7 +4239,7 @@ Date:   Wed Aug 12 14:01:49 2009 +0100
     Update the NEWS file
 
  NEWS |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ 1 file changed, 2 insertions(+)
 
 commit 75b888c26eebf7784c5af045a8c6af353e56b2e9
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3825,7 +4251,7 @@ Date:   Wed Aug 12 13:59:52 2009 +0100
     libtool script; shave will proxy it to the right place.
 
  json-glib/Makefile.am |   20 +++++++++++---------
- 1 files changed, 11 insertions(+), 9 deletions(-)
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
 commit d84c0f367b06e094ff693d60a724b9f141c33ca9
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3846,7 +4272,7 @@ Date:   Wed Aug 12 13:48:17 2009 +0100
  json-glib/json-parser.h        |    4 ++++
  json-glib/json-types.h         |    4 ++++
  json-glib/json-version.h.in    |    4 ++++
- 6 files changed, 26 insertions(+), 0 deletions(-)
+ 6 files changed, 26 insertions(+)
 
 commit 3adba015e1c1f9edc7b7b2c4364d65f813216225
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3860,7 +4286,7 @@ Date:   Wed Aug 12 13:46:46 2009 +0100
     and not the plain json-glib.h.
 
  json-glib/Makefile.am |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit a9386e20bf8e16e17a89dda24781c63bf495aa97
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3891,7 +4317,7 @@ Date:   Wed Aug 12 12:29:34 2009 +0100
     the member name or not.
 
  json-glib/json-object.c |   35 ++++++-----------------------------
- 1 files changed, 6 insertions(+), 29 deletions(-)
+ 1 file changed, 6 insertions(+), 29 deletions(-)
 
 commit ad638149c2cc1a17c0d2ad1482d932c8940c64e0
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3900,7 +4326,7 @@ Date:   Wed Aug 12 12:22:44 2009 +0100
     Update NEWS
 
  NEWS |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ 1 file changed, 2 insertions(+)
 
 commit d87b18675ac02f42be23bf4070134690b8b9934b
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3938,18 +4364,18 @@ Date:   Wed Aug 12 12:13:11 2009 +0100
       float         -> G_TYPE_DOUBLE
       string        -> G_TYPE_STRING
 
- json-glib/json-array.c        |    4 +-
- json-glib/json-generator.c    |    4 +-
+ json-glib/json-array.c        |    4 +--
+ json-glib/json-generator.c    |    4 +--
  json-glib/json-gobject.c      |   58 ++++++++++++++++++++++++++++++---------
  json-glib/json-node.c         |   61 +++++++++++++++++++++++++++++++++--------
- json-glib/json-object.c       |    4 +-
+ json-glib/json-object.c       |    4 +--
  json-glib/json-types.h        |   12 ++++----
  json-glib/tests/array-test.c  |    2 +-
  json-glib/tests/node-test.c   |   14 +++++-----
  json-glib/tests/object-test.c |    2 +-
- tests/test-generator.c        |    4 +-
- tests/test-parser.c           |    4 +-
- tests/test-serialize-full.c   |    9 +-----
+ tests/test-generator.c        |    4 +--
+ tests/test-parser.c           |    4 +--
+ tests/test-serialize-full.c   |    9 ++----
  12 files changed, 121 insertions(+), 57 deletions(-)
 
 commit 7411cadc0fdd9ffc2bd7004c9980913ac857a495
@@ -3958,8 +4384,8 @@ Date:   Sun Jun 28 23:52:34 2009 +0100
 
     Indentation fixes
 
- tests/test-parser.c |   94 +++++++++++++++++++++++++-------------------------
- 1 files changed, 47 insertions(+), 47 deletions(-)
+ tests/test-parser.c |   98 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 49 insertions(+), 49 deletions(-)
 
 commit 112a8ec8dfd9c46304008b62e8ab256ed7714644
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3974,7 +4400,7 @@ Date:   Sun Jun 28 23:49:51 2009 +0100
     Thanks to Thomas Weidner for catching and reporting the issue.
 
  json-glib/json-parser.c |   16 +++++++++++-----
- 1 files changed, 11 insertions(+), 5 deletions(-)
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
 commit 4ecdd6bedb7961f3a33971aa1f2338115a60f7f3
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3987,7 +4413,7 @@ Date:   Sun Jun 28 23:48:36 2009 +0100
     document, and JsonParser must create the correct JsonNode.
 
  tests/test-parser.c |   59 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 59 insertions(+), 0 deletions(-)
+ 1 file changed, 59 insertions(+)
 
 commit 9a3b7a020716e23f1330915f1768a7c00bffbeb5
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -3998,7 +4424,7 @@ Date:   Thu Jun 25 10:37:43 2009 +0100
     The passed value is a pointer to a JsonObject, not to a JsonArray.
 
  json-glib/json-object.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 68d872f15022217c0ff1cf516aec917d600fd762
 Author: Rodrigo Moya <rodrigo@gnome-db.org>
@@ -4009,7 +4435,7 @@ Date:   Wed Jun 24 14:07:18 2009 +0200
     Reviewed by Emmanuele Bassi
 
  json-glib/json-object.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 6e706fb2b7a371f25c169ed25d4b617f2dc05b63
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4027,7 +4453,7 @@ Date:   Sun Jun 21 10:58:24 2009 +0100
       http://bugzilla.openedhand.com/show_bug.cgi?id=1648
 
  json-glib/json-generator.c |   43 +++++++++++++++++++++++++++++++++----------
- 1 files changed, 33 insertions(+), 10 deletions(-)
+ 1 file changed, 33 insertions(+), 10 deletions(-)
 
 commit a9416b7e2823f1fffe639d90bb352a337815a70e
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4036,7 +4462,7 @@ Date:   Thu Jun 18 11:23:56 2009 +0100
     Post-release bump to 0.7.3
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 1d13a409bb911141653a75d44e90feac9bfc2862
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4045,7 +4471,7 @@ Date:   Thu Jun 18 11:20:35 2009 +0100
     [release] 0.7.2
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit ff97e679522c52be6b5dfe0f851416cdeac7f921
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4054,7 +4480,7 @@ Date:   Thu Jun 18 11:14:37 2009 +0100
     [release] Update NEWS
 
  NEWS |   19 +++++++++++++++++++
- 1 files changed, 19 insertions(+), 0 deletions(-)
+ 1 file changed, 19 insertions(+)
 
 commit 182ca9cd9a3fabaa2533d841154856c61c570d08
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4079,7 +4505,7 @@ Date:   Thu Jun 18 10:05:57 2009 +0100
     documented or scanned.
 
  doc/reference/Makefile.am |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ 1 file changed, 1 insertion(+)
 
 commit 41649f049637864cfce21f6615c7d8bcaf3f03b8
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4088,7 +4514,7 @@ Date:   Thu Jun 18 10:03:23 2009 +0100
     [docs] Update the README file
 
  README |   30 ++++++++++++++++++++----------
- 1 files changed, 20 insertions(+), 10 deletions(-)
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
 commit 97fc00b1a5e3878074488ee93d9b52570983da1f
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4097,7 +4523,7 @@ Date:   Thu Jun 18 10:03:05 2009 +0100
     [build] Use AS_CASE m4 macro, instead of AS_IF
 
  configure.ac |   30 ++++++++++++++++--------------
- 1 files changed, 16 insertions(+), 14 deletions(-)
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
 commit 610cd260ac50c09809d6273c328ecea5a21f51bb
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4106,7 +4532,7 @@ Date:   Thu Jun 18 10:02:39 2009 +0100
     [build] Require automake 1.10
 
  configure.ac |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 commit bddc717b8b6f2f1501c30f78159c20394665d335
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4117,10 +4543,10 @@ Date:   Tue Jun 9 11:48:02 2009 +0100
     Build the Introspection data when compiling JSON-GLib; this way, the
     API should be available to other languages automatically.
 
- .gitignore                       |    3 +
- build/autotools/Makefile.am      |    7 +++-
+ .gitignore                       |    3 ++
+ build/autotools/Makefile.am      |    7 ++-
  build/autotools/introspection.m4 |   88 ++++++++++++++++++++++++++++++++++++++
- configure.ac                     |   13 +++--
+ configure.ac                     |   13 +++---
  json-glib/Makefile.am            |   30 +++++++++++++
  5 files changed, 135 insertions(+), 6 deletions(-)
 
@@ -4135,7 +4561,7 @@ Date:   Tue Jun 9 11:24:54 2009 +0100
     build to handle gracefully different versions of GCC.
 
  .gitignore                          |    1 +
- Makefile.am                         |    2 +
+ Makefile.am                         |    2 ++
  build/autotools/Makefile.am         |    2 +-
  build/autotools/as-compiler-flag.m4 |   62 +++++++++++++++++++++++++++++++++++
  configure.ac                        |    5 ++-
@@ -4158,7 +4584,7 @@ Date:   Tue Jun 9 11:15:53 2009 +0100
     [git ignore] Add m4 files under build/
 
  .gitignore |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+ 1 file changed, 3 insertions(+)
 
 commit c12786444e0175464295fb9a98c600060bffa0ed
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4200,14 +4626,14 @@ Date:   Tue Jun 9 11:05:23 2009 +0100
 
  json-glib/Makefile.am          |    1 +
  json-glib/json-array.c         |    9 +-----
- json-glib/json-generator.c     |    2 +
- json-glib/json-gobject.c       |    2 +
+ json-glib/json-generator.c     |    2 ++
+ json-glib/json-gobject.c       |    2 ++
  json-glib/json-node.c          |    2 +-
  json-glib/json-object.c        |    9 +-----
- json-glib/json-parser.c        |    2 +
+ json-glib/json-parser.c        |    2 ++
  json-glib/json-types-private.h |   61 ++++++++++++++++++++++++++++++++++++++++
- json-glib/json-types.h         |   38 +++++++++---------------
- json-glib/tests/node-test.c    |    8 ++--
+ json-glib/json-types.h         |   38 +++++++++----------------
+ json-glib/tests/node-test.c    |    8 +++---
  10 files changed, 89 insertions(+), 45 deletions(-)
 
 commit 930fdf4c4dff1f5310a946c2a9f5b6860f7c8ba8
@@ -4220,11 +4646,11 @@ Date:   Sun May 17 19:44:41 2009 +0100
     json_array_foreach_element() iterates over a JSON array data
     type.
 
- doc/reference/json-glib-sections.txt |    2 +
- json-glib/json-array.c               |   35 ++++++++++++++++++++++++
+ doc/reference/json-glib-sections.txt |    2 ++
+ json-glib/json-array.c               |   35 +++++++++++++++++++++++++
  json-glib/json-types.h               |   21 +++++++++++++++
  json-glib/tests/array-test.c         |   48 ++++++++++++++++++++++++++++++++++
- 4 files changed, 106 insertions(+), 0 deletions(-)
+ 4 files changed, 106 insertions(+)
 
 commit 3057a1722e27a13b39ddec4754fb6abda1aea199
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4235,9 +4661,9 @@ Date:   Sat May 16 20:09:07 2009 +0100
     The json_object_foreach_member() function iterates over a JsonObject
     data type.
 
- doc/reference/json-glib-sections.txt |    2 +
+ doc/reference/json-glib-sections.txt |    2 ++
  json-glib/json-object.c              |   55 ++++++++++++++++++++++++++++++++
- json-glib/json-types.h               |   25 +++++++++++++-
+ json-glib/json-types.h               |   25 +++++++++++++--
  json-glib/tests/object-test.c        |   57 ++++++++++++++++++++++++++++++++++
  4 files changed, 137 insertions(+), 2 deletions(-)
 
@@ -4252,7 +4678,7 @@ Date:   Sat May 16 13:53:58 2009 +0100
     with GOnce to enable atomic (and thread-safe) type registration.
 
  json-glib/json-enum-types.c.in |   18 +++++++++++++-----
- 1 files changed, 13 insertions(+), 5 deletions(-)
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
 commit 43d4bd151cd6979ecc6fdad5fab3e7988117c7be
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4261,7 +4687,7 @@ Date:   Sun Apr 19 00:36:08 2009 +0100
     [doap] Add a category element
 
  json-glib.doap |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ 1 file changed, 1 insertion(+)
 
 commit 58999bddac74c176fbd8544fa2cd30e2f067d863
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4275,7 +4701,7 @@ Date:   Fri Apr 17 15:45:42 2009 +0100
  doc/reference/json-glib-sections.txt |    1 +
  json-glib/json-node.c                |   20 ++++++++++++++++++++
  json-glib/json-types.h               |    1 +
- 3 files changed, 22 insertions(+), 0 deletions(-)
+ 3 files changed, 22 insertions(+)
 
 commit ba46d8e07a8e2dd50a3b1fff8b8c3303e3686480
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4290,7 +4716,7 @@ Date:   Fri Apr 17 15:38:40 2009 +0100
     us a little bit more of future compatibility.
 
  json-glib/json-types.h |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit d1e7d1ecd05687624f7149dad75a5fac9a645e72
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4330,7 +4756,7 @@ Date:   Fri Apr 17 15:19:42 2009 +0100
     docbook.
 
  doc/reference/version.xml.in |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit cbc92b72b2d7870a916f24055f8c2aa2371aa4ea
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4342,8 +4768,8 @@ Date:   Fri Apr 17 15:02:44 2009 +0100
     the typed JsonNode accessors and the newly added JsonObject and
     JsonArray typed accessors.
 
- tests/test-generator.c |   63 +++++++----------------------------------------
- 1 files changed, 10 insertions(+), 53 deletions(-)
+ tests/test-generator.c |   63 ++++++++----------------------------------------
+ 1 file changed, 10 insertions(+), 53 deletions(-)
 
 commit e437ce609e333c5b8ede21174dfba032c1bbfb00
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4359,9 +4785,9 @@ Date:   Fri Apr 17 14:49:25 2009 +0100
     As for JsonObject, the amount of types is small enough to avoid
     the combinatorial API explosion.
 
- doc/reference/json-glib-sections.txt |   22 ++-
+ doc/reference/json-glib-sections.txt |   22 +-
  json-glib/json-array.c               |  386 ++++++++++++++++++++++++++++++++++
- json-glib/json-types.h               |   57 ++++--
+ json-glib/json-types.h               |   57 +++--
  3 files changed, 447 insertions(+), 18 deletions(-)
 
 commit 4819ca625d1b73270797f913495a3835297950c2
@@ -4409,7 +4835,7 @@ Date:   Fri Apr 17 11:35:57 2009 +0100
 
  doc/reference/json-glib-sections.txt |   17 ++
  json-glib/json-object.c              |  489 ++++++++++++++++++++++++++++++++--
- json-glib/json-types.h               |   83 +++++--
+ json-glib/json-types.h               |   83 ++++--
  3 files changed, 555 insertions(+), 34 deletions(-)
 
 commit 2a768cb5e553afc4a9ac0d9bf1dc36a183821983
@@ -4423,7 +4849,7 @@ Date:   Thu Apr 16 19:57:11 2009 +0100
     GNOME userid.
 
  json-glib.doap |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+ 1 file changed, 3 insertions(+)
 
 commit 17822292acb4d1c9b4f414ea0e4b858809d3b858
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4434,7 +4860,7 @@ Date:   Thu Apr 16 18:18:45 2009 +0100
     Describe the releases of the 0.6 cycle.
 
  json-glib.doap |   18 ++++++++++++++++++
- 1 files changed, 18 insertions(+), 0 deletions(-)
+ 1 file changed, 18 insertions(+)
 
 commit 470f3a4299153362deea260c806d9b87870af3de
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4446,7 +4872,7 @@ Date:   Thu Apr 16 18:03:31 2009 +0100
     GNOME Cgit instance will pick up the DOAP file and update itself.
 
  json-glib.doap |   30 ++++++++++++++++++++++++++++++
- 1 files changed, 30 insertions(+), 0 deletions(-)
+ 1 file changed, 30 insertions(+)
 
 commit 764a3f79fe0d8d13e24bd921a16a46f4603bcbf1
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4457,7 +4883,7 @@ Date:   Thu Apr 16 11:28:24 2009 +0100
     Every GNOME project needs a MAINTAINERS file.
 
  MAINTAINERS |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+ 1 file changed, 3 insertions(+)
 
 commit f9956b4eadcfc9bbd5c0bc4b861ff782779e8a9a
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4481,7 +4907,7 @@ Date:   Tue Apr 14 00:09:35 2009 +0100
     thorough test unit for the JsonNode copy operation.
 
  json-glib/json-node.c       |    2 +-
- json-glib/tests/node-test.c |   45 +++++++++++++++++++++++++++++++++++++++++-
+ json-glib/tests/node-test.c |   45 +++++++++++++++++++++++++++++++++++++++++--
  2 files changed, 44 insertions(+), 3 deletions(-)
 
 commit e2c65a75d68aafa26f2084928e732961e48beb99
@@ -4496,16 +4922,16 @@ Date:   Mon Apr 13 23:46:52 2009 +0100
     Also, use Shave to sanitize the libtool and compiler incantations
     and restore sanity to the build system.
 
- .gitignore                       |    5 ++
+ .gitignore                       |    5 +++
  autogen.sh                       |    9 ++++
  build/Makefile.am                |    1 +
- build/autotools/Makefile.am      |    3 +
+ build/autotools/Makefile.am      |    3 ++
  build/autotools/shave-libtool.in |   69 +++++++++++++++++++++++++++++
  build/autotools/shave.in         |   79 +++++++++++++++++++++++++++++++++
  build/autotools/shave.m4         |   77 ++++++++++++++++++++++++++++++++
- configure.ac                     |   88 +++++++++++++++++++++----------------
+ configure.ac                     |   90 +++++++++++++++++++++-----------------
  json-glib/Makefile.am            |   89 +++++++++++++++++++------------------
- 9 files changed, 339 insertions(+), 81 deletions(-)
+ 9 files changed, 340 insertions(+), 82 deletions(-)
 
 commit 8080df63b4b4eae3b59d1214fc67f48149f49773
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4519,7 +4945,7 @@ Date:   Mon Apr 13 22:25:42 2009 +0100
     Thanks to: Gordon Williams <gordon.williams@collabora.co.uk>
 
  json-glib/json-parser.c |   38 +++++++++++++++++++++++++++++++++-----
- 1 files changed, 33 insertions(+), 5 deletions(-)
+ 1 file changed, 33 insertions(+), 5 deletions(-)
 
 commit ca329a7d5c1185cdf15fb85891693eca30295de1
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4531,7 +4957,7 @@ Date:   Mon Apr 13 22:30:05 2009 +0100
     I also need to show what an assignment looks like.
 
  json-glib/json-parser.c |   17 ++++++++++++-----
- 1 files changed, 12 insertions(+), 5 deletions(-)
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
 commit b28d5894060aac1239e23665f42be3946b5450e7
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4542,7 +4968,7 @@ Date:   Mon Apr 13 22:29:36 2009 +0100
     Add more spaces and remove the ` from the error message.
 
  json-glib/json-parser.c |   18 ++++++++++++------
- 1 files changed, 12 insertions(+), 6 deletions(-)
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
 commit a19a51df9e95e36edf949e68581731bd31959081
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4559,7 +4985,7 @@ Date:   Mon Apr 13 22:08:21 2009 +0100
     Reported by: Jasper <jasper@humppa.nl>
 
  tests/test-serialize-full.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit e583a9ec95f3d157091ec1e1a2ac8c493f0e23b2
 Author: Emmanuele Bassi <ebassi@linux.intel.com>
@@ -4571,7 +4997,7 @@ Date:   Mon Apr 13 22:04:10 2009 +0100
     GNOME provides instead of calling autoreconf.
 
  autogen.sh |   21 ++++++++-------------
- 1 files changed, 8 insertions(+), 13 deletions(-)
+ 1 file changed, 8 insertions(+), 13 deletions(-)
 
 commit 1d92c73bc05423872581d513f355783d4864edd5
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -4595,8 +5021,8 @@ Date:   Fri Nov 28 17:24:15 2008 +0000
     perform type checks and requires that the length of the memory buffer
     containing the JSON data stream is already a positive integer.
 
- json-glib/json-parser.c |  175 +++++++++++++++++++++++++++-------------------
- 1 files changed, 103 insertions(+), 72 deletions(-)
+ json-glib/json-parser.c |  175 ++++++++++++++++++++++++++++-------------------
+ 1 file changed, 103 insertions(+), 72 deletions(-)
 
 commit 6e7958785096806b3ffa60a4937642d713a051f2
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -4623,7 +5049,7 @@ Date:   Fri Nov 28 17:19:17 2008 +0000
     directly on stderr.
 
  json-glib/json-parser.c |   28 ++++++++++++++++++++++++++--
- 1 files changed, 26 insertions(+), 2 deletions(-)
+ 1 file changed, 26 insertions(+), 2 deletions(-)
 
 commit a5bea353dead0bd69f9664df86050fc829a2dcd5
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -4632,7 +5058,7 @@ Date:   Mon Nov 3 16:01:03 2008 +0000
     Bump to 0.7.1 after stable branch
 
  configure.ac |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 commit cf4c7360c69c0fe7587ec2456cd10839e1d0c1d6
 Author: Emmanuele Bassi <ebassi@gnome.org>
@@ -4653,7 +5079,7 @@ Date:   Mon Nov 3 15:51:21 2008 +0000
     Signed-off-by: Emmanuele Bassi <ebassi@linux.intel.com>
 
  json-glib/json-gobject.c |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 commit 9b94bc7f99063f45a2725861369f36b53ec3d440
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4662,7 +5088,7 @@ Date:   Fri Jun 13 11:56:46 2008 +0100
     Sync up with the current stable release numbers
 
  configure.ac |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit 4dd392342003147d55eee98db50e11d344b287d4
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4671,7 +5097,7 @@ Date:   Fri Jun 13 11:27:50 2008 +0100
     Fix a variable shadowing
 
  json-glib/json-generator.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 commit a02a42ef47e61456747e511556097b903f07d68a
 Merge: fdbad1c bc5c722
@@ -4697,7 +5123,7 @@ Date:   Fri Jun 13 11:22:35 2008 +0100
  Makefile.am           |    6 +++++-
  configure.ac          |    3 +++
  json-glib/Makefile.am |    2 ++
- 3 files changed, 10 insertions(+), 1 deletions(-)
+ 3 files changed, 10 insertions(+), 1 deletion(-)
 
 commit fdbad1cfd6ad6da9fab631f945ab8d2e85228fdf
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4716,7 +5142,7 @@ Date:   Fri Jun 13 11:06:15 2008 +0100
     Signed-off-by: Emmanuele Bassi <ebassi@openedhand.com>
 
  json-glib/json-generator.c |   17 ++++++++++++++++-
- 1 files changed, 16 insertions(+), 1 deletions(-)
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
 commit 81c02ef3db6901655f8a7117e5e2675d37096daf
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4727,7 +5153,7 @@ Date:   Sun May 18 11:56:04 2008 +0100
     The json-scanner.h header file is not shipped with JSON-GLib anymore.
 
  json-glib/json-glib.h |    1 -
- 1 files changed, 0 insertions(+), 1 deletions(-)
+ 1 file changed, 1 deletion(-)
 
 commit 9713843a4294b3e35a29125bf2bf1867a6443f27
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4735,7 +5161,7 @@ Date:   Tue May 6 11:48:25 2008 +0100
 
     Remove debian packaging
 
- debian/changelog                |    5 ---
+ debian/changelog                |    5 ----
  debian/compat                   |    1 -
  debian/control                  |   61 ---------------------------------------
  debian/copyright                |   27 -----------------
@@ -4743,8 +5169,8 @@ Date:   Tue May 6 11:48:25 2008 +0100
  debian/libjson-glib-doc.install |    1 -
  debian/libjson-glib-doc.links   |    1 -
  debian/libjson-glib0.install    |    1 -
- debian/rules                    |   12 -------
- 9 files changed, 0 insertions(+), 112 deletions(-)
+ debian/rules                    |   12 --------
+ 9 files changed, 112 deletions(-)
 
 commit d67000ab6c5ae6710f48f0517c98600af7cdaa0e
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4753,7 +5179,7 @@ Date:   Mon May 5 23:17:58 2008 +0100
     Update changelog for the debian packages
 
  debian/changelog |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 commit 0830873edc5203655f04868184cedb428b6d2d54
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4761,8 +5187,8 @@ Date:   Mon May 5 23:16:38 2008 +0100
 
     Update git ignore file
 
- .gitignore |   72 ++++++++++++++++++-----------------------------------------
- 1 files changed, 22 insertions(+), 50 deletions(-)
+ .gitignore |   72 +++++++++++++++++++-----------------------------------------
+ 1 file changed, 22 insertions(+), 50 deletions(-)
 
 commit eb1cd29f78ff52e3ec3b063716fb86b5f2c5ae4a
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4774,14 +5200,14 @@ Date:   Mon May 5 23:13:17 2008 +0100
     repository and official packages, so there's no point in duplicating
     the effort here.
 
- Makefile.am                |    6 +--
+ Makefile.am                |    6 +-
  configure.ac               |   15 -----
  contrib/Makefile.am        |    6 --
  contrib/json-glib-1.0.deps |    1 -
  contrib/json-glib-1.0.vapi |  139 --------------------------------------------
  contrib/json-object.vala   |   46 ---------------
  contrib/json-test.vala     |  122 --------------------------------------
- 7 files changed, 1 insertions(+), 334 deletions(-)
+ 7 files changed, 1 insertion(+), 334 deletions(-)
 
 commit 094acd1663210e803a8dab496f6de8066ef11f44
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4790,7 +5216,7 @@ Date:   Mon May 5 12:44:29 2008 +0100
     Bump to 0.6.1
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit a725bac9a287883f2d4f32130c7faedb121f754b
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4799,7 +5225,7 @@ Date:   Mon May 5 12:39:01 2008 +0100
     Bump to 0.6.0
 
  configure.ac |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit cd598180b12a212525427a8cddf11bc0ed4f1836
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4808,7 +5234,7 @@ Date:   Mon May 5 12:38:50 2008 +0100
     Update NEWS for 0.6.0
 
  NEWS |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+ 1 file changed, 5 insertions(+)
 
 commit 26479ec3c342889a2ee822bdf73f2e5fb6e170d7
 Merge: 8b5b5f6 7ff9134
@@ -4829,7 +5255,7 @@ Date:   Mon May 5 12:34:35 2008 +0100
     the tarball.
 
  json-glib/Makefile.am |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ 1 file changed, 1 insertion(+)
 
 commit 705a73eb3dfa2323ec86c1d299b567a15acde7a6
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4838,7 +5264,7 @@ Date:   Mon May 5 12:24:22 2008 +0100
     Style fixes for the configure output
 
  configure.ac |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 commit e017d392a281594e350a8d74c142cbe014753d7e
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4850,7 +5276,7 @@ Date:   Mon May 5 12:24:00 2008 +0100
     libtool is '-version-info', not '-versio-info'.
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 2051be2f7185733bbc62d10ec096538fec924638
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4863,7 +5289,7 @@ Date:   Mon May 5 12:22:59 2008 +0100
     it when invoked with the --help command line switch.
 
  configure.ac |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 commit 4cb8a9078172c5f56ac5d56417b8656a7053df4a
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4878,7 +5304,7 @@ Date:   Mon May 5 12:21:40 2008 +0100
     set up), do not fail and just provide a stub gtk-doc.make.
 
  autogen.sh |   28 +++++++++++++++++++++++++---
- 1 files changed, 25 insertions(+), 3 deletions(-)
+ 1 file changed, 25 insertions(+), 3 deletions(-)
 
 commit 1571fcddd6f2a245f4bb6ad64f82d24fc9c4cec0
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4891,7 +5317,7 @@ Date:   Thu May 1 23:00:28 2008 +0100
     they are correctly parsed and assigned to the instance.
 
  tests/test-serialize-full.c |   29 +++++++++++++++++++++++++++--
- 1 files changed, 27 insertions(+), 2 deletions(-)
+ 1 file changed, 27 insertions(+), 2 deletions(-)
 
 commit 4c11d0969a44bb70acf6463ef6305999ff443be2
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4907,7 +5333,7 @@ Date:   Thu May 1 22:58:55 2008 +0100
     one of the original strings).
 
  json-glib/json-gobject.c |   15 +++++----------
- 1 files changed, 5 insertions(+), 10 deletions(-)
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
 commit 7ff91344d21b0c26d3a3a2834dbf09286cb1f904
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4922,7 +5348,7 @@ Date:   Thu May 1 16:08:15 2008 +0100
     idea unless you read the Debian packaging rules.
 
  debian/rules |    3 ---
- 1 files changed, 0 insertions(+), 3 deletions(-)
+ 1 file changed, 3 deletions(-)
 
 commit e75321e64f17d69beac0c2e131572fe081680b08
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4941,8 +5367,8 @@ Date:   Thu May 1 15:58:31 2008 +0100
  debian/libjson-glib-doc.install |    1 +
  debian/libjson-glib-doc.links   |    1 +
  debian/libjson-glib0.install    |    1 +
- debian/rules                    |   15 +++++++++
- 9 files changed, 116 insertions(+), 0 deletions(-)
+ debian/rules                    |   15 ++++++++++
+ 9 files changed, 116 insertions(+)
 
 commit 30f9d47ecf43a17610cd9c0074ff832bfa37593c
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4951,7 +5377,7 @@ Date:   Thu Apr 24 15:47:11 2008 +0100
     Test the equality of the serialize string length
 
  tests/test-serialize-simple.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+ 1 file changed, 3 insertions(+)
 
 commit 07c2b916dadb4b40fbaabf49f0e80941993cc2cf
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4964,7 +5390,7 @@ Date:   Thu Apr 24 15:02:33 2008 +0100
     to the shared object.
 
  json-glib/Makefile.am |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 commit 179899e5da801fda0981a1d446ba420efd4021c1
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4973,7 +5399,7 @@ Date:   Thu Apr 24 14:55:51 2008 +0100
     Update git ignore file
 
  .gitignore |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+ 1 file changed, 4 insertions(+)
 
 commit b0daf7e3a2529dd9950d77a96a10233d68778f32
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4985,7 +5411,7 @@ Date:   Thu Apr 24 14:54:05 2008 +0100
     expose as a public symbol.
 
  json-glib/json-glib.h |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ 1 file changed, 1 insertion(+)
 
 commit c7a7f429565195fe7aba56a254abf3637cf6fa8a
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -4998,7 +5424,7 @@ Date:   Thu Apr 24 14:52:54 2008 +0100
     macro are implied.
 
  doc/reference/Makefile.am |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ 1 file changed, 2 insertions(+)
 
 commit 053bf43c813799c5f59e9241217fe31c560b5885
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5010,7 +5436,7 @@ Date:   Thu Apr 24 14:52:07 2008 +0100
     language bindings and other users of the library.
 
  json-glib/Makefile.am |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ 1 file changed, 1 insertion(+)
 
 commit 5977d95866cd9763e97a47d6c9909e6a2fbf0ed1
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5019,7 +5445,7 @@ Date:   Thu Apr 24 14:50:34 2008 +0100
     Autogenerate the GTypes for the enumerations
 
  json-glib/Makefile.am |   70 +++++++++++++++++++++++++++++++++----------------
- 1 files changed, 47 insertions(+), 23 deletions(-)
+ 1 file changed, 47 insertions(+), 23 deletions(-)
 
 commit 356413e8840a614914b84f40b1d8476ba036ded4
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5032,7 +5458,7 @@ Date:   Thu Apr 24 14:49:45 2008 +0100
 
  json-glib/json-enum-types.c.in |   31 +++++++++++++++++++++++++++++++
  json-glib/json-enum-types.h.in |   26 ++++++++++++++++++++++++++
- 2 files changed, 57 insertions(+), 0 deletions(-)
+ 2 files changed, 57 insertions(+)
 
 commit 7d57ffc03783defbfeb26e21a14e3df32555c29d
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5041,7 +5467,7 @@ Date:   Mon Apr 21 10:57:05 2008 +0100
     Update git ignore file
 
  .gitignore |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ 1 file changed, 1 insertion(+)
 
 commit 7d259e03b9a556d155ade87417ab26830c3e7684
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5054,7 +5480,7 @@ Date:   Sun Apr 20 22:43:32 2008 +0100
     returned variable name is correct.
 
  tests/test-parser.c |   16 ++++++++++------
- 1 files changed, 10 insertions(+), 6 deletions(-)
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
 commit 6899bca0dcf72dac0cad9dcf1a7cd10159d471e5
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5066,7 +5492,7 @@ Date:   Sat Apr 19 23:22:29 2008 +0100
     object.
 
  tests/test-parser.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ 1 file changed, 2 insertions(+)
 
 commit 81addb645ac5fad28619bb660624902abe981377
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5078,7 +5504,7 @@ Date:   Sat Apr 19 23:18:54 2008 +0100
     other units.
 
  tests/test-parser.c |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+ 1 file changed, 4 insertions(+)
 
 commit 22a0db88c14895f98db76bca3cb078fbd3a2b07d
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5087,7 +5513,7 @@ Date:   Sat Apr 19 23:09:32 2008 +0100
     Whitespace fixes in the licensing notice
 
  json-glib/json-scanner.h |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 676592cef006de16d966a1ca0469ccd0556f0e4b
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5096,7 +5522,7 @@ Date:   Sat Apr 19 23:09:20 2008 +0100
     Documentation fixes in JsonNode
 
  json-glib/json-node.c |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 commit bf2249a1855b6bebe0b3528b4d5321a1ebe4b9e7
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5108,7 +5534,7 @@ Date:   Sat Apr 19 23:08:20 2008 +0100
     and copy it.
 
  json-glib/json-node.c |   17 +++++++++++++----
- 1 files changed, 13 insertions(+), 4 deletions(-)
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
 commit c191b2f8a8159457db3333390be10d6c7c0d4336
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5138,7 +5564,7 @@ Date:   Sat Apr 19 23:01:26 2008 +0100
     parsing JSON.
 
  json-glib/Makefile.am |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 commit df2a310a6ed0a3b32415f53076ff4c053b3fd925
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5153,7 +5579,7 @@ Date:   Sat Apr 19 22:59:28 2008 +0100
     to them inside our API reference.
 
  doc/reference/Makefile.am |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 commit 6a3d8266efe505b29555db21658c241eba20fe2d
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5166,7 +5592,7 @@ Date:   Sat Apr 19 22:57:05 2008 +0100
     pkg-config file of the library for its prefix.
 
  configure.ac |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+ 1 file changed, 5 insertions(+)
 
 commit 4e5ec69cce8ab27f965985ba69ea11224ae39ffd
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5175,7 +5601,7 @@ Date:   Sat Apr 19 22:28:21 2008 +0100
     Update the description and dependencies
 
  README |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 commit f65a5d5e30a1242a899149b732d1139891876014
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5184,7 +5610,7 @@ Date:   Sat Apr 19 18:05:45 2008 +0100
     Bump to 0.5.1
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit ab0da7c61bde715e99dd16027b198c7760b30922
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5193,7 +5619,7 @@ Date:   Sat Apr 19 18:01:57 2008 +0100
     Update for 0.5.0 release
 
  NEWS |   14 ++++++++++++++
- 1 files changed, 14 insertions(+), 0 deletions(-)
+ 1 file changed, 14 insertions(+)
 
 commit 203927c71231cf6cec6d88161211702b7105df2d
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5202,7 +5628,7 @@ Date:   Sat Apr 19 17:20:50 2008 +0100
     Fix ignore rule
 
  .gitignore |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 76921ac27534aa0a25b39790ce4d99cf6e19a20c
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5214,7 +5640,7 @@ Date:   Sat Apr 19 17:19:30 2008 +0100
     using the \uXXXX notation, as per RFC.
 
  tests/test-parser.c |   67 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 67 insertions(+), 0 deletions(-)
+ 1 file changed, 67 insertions(+)
 
 commit 379a2fe972c6e7436be9f345fe018bf4fe575354
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5233,7 +5659,7 @@ Date:   Sat Apr 19 17:16:28 2008 +0100
     This allows full compatibility with JSON.
 
  json-glib/json-scanner.c |   56 +++++++++++++++++++++++++++++++++++++++++-----
- 1 files changed, 50 insertions(+), 6 deletions(-)
+ 1 file changed, 50 insertions(+), 6 deletions(-)
 
 commit 9429ecaa88cdb6705189b6970481911f11339ff6
 Merge: d313aa1 445a3f7
@@ -5255,7 +5681,7 @@ Date:   Sat Apr 12 13:21:21 2008 +0100
     expected JSON_NODE_VALUE.
 
  json-glib/json-node.c |   21 +++++++++++++++------
- 1 files changed, 15 insertions(+), 6 deletions(-)
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
 commit 4e826d9f209a8f68023bae54c91b2bbbb202a54a
 Merge: 98b6e5e 2a579b5
@@ -5271,7 +5697,7 @@ Date:   Thu Apr 3 16:31:48 2008 +0100
     Wrap the test report information section inside an info element
 
  Makefile.decl |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 commit 8e2e539d02b84e0fe452174f3dfab06f35a4e6a1
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5282,7 +5708,7 @@ Date:   Sun Mar 9 20:52:29 2008 +0000
     Test the GValue API for storing fundamental types into a JsonNode.
 
  json-glib/tests/node-test.c |   29 +++++++++++++++++++++++++++++
- 1 files changed, 29 insertions(+), 0 deletions(-)
+ 1 file changed, 29 insertions(+)
 
 commit 646b90e79d3424a332064a6a1e9fc62d1ce99386
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5291,7 +5717,7 @@ Date:   Wed Mar 5 17:43:06 2008 +0000
     Add package and version information to the test-report XML
 
  Makefile.decl |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ 1 file changed, 2 insertions(+)
 
 commit b8943381b0df44d9e6e21ae8321df2376c8458a8
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5302,7 +5728,7 @@ Date:   Wed Mar 5 16:03:24 2008 +0000
     Use a similar test unit as the JsonArray one, testing creation, empty
     objects, addition and removal of members.
 
- .gitignore                    |    2 +
+ .gitignore                    |    2 ++
  json-glib/tests/Makefile.am   |   17 +++++++----
  json-glib/tests/object-test.c |   62 +++++++++++++++++++++++++++++++++++++++++
  3 files changed, 75 insertions(+), 6 deletions(-)
@@ -5318,7 +5744,7 @@ Date:   Wed Mar 5 15:46:41 2008 +0000
     test cases clean.
 
  json-glib/tests/array-test.c |   12 ++++++++++++
- 1 files changed, 12 insertions(+), 0 deletions(-)
+ 1 file changed, 12 insertions(+)
 
 commit 6aa1ddb891594e0f567bc3ebeb3bf5d3ab8e7e0c
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5327,7 +5753,7 @@ Date:   Tue Mar 4 13:07:08 2008 +0000
     Clean the test-report XML output, if found
 
  Makefile.am |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 6eee8282d327614380854d572b2680f40b2faaf5
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5336,7 +5762,7 @@ Date:   Tue Mar 4 12:37:52 2008 +0000
     Update gitignore file
 
  .gitignore |   18 ++++++++----------
- 1 files changed, 8 insertions(+), 10 deletions(-)
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
 commit d5cb48681c68c3d53d8ec331ef37fb60820a9421
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5352,8 +5778,8 @@ Date:   Tue Mar 4 12:30:48 2008 +0000
     The API coverage for the data types is part of the json-glib/tests
     directory and will be expanded later.
 
- tests/Makefile.am           |    8 ++++-
- tests/test-serialize-full.c |   56 ++++++++++++++++++++++++++----------------
+ tests/Makefile.am           |    8 +++++--
+ tests/test-serialize-full.c |   56 +++++++++++++++++++++++++++----------------
  2 files changed, 41 insertions(+), 23 deletions(-)
 
 commit 1f6307ea2d7dc6ebe279d08b9f95f3074fbdd462
@@ -5416,7 +5842,7 @@ Date:   Tue Mar 4 12:09:44 2008 +0000
     tests.
 
  tests/test-06.c |   28 ++++++++++++++++++----------
- 1 files changed, 18 insertions(+), 10 deletions(-)
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
 commit 5cc1d3d6061830de403ccbc10c2414f29cd1cf82
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5433,7 +5859,7 @@ Date:   Tue Mar 4 10:52:51 2008 +0000
     just compare the length of the output.
 
  tests/Makefile.am      |    4 +
- tests/test-04.c        |  238 ----------------------------
+ tests/test-04.c        |  238 -----------------------------
  tests/test-05.c        |  227 ---------------------------
  tests/test-generator.c |  399 ++++++++++++++++++++++++++++++++++++++++++++++++
  4 files changed, 403 insertions(+), 465 deletions(-)
@@ -5445,7 +5871,7 @@ Date:   Tue Mar 4 10:44:56 2008 +0000
     Append to EXTRA_DIST, since it was defined elsewhere
 
  contrib/Makefile.am |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 98b6e5e2f151c4ee800754675bf01e585fee850b
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5454,7 +5880,7 @@ Date:   Tue Mar 4 07:05:01 2008 +0000
     Update the README
 
  README |   36 ++++++++++++++++++++++++++++++++++++
- 1 files changed, 36 insertions(+), 0 deletions(-)
+ 1 file changed, 36 insertions(+)
 
 commit 1a078c783a5a03b3367ce59eb25248dd6e23b5c6
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5463,7 +5889,7 @@ Date:   Tue Mar 4 07:05:01 2008 +0000
     Update the README
 
  README |   36 ++++++++++++++++++++++++++++++++++++
- 1 files changed, 36 insertions(+), 0 deletions(-)
+ 1 file changed, 36 insertions(+)
 
 commit 44891ea1040ceae95a994b646174696de7779ea1
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5472,7 +5898,7 @@ Date:   Tue Mar 4 06:44:59 2008 +0000
     Update gitignore file
 
  .gitignore |   11 +++++------
- 1 files changed, 5 insertions(+), 6 deletions(-)
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
 commit 3ea189acf52ea39653c6505c136f1f45a660a24c
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5484,7 +5910,7 @@ Date:   Tue Mar 4 06:34:11 2008 +0000
     for the members of the simple objects test case.
 
  tests/test-parser.c |   31 ++++++++++++++++++++++++-------
- 1 files changed, 24 insertions(+), 7 deletions(-)
+ 1 file changed, 24 insertions(+), 7 deletions(-)
 
 commit 40b3e9330f482e002aea90b0c1a4b9db2adffff0
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5506,7 +5932,7 @@ Date:   Tue Mar 4 06:27:24 2008 +0000
     case more reliable.
 
  tests/test-parser.c |   40 +++++++++++++++++++++++++++++++---------
- 1 files changed, 31 insertions(+), 9 deletions(-)
+ 1 file changed, 31 insertions(+), 9 deletions(-)
 
 commit 7e6dab14302b94979672acf81eec8710ea95e288
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5517,7 +5943,7 @@ Date:   Sun Mar 2 17:44:27 2008 +0000
     This simple unit will test the JsonArray API, as part of the coverage
     test for the JSON-GLib types.
 
- json-glib/tests/Makefile.am  |   10 ++++++--
+ json-glib/tests/Makefile.am  |   10 ++++++---
  json-glib/tests/array-test.c |   50 ++++++++++++++++++++++++++++++++++++++++++
  2 files changed, 57 insertions(+), 3 deletions(-)
 
@@ -5551,7 +5977,7 @@ Date:   Sun Mar 2 14:58:58 2008 +0000
     and remolding them into a more interesting test framework.
 
  tests/Makefile.am |   39 +++++----------------------------------
- 1 files changed, 5 insertions(+), 34 deletions(-)
+ 1 file changed, 5 insertions(+), 34 deletions(-)
 
 commit 1e6aa16a2a6432cf96d0a86d4650c13e63c67e43
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5560,7 +5986,7 @@ Date:   Sun Mar 2 14:56:56 2008 +0000
     Remove old, empty string test
 
  tests/test-01.c |   57 -------------------------------------------------------
- 1 files changed, 0 insertions(+), 57 deletions(-)
+ 1 file changed, 57 deletions(-)
 
 commit 989c807fd61cc65c1e4058c5d0794ae2fe438ba1
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5574,7 +6000,7 @@ Date:   Sun Mar 2 14:56:28 2008 +0000
     The JsonObject parsing test will also be merged later.
 
  tests/test-parser.c |  262 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 262 insertions(+), 0 deletions(-)
+ 1 file changed, 262 insertions(+)
 
 commit f1e1c0e7796903abb725e8216fc54f53573ecdc9
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5590,7 +6016,7 @@ Date:   Sun Mar 2 10:51:09 2008 +0000
     framework API.
 
  tests/test-01.c |   44 +++++++++++++++++++++++++++++++++++---------
- 1 files changed, 35 insertions(+), 9 deletions(-)
+ 1 file changed, 35 insertions(+), 9 deletions(-)
 
 commit cb5b3d5fa6244b0d20258203bd9df7e3148af57b
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5602,7 +6028,7 @@ Date:   Sun Mar 2 10:50:17 2008 +0000
     original nodes are equivalent.
 
  json-glib/tests/node-test.c |   15 +++++++++++++++
- 1 files changed, 15 insertions(+), 0 deletions(-)
+ 1 file changed, 15 insertions(+)
 
 commit 40c757835e329fe01f8f22aba74d2e47f3a5e55c
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5623,7 +6049,7 @@ Date:   Sat Mar 1 19:35:47 2008 +0000
     Update gitignore file
 
  .gitignore |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+ 1 file changed, 4 insertions(+)
 
 commit e4be0d896359cc1d0ba99dd81a66855389ebd5df
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5645,9 +6071,9 @@ Date:   Sat Mar 1 19:30:41 2008 +0000
 
  Makefile.am                 |    4 ++-
  Makefile.decl               |   57 +++++++++++++++++++++++++++++++++++++++++++
- configure.ac                |    3 +-
+ configure.ac                |    3 ++-
  json-glib/Makefile.am       |    9 ++++++-
- json-glib/tests/Makefile.am |   15 +++++++++++
+ json-glib/tests/Makefile.am |   15 ++++++++++++
  json-glib/tests/node-test.c |   27 ++++++++++++++++++++
  6 files changed, 112 insertions(+), 3 deletions(-)
 
@@ -5658,7 +6084,7 @@ Date:   Fri Feb 29 16:40:33 2008 +0000
     Update gitignore
 
  .gitignore |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ 1 file changed, 1 insertion(+)
 
 commit 8a2bb3c4400b9df6cd864eb29920a7767e8170c7
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5672,7 +6098,7 @@ Date:   Fri Feb 29 16:37:18 2008 +0000
     Also, use the Slice allocator for the ScannerKey structs.
 
  json-glib/json-scanner.c |   42 ++++++++++++++++++++----------------------
- 1 files changed, 20 insertions(+), 22 deletions(-)
+ 1 file changed, 20 insertions(+), 22 deletions(-)
 
 commit 42f7800c5b1c30ff187fc824a9bb39565033488e
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5683,7 +6109,7 @@ Date:   Fri Feb 29 16:01:48 2008 +0000
     JsonParser now uses JsonScanner, the internal copy of GScanner.
 
  json-glib/json-parser.c |   33 +++++++++++++++++----------------
- 1 files changed, 17 insertions(+), 16 deletions(-)
+ 1 file changed, 17 insertions(+), 16 deletions(-)
 
 commit 314f24fd0c8c6b024c93b1d8d275f9049ef22951
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5694,9 +6120,9 @@ Date:   Fri Feb 29 16:00:55 2008 +0000
     Rename all the API and the data types to the Json namespace, so we can
     use the internal copy instead of GScanner.
 
- json-glib/json-scanner.c |  637 +++++++++++++++++++++++-----------------------
+ json-glib/json-scanner.c |  639 +++++++++++++++++++++++-----------------------
  json-glib/json-scanner.h |    6 +-
- 2 files changed, 327 insertions(+), 316 deletions(-)
+ 2 files changed, 328 insertions(+), 317 deletions(-)
 
 commit 65708000ab02d0a4080b662bb409ac4b79101488
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5705,7 +6131,7 @@ Date:   Fri Feb 29 16:00:30 2008 +0000
     Add JsonScanner to the build
 
  json-glib/Makefile.am |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ 1 file changed, 2 insertions(+)
 
 commit 8e27ac27a9b22361296564d740301c2c49b387f8
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5717,7 +6143,7 @@ Date:   Fri Feb 29 15:59:57 2008 +0000
     less ancient.
 
  configure.ac |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit a475b0896d5760c893a099c9411f9790e5c492ba
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5725,8 +6151,8 @@ Date:   Fri Feb 29 12:24:14 2008 +0000
 
     Update the JsonScanner default configuration
 
- json-glib/json-scanner.c |   84 +++++++++++++++++++--------------------------
- 1 files changed, 36 insertions(+), 48 deletions(-)
+ json-glib/json-scanner.c |   84 ++++++++++++++++++++--------------------------
+ 1 file changed, 36 insertions(+), 48 deletions(-)
 
 commit 10ac1734b326700257ef318d9a2000c538b5cd38
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5739,8 +6165,8 @@ Date:   Fri Feb 29 12:22:02 2008 +0000
     
     Also, remove the configuration: JsonScanner will provide us with one.
 
- json-glib/json-parser.c |  127 ++++++++++++++++------------------------------
- 1 files changed, 44 insertions(+), 83 deletions(-)
+ json-glib/json-parser.c |  127 ++++++++++++++++-------------------------------
+ 1 file changed, 44 insertions(+), 83 deletions(-)
 
 commit 4a4095c360fc29f766e8baba3529a78b6d736b19
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5749,7 +6175,7 @@ Date:   Fri Feb 29 12:21:20 2008 +0000
     Add json-scanner.h to the exported headers
 
  json-glib/json-glib.h |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ 1 file changed, 1 insertion(+)
 
 commit 469a22e4f1fac6b4fd8110823322b7fbfa9b6552
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5758,7 +6184,7 @@ Date:   Fri Feb 29 12:13:54 2008 +0000
     Include JsonScanner into JsonParser
 
  json-glib/json-parser.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ 1 file changed, 1 insertion(+)
 
 commit 8537549a5a65f3111a4436b69499664c167b1534
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5769,7 +6195,7 @@ Date:   Fri Feb 29 12:10:16 2008 +0000
     The GTokenType extension enumeration belongs with the tokenizer.
 
  json-glib/json-parser.h |   15 ++-------------
- 1 files changed, 2 insertions(+), 13 deletions(-)
+ 1 file changed, 2 insertions(+), 13 deletions(-)
 
 commit 1ddd45d36a3a25aa86a95c60e0c29e83687971bd
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5790,7 +6216,7 @@ Date:   Fri Feb 29 12:06:19 2008 +0000
 
  json-glib/json-scanner.c | 1809 ++++++++++++++++++++++++++++++++++++++++++++++
  json-glib/json-scanner.h |  167 +++++
- 2 files changed, 1976 insertions(+), 0 deletions(-)
+ 2 files changed, 1976 insertions(+)
 
 commit 3a9ec8f1ca9bf525875c3fbfaf1ab2f3c708bf36
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5811,7 +6237,7 @@ Date:   Tue Jan 29 19:13:15 2008 +0000
 
  contrib/json-glib-1.0.deps |    1 +
  contrib/json-glib-1.0.vapi |   14 +++++-----
- contrib/json-test.vala     |   62 +++++++++++++++++++++----------------------
+ contrib/json-test.vala     |   62 +++++++++++++++++++++-----------------------
  3 files changed, 38 insertions(+), 39 deletions(-)
 
 commit e8a59f086f43e5abd5414033ea8c9a886eb112ed
@@ -5824,7 +6250,7 @@ Date:   Tue Jan 29 19:12:35 2008 +0000
     lot about them.
 
  Makefile.am |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit b6963328f3d8d8e85ca0b21f9bdeca77b5611019
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5836,7 +6262,7 @@ Date:   Tue Jan 29 18:19:16 2008 +0000
     its symbol in the json-glib-sections.txt file anymore.
 
  doc/reference/json-glib-sections.txt |    1 -
- 1 files changed, 0 insertions(+), 1 deletions(-)
+ 1 file changed, 1 deletion(-)
 
 commit 48079c2f580171235eecc298b0193022a67e0b79
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5880,7 +6306,7 @@ Date:   Mon Jan 28 11:02:30 2008 +0000
     the correctly normalized one.
 
  json-glib/json-object.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit f2f08d282ac6bc69ba9029d065979b1332abd5a5
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5894,8 +6320,8 @@ Date:   Sun Jan 27 21:26:51 2008 +0000
     and dispose methods. As further optimisation, inlining them should be
     worth as well.
 
- json-glib/json-parser.c |   51 +++++++++++++++++++++++++++-------------------
- 1 files changed, 30 insertions(+), 21 deletions(-)
+ json-glib/json-parser.c |   51 ++++++++++++++++++++++++++++-------------------
+ 1 file changed, 30 insertions(+), 21 deletions(-)
 
 commit 629d4a54913c578d7b612f10d9b04addc8e0c7fb
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5911,7 +6337,7 @@ Date:   Tue Dec 25 21:44:03 2007 +0000
  json-glib/json-gobject.c   |    2 ++
  json-glib/json-node.c      |    3 +++
  json-glib/json-object.c    |    2 ++
- 5 files changed, 11 insertions(+), 0 deletions(-)
+ 5 files changed, 11 insertions(+)
 
 commit e172e9ccec88999e7d8433df08d8d92568537cf7
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5922,7 +6348,7 @@ Date:   Tue Dec 25 21:41:44 2007 +0000
     Use an intermediary pointer to avoid a lot of pointer dereferences
 
  json-glib/json-parser.c |   25 ++++++++++++++-----------
- 1 files changed, 14 insertions(+), 11 deletions(-)
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
 commit 61a6a144a2182946be4fb975d05e1c26d814c323
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5937,7 +6363,7 @@ Date:   Tue Dec 25 11:55:36 2007 +0000
     support is ready, yet.
 
  contrib/json-glib-1.0.vapi |   21 ++++++++++--
- contrib/json-object.vala   |   10 ++++-
+ contrib/json-object.vala   |   10 ++++--
  contrib/json-test.vala     |   81 ++++++++++++++++++++++++++++++++------------
  3 files changed, 85 insertions(+), 27 deletions(-)
 
@@ -5953,8 +6379,8 @@ Date:   Tue Dec 25 11:53:04 2007 +0000
     methods, and still be able to retain some basic functionality for the methods
     they decide not to implement.
 
- json-glib/json-gobject.c |  208 ++++++++++++++++++++++++++-------------------
- 1 files changed, 120 insertions(+), 88 deletions(-)
+ json-glib/json-gobject.c |  208 ++++++++++++++++++++++++++--------------------
+ 1 file changed, 120 insertions(+), 88 deletions(-)
 
 commit 5bb6dd7b77dcd0d1996f484990223287d2144ff3
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5967,7 +6393,7 @@ Date:   Tue Dec 25 11:51:20 2007 +0000
     the passed JSON stream is a JavaScript assignment.
 
  json-glib/json-parser.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ 1 file changed, 2 insertions(+)
 
 commit a90a842f269314c4423de9d84d03391a8efbd7b5
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -5993,7 +6419,7 @@ Date:   Tue Dec 25 11:47:10 2007 +0000
     Avoid feeding garbage to the callers by using g_slice_new0().
 
  json-glib/json-node.c |    9 +++++----
- 1 files changed, 5 insertions(+), 4 deletions(-)
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 commit ba7282dd23e2980203208cb73942535bfefa5906
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6004,7 +6430,7 @@ Date:   Tue Dec 25 11:45:56 2007 +0000
     Found this very dumb leak while using Valgrind.
 
  json-glib/json-generator.c |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+ 1 file changed, 6 insertions(+)
 
 commit 193aca9aabbfc3db8e1faca0a65b19ac7ba96341
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6017,7 +6443,7 @@ Date:   Tue Dec 25 11:44:18 2007 +0000
     out.
 
  tests/test-07.c |    2 --
- 1 files changed, 0 insertions(+), 2 deletions(-)
+ 1 file changed, 2 deletions(-)
 
 commit a6fae2d61b1cfefa742574761edc19c8d6f702f5
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6030,7 +6456,7 @@ Date:   Thu Nov 22 16:00:35 2007 +0000
     Vala to a JSON string.
 
  contrib/json-object.vala |   40 ++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 40 insertions(+), 0 deletions(-)
+ 1 file changed, 40 insertions(+)
 
 commit ea6cc8756f70d488eae128e4a01f63ce2766cc3a
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6039,7 +6465,7 @@ Date:   Thu Nov 22 15:59:25 2007 +0000
     Omit the lenght argument now that we provide a default
 
  contrib/json-test.vala |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 9492f3439dd491bb5afadfe6b2bd49a72ec9bb1e
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6055,7 +6481,7 @@ Date:   Thu Nov 22 15:58:23 2007 +0000
      * provide default values for the length argument in from_data()/to_data()
 
  contrib/json-glib-1.0.vapi |   20 +++++++++++---------
- 1 files changed, 11 insertions(+), 9 deletions(-)
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
 commit a255b4f5eb8769c444a9ac3a4cc7404fccd44ee3
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6069,7 +6495,7 @@ Date:   Thu Nov 22 00:01:37 2007 +0000
 
  Makefile.am  |    8 +++++++-
  configure.ac |    3 +++
- 2 files changed, 10 insertions(+), 1 deletions(-)
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
 commit aa8911ca4d63bfb3dd34997f9a745d70d12673af
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6078,7 +6504,7 @@ Date:   Wed Nov 21 20:44:08 2007 +0000
     Update the test case for the Vala bindings
 
  contrib/json-test.vala |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit 7083e9e6733611b5313f0708c4b93b9726ef26d0
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6090,7 +6516,7 @@ Date:   Wed Nov 21 20:43:35 2007 +0000
     Also, export the JSON_NODE_TYPE() macro as Json.Node.type() method.
 
  contrib/json-glib-1.0.vapi |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 commit 9d4588e97a88960a4dd6a28debb3cb0f8d75f098
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6099,7 +6525,7 @@ Date:   Wed Nov 21 20:42:07 2007 +0000
     Add symbols of the newly committed API
 
  doc/reference/json-glib-sections.txt |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+ 1 file changed, 3 insertions(+)
 
 commit cf2eceeb69ccbda4f2ff583ee7869c7fd3cda603
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6114,7 +6540,7 @@ Date:   Wed Nov 21 20:41:42 2007 +0000
  json-glib/json-array.c  |   29 +++++++++++++++++++++++++++++
  json-glib/json-object.c |   29 +++++++++++++++++++++++++++++
  json-glib/json-types.h  |    4 ++++
- 3 files changed, 62 insertions(+), 0 deletions(-)
+ 3 files changed, 62 insertions(+)
 
 commit 5a4a8761af0562fbee8e1a56ce1771a20c1ad8e3
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6130,7 +6556,7 @@ Date:   Wed Nov 21 20:07:12 2007 +0000
  tests/test-03.c |    2 ++
  tests/test-04.c |    8 ++++++++
  tests/test-05.c |    6 ++++++
- 5 files changed, 19 insertions(+), 1 deletions(-)
+ 5 files changed, 19 insertions(+), 1 deletion(-)
 
 commit ac699263493e09eeb203f9bf88c0a8296f9e4a8f
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6142,7 +6568,7 @@ Date:   Wed Nov 21 20:06:06 2007 +0000
     root node getter function of JsonParser.
 
  json-glib/json-gobject.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ 1 file changed, 2 insertions(+)
 
 commit 0b6b09c0fe2fdd21b18593192e7213d1b0098f12
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6178,7 +6604,7 @@ Date:   Wed Nov 21 18:39:04 2007 +0000
  contrib/Makefile.am        |    4 ++
  contrib/json-glib-1.0.vapi |  118 ++++++++++++++++++++++++++++++++++++++++++++
  contrib/json-test.vala     |   87 ++++++++++++++++++++++++++++++++
- 5 files changed, 222 insertions(+), 1 deletions(-)
+ 5 files changed, 222 insertions(+), 1 deletion(-)
 
 commit 557a60b4e0f1fd6fc0fa79efc60f9bfd777e0670
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6202,8 +6628,8 @@ Date:   Wed Nov 21 01:39:00 2007 +0000
     The JsonGenerator:indent-char can be used to control the character that
     indents the lines when pretty printing.
 
- json-glib/json-generator.c |   54 ++++++++++++++++++++++++++++++++-----------
- 1 files changed, 40 insertions(+), 14 deletions(-)
+ json-glib/json-generator.c |   54 ++++++++++++++++++++++++++++++++------------
+ 1 file changed, 40 insertions(+), 14 deletions(-)
 
 commit 58133b51152ca76b8cb5c93b5991f9b1a565e9a9
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6215,7 +6641,7 @@ Date:   Wed Nov 21 01:20:20 2007 +0000
     and not G_TYPE_FLOAT anymore.
 
  json-glib/json-generator.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit 80006db7bcea2bd8c44a648a64ba3da6a05a6fd1
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6226,8 +6652,8 @@ Date:   Tue Nov 20 18:30:42 2007 +0000
     Update the GObject deserialization test suite to check for the correct
     deserialization of the enum/flags values.
 
- tests/test-08.c |   60 ++++++++++++++++++++++++++++++++++++++++++++++++------
- 1 files changed, 53 insertions(+), 7 deletions(-)
+ tests/test-08.c |   60 ++++++++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 53 insertions(+), 7 deletions(-)
 
 commit 1110e098fa879abf7f67f24af2a1b736ce359dd6
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6242,7 +6668,7 @@ Date:   Tue Nov 20 18:20:33 2007 +0000
     This code is taken from ClutterScript and it was adapted from GtkBuilder.
 
  json-glib/json-gobject.c |  170 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 170 insertions(+), 0 deletions(-)
+ 1 file changed, 170 insertions(+)
 
 commit 2674ce68e574cebeca147944cf748b41fbe27507
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6251,7 +6677,7 @@ Date:   Tue Nov 13 11:34:05 2007 +0000
     Bump up to 0.5.0
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit c1547eb3aba6f09b3ce4c23bd66a798e03b35a34
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6261,7 +6687,7 @@ Date:   Tue Nov 13 11:29:19 2007 +0000
 
  NEWS         |    9 +++++++++
  configure.ac |    2 +-
- 2 files changed, 10 insertions(+), 1 deletions(-)
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
 commit 03325e108e40d5deba979852ee402d7d6579ac81
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6270,7 +6696,7 @@ Date:   Tue Nov 13 11:20:34 2007 +0000
     Fix variable shadowing for distcheck
 
  json-glib/json-parser.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit afeec9b40468d289351c78007b5122ff716bb977
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6279,7 +6705,7 @@ Date:   Tue Nov 13 11:16:51 2007 +0000
     Add 0.4 symbols index
 
  doc/reference/json-glib-docs.sgml |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+ 1 file changed, 4 insertions(+)
 
 commit 32023e03ca9c976e66b9af949d4aea36e1d4d874
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6291,7 +6717,7 @@ Date:   Tue Nov 13 10:59:14 2007 +0000
     a property into a JSON object member and vice versa.
 
  json-glib/json-gobject.c |   15 ++++++++-------
- 1 files changed, 8 insertions(+), 7 deletions(-)
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
 commit c669a28d37795be68f3a51e9353f6f9d8e695a52
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6300,7 +6726,7 @@ Date:   Tue Nov 13 10:55:23 2007 +0000
     Add new symbols to the documentation
 
  doc/reference/json-glib-sections.txt |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 commit b83a2bfa96885837ca48bacb6492fd68a2b5b564
 Merge: 1f9b3e5 198ed83
@@ -6333,7 +6759,7 @@ Date:   Tue Nov 13 10:46:02 2007 +0000
  .gitignore        |    2 +
  tests/Makefile.am |    4 +-
  tests/test-08.c   |  291 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 296 insertions(+), 1 deletions(-)
+ 3 files changed, 296 insertions(+), 1 deletion(-)
 
 commit 7b93db7ad996b29a6c576db33803029dc94e16fc
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6346,7 +6772,7 @@ Date:   Tue Nov 13 10:45:23 2007 +0000
     way around.
 
  json-glib/json-gobject.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 commit 9e61004365982017bfe9b76889e2a7d1a0320350
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6355,7 +6781,7 @@ Date:   Tue Nov 13 10:11:34 2007 +0000
     Update git ignore file
 
  .gitignore |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ 1 file changed, 2 insertions(+)
 
 commit 4b496c7d906c81dceafe6a5f442b55b6e161f762
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6370,8 +6796,8 @@ Date:   Tue Nov 13 10:11:00 2007 +0000
     It will natively convert integers, booleans, strings and double precision
     floating point values; it also handles string vectors in form of arrays.
 
- json-glib/json-gobject.c |   94 +++++++++++++++++++++++++++++++++++++++++----
- 1 files changed, 85 insertions(+), 9 deletions(-)
+ json-glib/json-gobject.c |   94 +++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 85 insertions(+), 9 deletions(-)
 
 commit a7c39c910e08093ee0d0723685005623f26b9eae
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6394,7 +6820,7 @@ Date:   Tue Nov 13 09:28:57 2007 +0000
     feeding it to the JsonGenerator.
 
  json-glib/json-generator.c |   30 ++++++++++++++++++++++++++++--
- 1 files changed, 28 insertions(+), 2 deletions(-)
+ 1 file changed, 28 insertions(+), 2 deletions(-)
 
 commit 6132d7325c33e26740b4c955d8ccbe53fd817cd8
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6405,7 +6831,7 @@ Date:   Tue Nov 13 09:26:02 2007 +0000
     JsonNode payload is inside a union.
 
  json-glib/json-node.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit f051b948714e4928a7d7f903e891639ce4ba82fd
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6433,7 +6859,7 @@ Date:   Sat Nov 10 15:12:20 2007 +0000
 
  json-glib/json-parser.c |   12 +++++++++++-
  tests/test-02.c         |    1 +
- 2 files changed, 12 insertions(+), 1 deletions(-)
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
 commit 261d05a4cdcc1f64824615cdc81b4b467d0a5f57
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6458,8 +6884,8 @@ Date:   Sat Nov 10 02:15:44 2007 +0000
 
  doc/reference/json-glib-sections.txt |    1 +
  json-glib/json-parser.c              |   80 +++++++++++++++++++++++++++++++++-
- json-glib/json-parser.h              |    5 ++
- tests/test-02.c                      |    5 ++
+ json-glib/json-parser.h              |    5 +++
+ tests/test-02.c                      |    5 +++
  4 files changed, 89 insertions(+), 2 deletions(-)
 
 commit 45c697263364a975fd6a54373f999f2932436b6f
@@ -6488,7 +6914,7 @@ Date:   Mon Oct 29 22:23:36 2007 +0000
     Fix objects test suite to match the arrays one
 
  tests/test-03.c |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 commit 3948d83795d68d665b8b969c08b6c40498eb2661
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6499,7 +6925,7 @@ Date:   Mon Oct 29 22:23:07 2007 +0000
     Add a check for commas after complex data types inside object members.
 
  json-glib/json-parser.c |    8 +++++++-
- 1 files changed, 7 insertions(+), 1 deletions(-)
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 commit 6182457fa305a1f159e9009d3fbef42a93f2768e
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6511,7 +6937,7 @@ Date:   Mon Oct 29 22:17:44 2007 +0000
     use G_TYPE_DOUBLE instead of G_TYPE_FLOAT for the floating point values.
 
  tests/test-02.c |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 commit 25cdc18be8acdad54561f919c5805ad4fa9b3ac9
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6522,7 +6948,7 @@ Date:   Mon Oct 29 22:16:31 2007 +0000
     Catch missing commas after an array element or an object member.
 
  json-glib/json-parser.c |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
+ 1 file changed, 10 insertions(+)
 
 commit 812422e4ed4df83374cdda6d94637448ab94dfef
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6539,7 +6965,7 @@ Date:   Mon Oct 29 18:18:34 2007 +0000
     which should make the JsonParser hopefully complete.
 
  json-glib/json-parser.c |  123 +++++++++++++++++++++++++++++++++++++++--------
- 1 files changed, 103 insertions(+), 20 deletions(-)
+ 1 file changed, 103 insertions(+), 20 deletions(-)
 
 commit 72d007d865a822875dfa311698fb2d13f5d3df69
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6551,7 +6977,7 @@ Date:   Mon Oct 29 18:16:24 2007 +0000
     we need to check if the payload of JsonNode is set to avoid a critical.
 
  json-glib/json-node.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 commit 59a66484befba457eda2ee7a9540f2b33ff04031
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6564,7 +6990,7 @@ Date:   Tue Oct 16 23:20:22 2007 +0100
 
  tests/Makefile.am |    4 +-
  tests/test-07.c   |  265 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 268 insertions(+), 1 deletions(-)
+ 2 files changed, 268 insertions(+), 1 deletion(-)
 
 commit 34515af7bb1d69317b9e52d0ced92beaf6770e7d
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6575,7 +7001,7 @@ Date:   Tue Oct 16 23:19:35 2007 +0100
     A placeholder, while syntactically correct, won't do.
 
  json-glib/json-gobject.c |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+ 1 file changed, 6 insertions(+)
 
 commit 0656c4bee8e14c375481c89a62f0e6e95be758ce
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6587,7 +7013,7 @@ Date:   Tue Oct 16 23:18:47 2007 +0100
     variable and you don't run the test suite to check the results.
 
  json-glib/json-generator.c |   10 ++++++----
- 1 files changed, 6 insertions(+), 4 deletions(-)
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 commit 88794df33e08cb409f71d1aaf702cd509b600954
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6596,7 +7022,7 @@ Date:   Tue Oct 16 19:53:27 2007 +0100
     Bump up to 0.3.0
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 0ce3bf30d84aedcf5f8f75e6c1112d91dcc1d654
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6605,7 +7031,7 @@ Date:   Tue Oct 16 19:49:42 2007 +0100
     Bump up to 0.2.0
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 77248800533f3dabfb09dfa8ba32e3084ea62d5f
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6614,7 +7040,7 @@ Date:   Tue Oct 16 19:43:27 2007 +0100
     Fix DISTCHECK configure flags
 
  Makefile.am |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 70be36c97a8cd598af061eb9ac5a9a5852858682
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6636,7 +7062,7 @@ Date:   Tue Oct 16 19:41:18 2007 +0100
     Some autogenerated code caused -Werror to croak, so -Wextra has to go.
 
  configure.ac |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 commit 9c690da734ee4513f19841f93a08ae35bbaa65b1
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6645,7 +7071,7 @@ Date:   Tue Oct 16 18:20:19 2007 +0100
     Autogenerate the ChangeLog when disting
 
  Makefile.am |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+ 1 file changed, 5 insertions(+)
 
 commit 95fc9c4fb5af82c766d2f4f515b361028bc348e7
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6654,7 +7080,7 @@ Date:   Tue Oct 16 18:20:01 2007 +0100
     Fix EXTRA_DIST files for distcheck
 
  json-glib/Makefile.am |   16 +++++++++-------
- 1 files changed, 9 insertions(+), 7 deletions(-)
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
 commit 87a36b8a5e23f3cf80730627f9b89061934a5bbf
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6685,7 +7111,7 @@ Date:   Tue Oct 16 17:25:08 2007 +0100
  doc/reference/json-glib-sections.txt |    1 +
  json-glib/json-object.c              |   41 ++++++++++++++++++++++++++++++++++
  json-glib/json-types.h               |    1 +
- 3 files changed, 43 insertions(+), 0 deletions(-)
+ 3 files changed, 43 insertions(+)
 
 commit 474ecf1cc6aae35b184edffc75fc8626c3f12f61
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6694,7 +7120,7 @@ Date:   Tue Oct 16 16:40:57 2007 +0100
     Add a note in the JsonObject documentation for the member name normalization
 
  json-glib/json-object.c |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 commit 93e26b94d9bb1909f3b16a4b0500f27660d7e621
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6710,7 +7136,7 @@ Date:   Tue Oct 16 16:37:01 2007 +0100
     for a JsonObject.
 
  json-glib/json-object.c |   31 ++++++++++++++++++++++++++-----
- 1 files changed, 26 insertions(+), 5 deletions(-)
+ 1 file changed, 26 insertions(+), 5 deletions(-)
 
 commit 73a7671dedfd3bb9bc1a8c197a68dcef90e627f7
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6725,7 +7151,7 @@ Date:   Mon Oct 15 10:28:39 2007 +0100
 
  configure.ac            |    2 +-
  json-glib/json-object.c |   25 +++++++++++++++++++++++++
- 2 files changed, 26 insertions(+), 1 deletions(-)
+ 2 files changed, 26 insertions(+), 1 deletion(-)
 
 commit 28928a2f1cbe83a2f1bf699c915daa6eca80f587
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6741,8 +7167,8 @@ Date:   Mon Oct 15 10:25:09 2007 +0100
  doc/reference/json-glib-sections.txt |    2 +
  json-glib/json-array.c               |   18 +++++
  json-glib/json-object.c              |   17 +++++
- json-glib/json-types.h               |  120 +++++++++++++++++----------------
- 4 files changed, 99 insertions(+), 58 deletions(-)
+ json-glib/json-types.h               |  126 ++++++++++++++++++----------------
+ 4 files changed, 102 insertions(+), 61 deletions(-)
 
 commit b3ecd6e2fbdd58250427f406c43d60b8cb8d2644
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6756,8 +7182,8 @@ Date:   Wed Oct 10 12:03:59 2007 +0100
     Also, use the commodity JsonNode API to avoid using values in the parser
     code.
 
- json-glib/json-parser.c |   79 +++++++++++++++++-----------------------------
- 1 files changed, 29 insertions(+), 50 deletions(-)
+ json-glib/json-parser.c |   79 +++++++++++++++++------------------------------
+ 1 file changed, 29 insertions(+), 50 deletions(-)
 
 commit a7839a06da53d32eb372b4813e5883a04e1c36b7
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6766,7 +7192,7 @@ Date:   Tue Oct 9 20:52:56 2007 +0100
     Add the forgotten JsonGenerator type function
 
  doc/reference/json-glib.types |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ 1 file changed, 1 insertion(+)
 
 commit daeef3345c3a7f3325cea8c945f0e1d814defcc1
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6780,7 +7206,7 @@ Date:   Mon Oct 8 18:29:44 2007 +0100
  doc/reference/json-glib-sections.txt |    1 +
  json-glib/json-node.c                |   20 ++++++++++++++++++++
  json-glib/json-types.h               |    1 +
- 3 files changed, 22 insertions(+), 0 deletions(-)
+ 3 files changed, 22 insertions(+)
 
 commit b12efcec57fff6e7637fc924fc50333b97eb2594
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6808,7 +7234,7 @@ Date:   Fri Oct 5 18:24:27 2007 +0100
  doc/reference/json-glib-sections.txt |    8 ++
  json-glib/json-node.c                |  201 ++++++++++++++++++++++++++++++++++
  json-glib/json-types.h               |   12 ++
- 3 files changed, 221 insertions(+), 0 deletions(-)
+ 3 files changed, 221 insertions(+)
 
 commit ad95c8bf8e4103058d42ae71f47e6980e3b52c34
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6821,7 +7247,7 @@ Date:   Fri Oct 5 18:23:15 2007 +0100
     parsed constants into a GValue.
 
  json-glib/json-parser.c |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 commit 220838e4e61c5a8fd9cf627da7309acf44fa82f0
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6833,9 +7259,9 @@ Date:   Fri Oct 5 16:39:10 2007 +0100
     and position within that line. These methods works only while parsing,
     so within the signal handlers and inside subclasses.
 
- doc/reference/json-glib-sections.txt |    6 ++++
- json-glib/json-parser.c              |   46 +++++++++++++++++++++++++++++++--
- json-glib/json-parser.h              |   21 +++++++++------
+ doc/reference/json-glib-sections.txt |    6 +++++
+ json-glib/json-parser.c              |   46 +++++++++++++++++++++++++++++++---
+ json-glib/json-parser.h              |   21 +++++++++-------
  3 files changed, 61 insertions(+), 12 deletions(-)
 
 commit ea5ee264a5b82fd1d09fa84ec81e17c4ea0d0c4a
@@ -6845,8 +7271,8 @@ Date:   Fri Oct 5 15:13:21 2007 +0100
     Document the newly added signals
 
  json-glib/json-parser.c |   64 +++++++++++++++++++++++++++++++++++++++++++++++
- json-glib/json-parser.h |   10 ++++++-
- 2 files changed, 73 insertions(+), 1 deletions(-)
+ json-glib/json-parser.h |   10 +++++++-
+ 2 files changed, 73 insertions(+), 1 deletion(-)
 
 commit fa9d1676da588306be5a14bcab100ad58a41b799
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6860,8 +7286,8 @@ Date:   Fri Oct 5 11:59:44 2007 +0100
     These signals require the addition of some custom marshaller.
 
  json-glib/json-marshal.list |    4 ++
- json-glib/json-parser.c     |  118 +++++++++++++++++++++++++++++++++++++++++-
- json-glib/json-parser.h     |   25 ++++++++-
+ json-glib/json-parser.c     |  118 +++++++++++++++++++++++++++++++++++++++++--
+ json-glib/json-parser.h     |   25 +++++++--
  3 files changed, 141 insertions(+), 6 deletions(-)
 
 commit aa2b31234f7cfac63b870e8d9d74e682b3121d4a
@@ -6891,7 +7317,7 @@ Date:   Tue Oct 2 12:13:23 2007 +0100
 
  doc/reference/json-glib-docs.sgml    |    6 ++++++
  doc/reference/json-glib-sections.txt |    6 ++++++
- 2 files changed, 12 insertions(+), 0 deletions(-)
+ 2 files changed, 12 insertions(+)
 
 commit cea3f69f2cde1cb4e6ea9242f6014b31864ad80f
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6902,7 +7328,7 @@ Date:   Tue Oct 2 12:12:49 2007 +0100
  .gitignore        |    2 +
  tests/Makefile.am |    4 +-
  tests/test-06.c   |  154 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 159 insertions(+), 1 deletions(-)
+ 3 files changed, 159 insertions(+), 1 deletion(-)
 
 commit 3666613e47b66d67a28bc06c6dcf678fe97eae50
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6917,7 +7343,7 @@ Date:   Tue Oct 2 12:11:55 2007 +0100
  json-glib/Makefile.am    |    2 +
  json-glib/json-gobject.c |  169 ++++++++++++++++++++++++++++++++++++++++++++++
  json-glib/json-gobject.h |   33 +++++++++
- 4 files changed, 205 insertions(+), 0 deletions(-)
+ 4 files changed, 205 insertions(+)
 
 commit 8398253c76cf5dda23891b49b1aaa49e57d95a8d
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6935,7 +7361,7 @@ Date:   Tue Oct 2 10:03:00 2007 +0100
  .gitignore        |    2 +
  tests/Makefile.am |    4 +-
  tests/test-05.c   |  217 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 222 insertions(+), 1 deletions(-)
+ 3 files changed, 222 insertions(+), 1 deletion(-)
 
 commit 2b25dbfa802f9af6e76fbe72140b687535cae8e5
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6946,7 +7372,7 @@ Date:   Tue Oct 2 08:07:56 2007 +0100
     JsonGenerator can now create objects and array-nested objects, with and without
     pretty printing. The test suite has been updated accordingly.
 
- json-glib/json-generator.c |  125 ++++++++++++++++++++++++++++++++++++++++++-
+ json-glib/json-generator.c |  125 ++++++++++++++++++++++++++++++++++++++++++--
  tests/test-04.c            |   68 ++++++++++++++++++++++++
  2 files changed, 190 insertions(+), 3 deletions(-)
 
@@ -6959,9 +7385,9 @@ Date:   Mon Oct 1 23:07:18 2007 +0100
     JsonGenerator now supports nested arrays, both with and without pretty
     printing. The tests suite has been updated accordingly.
 
- json-glib/json-generator.c |   10 +++++++
+ json-glib/json-generator.c |   10 ++++++++
  tests/test-04.c            |   61 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 71 insertions(+), 0 deletions(-)
+ 2 files changed, 71 insertions(+)
 
 commit 6f4dd6b154a150e8b4221800b61f85e5c4277d1b
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6985,7 +7411,7 @@ Date:   Mon Oct 1 22:22:12 2007 +0100
     Update list of git ignored files
 
  .gitignore |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+ 1 file changed, 5 insertions(+)
 
 commit 47b34271f989cb5f2ba01a633d003adb6052cbd1
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -6995,7 +7421,7 @@ Date:   Mon Oct 1 22:20:23 2007 +0100
 
  tests/Makefile.am |    4 +++-
  tests/test-04.c   |   29 +++++++++++++++++++++++++++++
- 2 files changed, 32 insertions(+), 1 deletions(-)
+ 2 files changed, 32 insertions(+), 1 deletion(-)
 
 commit 8edb4ef3232428ac9e548ae6c1dfa2328bf7198c
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7004,7 +7430,7 @@ Date:   Mon Oct 1 22:19:28 2007 +0100
     Add missing json-generator.h header
 
  json-glib/json-glib.h |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ 1 file changed, 1 insertion(+)
 
 commit f09acae8e0d6ceba5d13de75551491835a7e71de
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7015,7 +7441,7 @@ Date:   Mon Oct 1 19:49:43 2007 +0100
     Now that we moved the constructors and setters for the JSON data types into
     the public symbols we need to document them to get back to 100% doc coverage.
 
- doc/reference/json-glib-sections.txt |   26 ++++++++++-
+ doc/reference/json-glib-sections.txt |   26 +++++++++++-
  json-glib/json-array.c               |   22 ++++++++++
  json-glib/json-node.c                |   78 ++++++++++++++++++++++++++++++++++
  json-glib/json-object.c              |   15 +++++++
@@ -7040,8 +7466,8 @@ Date:   Mon Oct 1 18:01:20 2007 +0100
  json-glib/json-object.c    |    1 -
  json-glib/json-parser.c    |    1 -
  json-glib/json-private.h   |   35 -----------------------------------
- json-glib/json-types.h     |   36 ++++++++++++++++++++++++++++++------
- 8 files changed, 31 insertions(+), 47 deletions(-)
+ json-glib/json-types.h     |   38 +++++++++++++++++++++++++++++++-------
+ 8 files changed, 32 insertions(+), 48 deletions(-)
 
 commit bfa60e9ef9da71e3c0d171f81cd08e8eac749061
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7058,7 +7484,7 @@ Date:   Mon Oct 1 17:48:34 2007 +0100
  json-glib/Makefile.am                |    2 +
  json-glib/json-generator.c           |  255 ++++++++++++++++++++++++++++++++++
  json-glib/json-generator.h           |   82 +++++++++++
- 5 files changed, 365 insertions(+), 0 deletions(-)
+ 5 files changed, 365 insertions(+)
 
 commit 41849494890f1f51bc7c4429f0ee7b5d168da302
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7067,7 +7493,7 @@ Date:   Mon Oct 1 16:37:14 2007 +0100
     Fix ids inside the main documentation index
 
  doc/reference/json-glib-docs.sgml |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 commit c3f8ea960ef7f8733969d9fb0f71531bc7449a16
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7079,7 +7505,7 @@ Date:   Mon Oct 1 16:25:47 2007 +0100
 
  json-glib/json-parser.h |   19 +++++++++++++++++++
  json-glib/json-types.h  |   20 ++++++++++++++++++++
- 2 files changed, 39 insertions(+), 0 deletions(-)
+ 2 files changed, 39 insertions(+)
 
 commit 2211e4e60b90b92d868c9b5f6b61e133d2435b4d
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7091,7 +7517,7 @@ Date:   Mon Oct 1 16:25:11 2007 +0100
     the declared json_node_get_parent() function.
 
  json-glib/json-node.c |   16 ++++++++++++++++
- 1 files changed, 16 insertions(+), 0 deletions(-)
+ 1 file changed, 16 insertions(+)
 
 commit 29feafc236f888021b817fdfe0cfe685f5e3b65e
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7100,12 +7526,12 @@ Date:   Mon Oct 1 16:16:15 2007 +0100
     Add licensing informations to the source code
 
  json-glib/json-array.c      |   29 ++++++++++++++++++++++++
- json-glib/json-node.c       |   52 ++++++++++++++++++++++++++++++++++++------
- json-glib/json-object.c     |   34 ++++++++++++++++++++++++---
- json-glib/json-parser.c     |   28 +++++++++++++++++++++-
- json-glib/json-parser.h     |   19 +++++++++++++++
+ json-glib/json-node.c       |   52 ++++++++++++++++++++++++++++++++++++-------
+ json-glib/json-object.c     |   34 ++++++++++++++++++++++++----
+ json-glib/json-parser.c     |   28 +++++++++++++++++++++--
+ json-glib/json-parser.h     |   19 ++++++++++++++++
  json-glib/json-types.h      |   35 +++++++++++++++++++++++++++++
- json-glib/json-version.h.in |   19 +++++++++++++++
+ json-glib/json-version.h.in |   19 ++++++++++++++++
  7 files changed, 202 insertions(+), 14 deletions(-)
 
 commit 6eb1a5e94957d3555e7de5f6744a8777cd89efaf
@@ -7115,7 +7541,7 @@ Date:   Mon Oct 1 15:55:04 2007 +0100
     Fix a stray newline in the documentation
 
  doc/reference/json-glib-docs.sgml |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 commit a5ecf553082816a1ce6c4354ff23e8addf8d9c80
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7124,7 +7550,7 @@ Date:   Mon Oct 1 15:52:54 2007 +0100
     Update git ignore file
 
  .gitignore |   22 ++++++++++++++++++++++
- 1 files changed, 22 insertions(+), 0 deletions(-)
+ 1 file changed, 22 insertions(+)
 
 commit 9bdee4c01adef7e9d7ed18d5dd94671057f1459b
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7151,7 +7577,7 @@ Date:   Mon Oct 1 14:57:39 2007 +0100
     Add more test cases for the object parsing
 
  tests/test-03.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+ 1 file changed, 3 insertions(+)
 
 commit 79423943a8588a8ed6d5bedbc038255111897261
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7163,7 +7589,7 @@ Date:   Mon Oct 1 14:57:25 2007 +0100
     swallowed by the parser as soon as possible.
 
  json-glib/json-parser.c |   25 ++++++++++++++++---------
- 1 files changed, 16 insertions(+), 9 deletions(-)
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
 commit e711b883dba88d68b6986d87f14a06361cf54be7
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7172,7 +7598,7 @@ Date:   Mon Oct 1 14:46:31 2007 +0100
     Update gitignore
 
  .gitignore |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+ 1 file changed, 3 insertions(+)
 
 commit 591989c80b16fe68bdd79bcc7759a4249fdaf129
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7198,7 +7624,7 @@ Date:   Mon Oct 1 14:44:51 2007 +0100
     a JSON parser.
 
  json-glib/json-parser.c |  235 ++++++++++++++++++++++++++++++++++++++++++++---
- 1 files changed, 220 insertions(+), 15 deletions(-)
+ 1 file changed, 220 insertions(+), 15 deletions(-)
 
 commit fd89ad3d7127e68df06345fa52863e73ada93689
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7212,7 +7638,7 @@ Date:   Mon Oct 1 14:43:12 2007 +0100
     setting them into the JsonNodes.
 
  json-glib/json-private.h |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+ 1 file changed, 4 insertions(+)
 
 commit b2ee98f9b0baac019540020e177189b6a3780b83
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7224,7 +7650,7 @@ Date:   Mon Oct 1 13:01:32 2007 +0100
     of the newly created ones.
 
  json-glib/json-parser.c |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 commit 88b11be5eec1da769328e93189bc2f3316c9cd0a
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7251,14 +7677,14 @@ Date:   Mon Oct 1 12:57:46 2007 +0100
  json-glib/json-array.c   |   64 +++++------
  json-glib/json-data.c    |   93 ----------------
  json-glib/json-node.c    |  269 ++++++++++++++++++++++++++++++++++++++++++++++
- json-glib/json-object.c  |   44 ++------
+ json-glib/json-object.c  |   44 +++-----
  json-glib/json-parser.c  |   87 +++++++++++----
  json-glib/json-parser.h  |    2 +-
- json-glib/json-private.h |   38 +++----
- json-glib/json-types.h   |   55 ++++++----
+ json-glib/json-private.h |   38 ++++---
+ json-glib/json-types.h   |   59 +++++-----
  tests/test-01.c          |    2 +-
  tests/test-02.c          |  112 ++++++++++++++++++-
- 11 files changed, 533 insertions(+), 235 deletions(-)
+ 11 files changed, 535 insertions(+), 237 deletions(-)
 
 commit c11ebd32f73a1e21d6097bf9eba8e12f7e35497a
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7273,9 +7699,9 @@ Date:   Fri Sep 21 21:07:12 2007 +0100
 
  json-glib/Makefile.am    |    1 +
  json-glib/json-data.c    |   93 ++++++++++++++++++++++++++++++++++++++++++++++
- json-glib/json-private.h |    7 +++
- json-glib/json-types.h   |   49 +++++++++++++++++-------
- 4 files changed, 136 insertions(+), 14 deletions(-)
+ json-glib/json-private.h |    7 ++++
+ json-glib/json-types.h   |   53 ++++++++++++++++++--------
+ 4 files changed, 138 insertions(+), 16 deletions(-)
 
 commit f661c7e1a04c2fb198279030c9dd812f357240a3
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7288,7 +7714,7 @@ Date:   Fri Sep 21 21:05:12 2007 +0100
     after we have finished parsing a nested array.
 
  json-glib/json-parser.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ 1 file changed, 2 insertions(+)
 
 commit ae3a66e6a90b6cfd71cb8c41c0d752fd1b0a67cc
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7297,7 +7723,7 @@ Date:   Fri Sep 21 20:15:52 2007 +0100
     Update gitignore file
 
  .gitignore |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
+ 1 file changed, 7 insertions(+)
 
 commit 7875c5f573fdc6c2a39e958d2032f4c26d1f91ff
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7317,7 +7743,7 @@ Date:   Fri Sep 21 20:14:49 2007 +0100
  tests/Makefile.am |   12 ++++++++++++
  tests/test-01.c   |   31 +++++++++++++++++++++++++++++++
  tests/test-02.c   |   52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 95 insertions(+), 0 deletions(-)
+ 3 files changed, 95 insertions(+)
 
 commit 81ad2e5c61db2391d2d98a6b5df1247e3abf16ec
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7331,7 +7757,7 @@ Date:   Fri Sep 21 20:12:02 2007 +0100
     pass at the problem.
 
  json-glib/json-parser.c |  114 ++++++++++++++++++++++++++++++++++++++++-------
- 1 files changed, 97 insertions(+), 17 deletions(-)
+ 1 file changed, 97 insertions(+), 17 deletions(-)
 
 commit b433703db6722785e33f968830e23c5806230ac2
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7340,7 +7766,7 @@ Date:   Fri Sep 21 12:16:15 2007 +0100
     Add RFC 4627 text, where JSON is defined
 
  doc/rfc4627.txt |  563 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 563 insertions(+), 0 deletions(-)
+ 1 file changed, 563 insertions(+)
 
 commit c77af0ec13e3e11cdb784510e6a75125bb8ef667
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7352,7 +7778,7 @@ Date:   Fri Sep 21 12:08:09 2007 +0100
     only express objects and/or arrays as top-levels.
 
  json-glib/json-parser.c |   24 ++++++++++++++----------
- 1 files changed, 14 insertions(+), 10 deletions(-)
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
 commit 0ff67fb63c5e021b88d6a3d17c5e34dc95ac2676
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7361,7 +7787,7 @@ Date:   Fri Sep 21 11:58:00 2007 +0100
     Update gitignore file
 
  .gitignore |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+ 1 file changed, 4 insertions(+)
 
 commit d98d8c3d245192abe6ec5a531c9d0d678b07d061
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7385,7 +7811,7 @@ Date:   Fri Sep 21 11:54:40 2007 +0100
     GScanner should really get a way to retrieve the last error message.
 
  json-glib/json-parser.c |  266 ++++++++++++++++++++++++++++++++++++++++++++++-
- json-glib/json-parser.h |   28 +++++-
+ json-glib/json-parser.h |   28 ++++-
  2 files changed, 290 insertions(+), 4 deletions(-)
 
 commit cd1040e2fb6f6da50aaf72017746b33234c39704
@@ -7408,7 +7834,7 @@ Date:   Thu Sep 20 20:41:09 2007 +0100
     Add gitignore file
 
  .gitignore |   29 +++++++++++++++++++++++++++++
- 1 files changed, 29 insertions(+), 0 deletions(-)
+ 1 file changed, 29 insertions(+)
 
 commit c5bfb22f964b8f1feecdc8fb29d8a74b36861d32
 Author: Emmanuele Bassi <ebassi@openedhand.com>
@@ -7440,4 +7866,4 @@ Date:   Thu Sep 20 17:33:28 2007 +0100
  json-glib/json-private.h     |   26 +++
  json-glib/json-types.h       |   32 +++
  json-glib/json-version.h.in  |   65 ++++++
- 19 files changed, 1551 insertions(+), 0 deletions(-)
+ 19 files changed, 1551 insertions(+)

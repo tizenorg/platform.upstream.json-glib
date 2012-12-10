@@ -70,7 +70,7 @@ according to the following table:
 <p>
 </p>
 <div class="table">
-<a name="id2971653"></a><p class="title"><b>Table 2. Default JSON to GVariant conversion (without signature constrains)</b></p>
+<a name="id549765"></a><p class="title"><b>Table 2. Default JSON to GVariant conversion (without signature constrains)</b></p>
 <div class="table-contents"><table summary="Default JSON to GVariant conversion (without signature constrains)" border="1">
 <colgroup>
 <col>
@@ -160,7 +160,7 @@ JSON tree, and then <a class="link" href="JsonGenerator.html" title="JsonGenerat
 <tr>
 <td><p><span class="term"><em class="parameter"><code>length</code></em> :</span></p></td>
 <td>Return location for the length of the returned
-string, or <a href="/home/ebassi/gnome3/install/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+string, or <code class="literal">NULL</code>. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
 </td>
 </tr>
 <tr>
@@ -185,11 +185,11 @@ resolve ambiguous data types. If no error occurs, the resulting <span class="typ
 is guaranteed to conform to <em class="parameter"><code>signature</code></em>.
 </p>
 <p>
-If <em class="parameter"><code>signature</code></em> is not <a href="/home/ebassi/gnome3/install/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> but does not represent a valid GVariant type
-string, <a href="/home/ebassi/gnome3/install/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> is returned and error is set to <code class="literal">G_IO_ERROR_INVALID_ARGUMENT</code>.
+If <em class="parameter"><code>signature</code></em> is not <code class="literal">NULL</code> but does not represent a valid GVariant type
+string, <code class="literal">NULL</code> is returned and error is set to <code class="literal">G_IO_ERROR_INVALID_ARGUMENT</code>.
 If a <em class="parameter"><code>signature</code></em> is provided but the JSON structure cannot be mapped to it,
-<a href="/home/ebassi/gnome3/install/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> is returned and error is set to <code class="literal">G_IO_ERROR_INVALID_DATA</code>.
-If <em class="parameter"><code>signature</code></em> is <a href="/home/ebassi/gnome3/install/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>, the conversion is done based strictly on the types
+<code class="literal">NULL</code> is returned and error is set to <code class="literal">G_IO_ERROR_INVALID_DATA</code>.
+If <em class="parameter"><code>signature</code></em> is <code class="literal">NULL</code>, the conversion is done based strictly on the types
 in the JSON nodes.
 </p>
 <div class="variablelist"><table border="0">
@@ -201,7 +201,7 @@ in the JSON nodes.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>signature</code></em> :</span></p></td>
-<td>A valid <span class="type">GVariant</span> type string, or <a href="/home/ebassi/gnome3/install/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+<td>A valid <span class="type">GVariant</span> type string, or <code class="literal">NULL</code>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
 </td>
 </tr>
 <tr>
@@ -212,7 +212,7 @@ in the JSON nodes.
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>A newly created <span class="type">GVariant</span> compliant with
-<em class="parameter"><code>signature</code></em>, or <a href="/home/ebassi/gnome3/install/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> on error. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+<em class="parameter"><code>signature</code></em>, or <code class="literal">NULL</code> on error. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
 </td>
 </tr>
 </tbody>
@@ -241,11 +241,11 @@ The string is first converted to a <a class="link" href="json-glib-JSON-Node.htm
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>length</code></em> :</span></p></td>
-<td>The length of <em class="parameter"><code>json</code></em>, or -1 if <a href="/home/ebassi/gnome3/install/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>-terminated</td>
+<td>The length of <em class="parameter"><code>json</code></em>, or -1 if <code class="literal">NULL</code>-terminated</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>signature</code></em> :</span></p></td>
-<td>A valid <span class="type">GVariant</span> type string, or <a href="/home/ebassi/gnome3/install/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+<td>A valid <span class="type">GVariant</span> type string, or <code class="literal">NULL</code>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
 </td>
 </tr>
 <tr>
@@ -256,7 +256,7 @@ The string is first converted to a <a class="link" href="json-glib-JSON-Node.htm
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>A newly created <span class="type">GVariant</span> compliant with
-<em class="parameter"><code>signature</code></em>, or <a href="/home/ebassi/gnome3/install/share/gtk-doc/html/liboil/liboil-liboiljunk.html#NULL--CAPS"><code class="literal">NULL</code></a> on error. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+<em class="parameter"><code>signature</code></em>, or <code class="literal">NULL</code> on error. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
 </td>
 </tr>
 </tbody>

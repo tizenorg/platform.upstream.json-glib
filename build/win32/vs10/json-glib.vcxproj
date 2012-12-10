@@ -189,6 +189,7 @@
     <ClCompile Include="..\..\..\json-glib\./json-gboxed.c" />
     <ClCompile Include="..\..\..\json-glib\./json-generator.c" />
     <ClCompile Include="..\..\..\json-glib\./json-gobject.c" />
+    <ClCompile Include="..\..\..\json-glib\./json-gvariant.c" />
     <ClCompile Include="..\..\..\json-glib\./json-node.c" />
     <ClCompile Include="..\..\..\json-glib\./json-object.c" />
     <ClCompile Include="..\..\..\json-glib\./json-parser.c" />
@@ -196,7 +197,7 @@
     <ClCompile Include="..\..\..\json-glib\./json-reader.c" />
     <ClCompile Include="..\..\..\json-glib\./json-scanner.c" />
     <ClCompile Include="..\..\..\json-glib\./json-serializable.c" />
-    <ClCompile Include="..\..\..\json-glib\./json-gvariant.c" />
+    <ClCompile Include="..\..\..\json-glib\./json-value.c" />
     <ClCompile Include="..\..\..\json-glib\json-enum-types.c" />
     <ClCompile Include="..\..\..\json-glib\json-marshal.c" />
   </ItemGroup>
