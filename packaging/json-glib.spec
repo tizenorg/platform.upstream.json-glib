@@ -1,13 +1,13 @@
 %bcond_with introspection
 
 Name:           json-glib
-Version:        0.14.2
+Version:        0.15.2
 Release:        0
 License:        LGPL-2.1+
 Summary:        Library for JavaScript Object Notation format
 Url:            http://live.gnome.org/JsonGlib
 Group:          Development/Libraries/C and C++
-Source0:        http://download.gnome.org/sources/json-glib/0.14/%{name}-%{version}.tar.bz2
+Source0:        http://download.gnome.org/sources/json-glib/0.15/%{name}-%{version}.tar.xz
 Source99:       baselibs.conf
 %if %{with introspection}
 BuildRequires:  gobject-introspection-devel
