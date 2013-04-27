@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JsonBuilder</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="JSON-GLib Reference Manual">
 <link rel="up" href="ch03.html" title="Generator">
 <link rel="prev" href="JsonGenerator.html" title="JsonGenerator">
@@ -119,8 +119,11 @@ private data
 Creates a new <a class="link" href="JsonBuilder.html" title="JsonBuilder"><span class="type">JsonBuilder</span></a>. You can use this object to generate a
 JSON tree and obtain the root <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a>s.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>the newly created <a class="link" href="JsonBuilder.html" title="JsonBuilder"><span class="type">JsonBuilder</span></a> instance</td>
@@ -135,8 +138,11 @@ JSON tree and obtain the root <a class="link" href="json-glib-JSON-Node.html#Jso
 Returns the root of the current constructed tree, if the build is complete
 (ie: all opened objects, object members and arrays are being closed).
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
@@ -159,8 +165,11 @@ Free the returned value with <a class="link" href="json-glib-JSON-Node.html#json
 <p>
 Resets the state of the <em class="parameter"><code>builder</code></em> back to its initial state.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
 <td>a <a class="link" href="JsonBuilder.html" title="JsonBuilder"><span class="type">JsonBuilder</span></a>
@@ -180,8 +189,11 @@ the subarray, <a class="link" href="JsonBuilder.html#json-builder-end-array" tit
 Can be called for first or only if the call is associated to an object member
 or an array element.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
@@ -207,8 +219,11 @@ recent call to <a class="link" href="JsonBuilder.html#json-builder-begin-array" 
 <p>
 Cannot be called after <a class="link" href="JsonBuilder.html#json-builder-set-member-name" title="json_builder_set_member_name ()"><code class="function">json_builder_set_member_name()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
@@ -235,8 +250,11 @@ the subobject, <a class="link" href="JsonBuilder.html#json-builder-end-object" t
 Can be called for first or only if the call is associated to an object member
 or an array element.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
@@ -263,8 +281,11 @@ open an object or an array.
 <p>
 Can be called only if the call is associated to an object.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
@@ -294,8 +315,11 @@ recent call to <a class="link" href="JsonBuilder.html#json-builder-begin-object"
 <p>
 Cannot be called after <a class="link" href="JsonBuilder.html#json-builder-set-member-name" title="json_builder_set_member_name ()"><code class="function">json_builder_set_member_name()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
@@ -320,8 +344,11 @@ If called after <a class="link" href="JsonBuilder.html#json-builder-set-member-n
 most recent opened object, otherwise <em class="parameter"><code>node</code></em> is added as element of the most
 recent opened array.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
@@ -353,8 +380,11 @@ recent opened array.
 <p>
 See also: <a class="link" href="JsonBuilder.html#json-builder-add-value" title="json_builder_add_value ()"><code class="function">json_builder_add_value()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
@@ -386,8 +416,11 @@ recent opened array.
 <p>
 See also: <a class="link" href="JsonBuilder.html#json-builder-add-value" title="json_builder_add_value ()"><code class="function">json_builder_add_value()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
@@ -419,8 +452,11 @@ recent opened array.
 <p>
 See also: <a class="link" href="JsonBuilder.html#json-builder-add-value" title="json_builder_add_value ()"><code class="function">json_builder_add_value()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
@@ -452,8 +488,11 @@ recent opened array.
 <p>
 See also: <a class="link" href="JsonBuilder.html#json-builder-add-value" title="json_builder_add_value ()"><code class="function">json_builder_add_value()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>
@@ -484,8 +523,11 @@ recent opened array.
 <p>
 See also: <a class="link" href="JsonBuilder.html#json-builder-add-value" title="json_builder_add_value ()"><code class="function">json_builder_add_value()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>builder</code></em> :</span></p></td>

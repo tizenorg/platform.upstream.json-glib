@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JsonGenerator</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="JSON-GLib Reference Manual">
 <link rel="up" href="ch03.html" title="Generator">
 <link rel="prev" href="ch03.html" title="Generator">
@@ -120,8 +120,11 @@ Creates a new <a class="link" href="JsonGenerator.html" title="JsonGenerator"><s
 JSON data stream starting from a data object model composed by
 <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a>s.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>the newly created <a class="link" href="JsonGenerator.html" title="JsonGenerator"><span class="type">JsonGenerator</span></a> instance</td>
@@ -144,8 +147,11 @@ the <a class="link" href="JsonGenerator.html" title="JsonGenerator"><span class=
 freed after calling this function.</div>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>generator</code></em> :</span></p></td>
@@ -168,8 +174,11 @@ freed after calling this function.</div>
 Retrieves a pointer to the root <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> set using
 <a class="link" href="JsonGenerator.html#json-generator-set-root" title="json_generator_set_root ()"><code class="function">json_generator_set_root()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>generator</code></em> :</span></p></td>
@@ -196,8 +205,11 @@ Sets whether the generated JSON should be pretty printed, using the
 indentation character specified in the <a class="link" href="JsonGenerator.html#JsonGenerator--indent-char" title='The "indent-char" property'><span class="type">"indent-char"</span></a>
 property and the spacing specified in <a class="link" href="JsonGenerator.html#JsonGenerator--indent" title='The "indent" property'><span class="type">"indent"</span></a> property.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>generator</code></em> :</span></p></td>
@@ -219,8 +231,11 @@ property and the spacing specified in <a class="link" href="JsonGenerator.html#J
 <p>
 Retrieves the value set using <a class="link" href="JsonGenerator.html#json-generator-set-pretty" title="json_generator_set_pretty ()"><code class="function">json_generator_set_pretty()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>generator</code></em> :</span></p></td>
@@ -245,8 +260,11 @@ Retrieves the value set using <a class="link" href="JsonGenerator.html#json-gene
 <p>
 Sets the number of repetitions for each indentation level.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>generator</code></em> :</span></p></td>
@@ -269,8 +287,11 @@ that should be applied when pretty printing</td>
 <p>
 Retrieves the value set using <a class="link" href="JsonGenerator.html#json-generator-set-indent" title="json_generator_set_indent ()"><code class="function">json_generator_set_indent()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>generator</code></em> :</span></p></td>
@@ -293,8 +314,11 @@ Retrieves the value set using <a class="link" href="JsonGenerator.html#json-gene
 <p>
 Sets the character to be used when indenting
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>generator</code></em> :</span></p></td>
@@ -316,8 +340,11 @@ Sets the character to be used when indenting
 <p>
 Retrieves the value set using <a class="link" href="JsonGenerator.html#json-generator-set-indent-char" title="json_generator_set_indent_char ()"><code class="function">json_generator_set_indent_char()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>generator</code></em> :</span></p></td>
@@ -342,8 +369,11 @@ Retrieves the value set using <a class="link" href="JsonGenerator.html#json-gene
 Creates a JSON data stream and puts it inside <em class="parameter"><code>filename</code></em>, overwriting the
 current file contents. This operation is atomic.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>generator</code></em> :</span></p></td>
@@ -376,8 +406,11 @@ current file contents. This operation is atomic.
 Generates a JSON data stream from <em class="parameter"><code>generator</code></em> and returns it as a
 buffer.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>generator</code></em> :</span></p></td>
@@ -408,8 +441,11 @@ Use <code class="function">g_free()</code> to free the allocated resources.</td>
 <p>
 Outputs JSON data and streams it (synchronously) to <em class="parameter"><code>stream</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>generator</code></em> :</span></p></td>

@@ -365,42 +365,46 @@ json_parse_value (JsonParser   *parser,
   switch (token)
     {
     case G_TOKEN_INT:
-      *node = json_node_new (JSON_NODE_VALUE);
       JSON_NOTE (PARSER, "abs(node): %" G_GINT64_FORMAT " (sign: %s)",
                  scanner->value.v_int64,
                  is_negative ? "negative" : "positive");
-      json_node_set_int (*node, is_negative ? scanner->value.v_int64 * -1
-                                            : scanner->value.v_int64);
+      *node = json_node_init_int (json_node_alloc (),
+                                  is_negative ? scanner->value.v_int64 * -1
+                                              : scanner->value.v_int64);
       break;
 
     case G_TOKEN_FLOAT:
-      *node = json_node_new (JSON_NODE_VALUE);
       JSON_NOTE (PARSER, "abs(node): %.6f (sign: %s)",
                  scanner->value.v_float,
                  is_negative ? "negative" : "positive");
-      json_node_set_double (*node, is_negative ? scanner->value.v_float * -1.0
-                                               : scanner->value.v_float);
+      *node = json_node_init_double (json_node_alloc (),
+                                     is_negative ? scanner->value.v_float * -1.0
+                                                 : scanner->value.v_float);
       break;
 
     case G_TOKEN_STRING:
-      *node = json_node_new (JSON_NODE_VALUE);
       JSON_NOTE (PARSER, "node: '%s'",
                  scanner->value.v_string);
-      json_node_set_string (*node, scanner->value.v_string);
+      *node = json_node_init_string (json_node_alloc (), scanner->value.v_string);
       break;
 
     case JSON_TOKEN_TRUE:
     case JSON_TOKEN_FALSE:
-      *node = json_node_new (JSON_NODE_VALUE);
       JSON_NOTE (PARSER, "node: '%s'",
                  JSON_TOKEN_TRUE ? "<true>" : "<false>");
-      json_node_set_boolean (*node, token == JSON_TOKEN_TRUE ? TRUE : FALSE);
+      *node = json_node_init_boolean (json_node_alloc (), token == JSON_TOKEN_TRUE ? TRUE : FALSE);
       break;
 
     case JSON_TOKEN_NULL:
-      *node = json_node_new (JSON_NODE_NULL);
       JSON_NOTE (PARSER, "node: <null>");
+      *node = json_node_init_null (json_node_alloc ());
       break;
+
+    case G_TOKEN_IDENTIFIER:
+      JSON_NOTE (PARSER, "node: identifier '%s'", scanner->value.v_identifier);
+      priv->error_code = JSON_PARSER_ERROR_INVALID_BAREWORD;
+      *node = NULL;
+      return G_TOKEN_SYMBOL;
 
     default:
       {
@@ -408,17 +412,26 @@ json_parse_value (JsonParser   *parser,
 
         *node = NULL;
 
+        JSON_NOTE (PARSER, "node: invalid token");
+
         cur_type = json_node_get_node_type (current_node);
         if (cur_type == JSON_NODE_ARRAY)
-          return G_TOKEN_RIGHT_BRACE;
+          {
+            priv->error_code = JSON_PARSER_ERROR_PARSE;
+            return G_TOKEN_RIGHT_BRACE;
+          }
         else if (cur_type == JSON_NODE_OBJECT)
-          return G_TOKEN_RIGHT_CURLY;
+          {
+            priv->error_code = JSON_PARSER_ERROR_PARSE;
+            return G_TOKEN_RIGHT_CURLY;
+          }
         else
           {
             priv->error_code = JSON_PARSER_ERROR_INVALID_BAREWORD;
             return G_TOKEN_SYMBOL;
           }
       }
+      break;
     }
 
   return G_TOKEN_NONE;
@@ -436,7 +449,7 @@ json_parse_array (JsonParser   *parser,
   gint idx;
 
   old_current = priv->current_node;
-  priv->current_node = json_node_new (JSON_NODE_ARRAY);
+  priv->current_node = json_node_init_array (json_node_alloc (), NULL);
 
   array = json_array_new ();
 
@@ -464,23 +477,12 @@ json_parse_array (JsonParser   *parser,
           token = json_parse_object (parser, scanner, &element);
           break;
 
-        case G_TOKEN_INT:
-        case G_TOKEN_FLOAT:
-        case G_TOKEN_STRING:
-        case '-':
-        case JSON_TOKEN_TRUE:
-        case JSON_TOKEN_FALSE:
-        case JSON_TOKEN_NULL:
-          token = json_scanner_get_next_token (scanner);
-          token = json_parse_value (parser, scanner, token, &element);
-          break;
-
         case G_TOKEN_RIGHT_BRACE:
           goto array_done;
 
         default:
-          if (next_token != G_TOKEN_RIGHT_BRACE)
-            token = G_TOKEN_RIGHT_BRACE;
+          token = json_scanner_get_next_token (scanner);
+          token = json_parse_value (parser, scanner, token, &element);
           break;
         }
 
@@ -553,7 +555,7 @@ json_parse_object (JsonParser   *parser,
   guint token;
 
   old_current = priv->current_node;
-  priv->current_node = json_node_new (JSON_NODE_OBJECT);
+  priv->current_node = json_node_init_object (json_node_alloc (), NULL);
 
   object = json_object_new ();
 
@@ -579,7 +581,7 @@ json_parse_object (JsonParser   *parser,
         {
           JSON_NOTE (PARSER, "Missing object member name");
 
-          priv->error_code = JSON_PARSER_ERROR_PARSE;
+          priv->error_code = JSON_PARSER_ERROR_INVALID_BAREWORD;
 
           json_object_unref (object);
           json_node_free (priv->current_node);
@@ -591,6 +593,19 @@ json_parse_object (JsonParser   *parser,
       /* member name */
       token = json_scanner_get_next_token (scanner);
       name = g_strdup (scanner->value.v_string);
+      if (name == NULL || *name == '\0')
+        {
+          JSON_NOTE (PARSER, "Empty object member name");
+
+          priv->error_code = JSON_PARSER_ERROR_EMPTY_MEMBER_NAME;
+
+          json_object_unref (object);
+          json_node_free (priv->current_node);
+          priv->current_node = old_current;
+
+          return G_TOKEN_STRING;
+        }
+
       JSON_NOTE (PARSER, "Object member '%s'", name);
 
       /* a colon separates names from values */
@@ -627,20 +642,10 @@ json_parse_object (JsonParser   *parser,
           token = json_parse_object (parser, scanner, &member);
           break;
 
-        case G_TOKEN_INT:
-        case G_TOKEN_FLOAT:
-        case G_TOKEN_STRING:
-        case '-':
-        case JSON_TOKEN_TRUE:
-        case JSON_TOKEN_FALSE:
-        case JSON_TOKEN_NULL:
-          token = json_scanner_get_next_token (scanner);
-          token = json_parse_value (parser, scanner, token, &member);
-          break;
-
         default:
           /* once a member name is defined we need a value */
-          token = G_TOKEN_SYMBOL;
+          token = json_scanner_get_next_token (scanner);
+          token = json_parse_value (parser, scanner, token, &member);
           break;
         }
 
@@ -760,7 +765,11 @@ json_parse_statement (JsonParser  *parser,
         /* ... and finally swallow the '=' */
         next_token = json_scanner_get_next_token (scanner);
         if (next_token != '=')
-          return '=';
+          {
+            priv->error_code = JSON_PARSER_ERROR_INVALID_BAREWORD;
+            g_free (name);
+            return '=';
+          }
 
         priv->has_assignment = TRUE;
         priv->variable_name = name;
@@ -786,6 +795,7 @@ json_parse_statement (JsonParser  *parser,
     case G_TOKEN_INT:
     case G_TOKEN_FLOAT:
     case G_TOKEN_STRING:
+    case G_TOKEN_IDENTIFIER:
       JSON_NOTE (PARSER, "Statement is a value");
       token = json_scanner_get_next_token (scanner);
       return json_parse_value (parser, scanner, token, &priv->root);
@@ -800,34 +810,26 @@ json_parse_statement (JsonParser  *parser,
 
 static void
 json_scanner_msg_handler (JsonScanner *scanner,
-                          gchar       *message,
-                          gboolean     is_error)
+                          gchar       *message)
 {
   JsonParser *parser = scanner->user_data;
   JsonParserPrivate *priv = parser->priv;
+  GError *error = NULL;
 
-  if (is_error)
-    {
-      GError *error = NULL;
-
-      /* translators: %s: is the file name, %d is the line number
-       * and %s is the error message
-       */
-      g_set_error (&error, JSON_PARSER_ERROR,
-                   priv->error_code,
-                   _("%s:%d: Parse error: %s"),
-                   priv->is_filename ? priv->filename : "<none>",
-                   scanner->line,
-                   message);
-      
-      parser->priv->last_error = error;
-      g_signal_emit (parser, parser_signals[ERROR], 0, error);
-    }
-  else
-    g_warning ("%s:%d: Parse error: %s",
-               priv->is_filename ? priv->filename : "<none>",
+  /* translators: %s: is the file name, the first %d is the line
+   * number, the second %d is the position on the line, and %s is
+   * the error message
+   */
+  g_set_error (&error, JSON_PARSER_ERROR,
+               priv->error_code,
+               _("%s:%d:%d: Parse error: %s"),
+               priv->is_filename ? priv->filename : "<data>",
                scanner->line,
+               scanner->position,
                message);
+      
+  parser->priv->last_error = error;
+  g_signal_emit (parser, parser_signals[ERROR], 0, error);
 }
 
 static JsonScanner *
@@ -840,6 +842,10 @@ json_scanner_create (JsonParser *parser)
   scanner->msg_handler = json_scanner_msg_handler;
   scanner->user_data = parser;
 
+  /* XXX: this is eminently stupid, but we use the symbols later on, so
+   * we cannot move them into JsonScanner without moving a bunch of code
+   * as well
+   */
   for (i = 0; i < n_symbols; i++)
     {
       json_scanner_scope_add_symbol (scanner, 0,
@@ -937,8 +943,7 @@ json_parser_load (JsonParser   *parser,
                */
               json_scanner_unexp_token (scanner, expected_token,
                                         NULL, "value",
-                                        symbol_name, msg,
-                                        TRUE);
+                                        symbol_name, msg);
 
               /* and this will propagate the error we create in the
                * same message handler
@@ -1099,8 +1104,8 @@ json_parser_get_current_line (JsonParser *parser)
 {
   g_return_val_if_fail (JSON_IS_PARSER (parser), 0);
 
-  if (parser->priv->scanner)
-    return json_scanner_cur_line (parser->priv->scanner);
+  if (parser->priv->scanner != NULL)
+    return parser->priv->scanner->line;
 
   return 0;
 }
@@ -1123,8 +1128,8 @@ json_parser_get_current_pos (JsonParser *parser)
 {
   g_return_val_if_fail (JSON_IS_PARSER (parser), 0);
 
-  if (parser->priv->scanner)
-    return json_scanner_cur_line (parser->priv->scanner);
+  if (parser->priv->scanner != NULL)
+    return parser->priv->scanner->position;
 
   return 0;
 }

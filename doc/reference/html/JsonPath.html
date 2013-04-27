@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JsonPath</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="JSON-GLib Reference Manual">
 <link rel="up" href="ch02.html" title="Parser">
 <link rel="prev" href="JsonReader.html" title="JsonReader">
@@ -295,8 +295,11 @@ Creates a new <a class="link" href="JsonPath.html" title="JsonPath"><span class=
 Once created, the <a class="link" href="JsonPath.html" title="JsonPath"><span class="type">JsonPath</span></a> object should be used with <a class="link" href="JsonPath.html#json-path-compile" title="json_path_compile ()"><code class="function">json_path_compile()</code></a>
 and <a class="link" href="JsonPath.html#json-path-match" title="json_path_match ()"><code class="function">json_path_match()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>the newly created <a class="link" href="JsonPath.html" title="JsonPath"><span class="type">JsonPath</span></a> instance. Use
@@ -326,8 +329,11 @@ Error domain for <a class="link" href="JsonPath.html" title="JsonPath"><span cla
 <p>
 Error code enumeration for the <a class="link" href="JsonPath.html#JSON-PATH-ERROR:CAPS" title="JSON_PATH_ERROR"><code class="literal">JSON_PATH_ERROR</code></a> domain.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><a name="JSON-PATH-ERROR-INVALID-QUERY:CAPS"></a><span class="term"><code class="literal">JSON_PATH_ERROR_INVALID_QUERY</code></span></p></td>
 <td>Invalid query
@@ -348,8 +354,11 @@ Validates and decomposes <em class="parameter"><code>expression</code></em>.
 <p>
 A JSONPath expression must be compiled before calling <a class="link" href="JsonPath.html#json-path-match" title="json_path_match ()"><code class="function">json_path_match()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
@@ -389,8 +398,11 @@ into the <a class="link" href="JsonPath.html" title="JsonPath"><span class="type
 The matching <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a>s will be copied into a <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a> and
 returned wrapped in a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
@@ -428,8 +440,11 @@ This function is a simple wrapper around <a class="link" href="JsonPath.html#jso
 creates a <a class="link" href="JsonPath.html" title="JsonPath"><span class="type">JsonPath</span></a> instance, compiles <em class="parameter"><code>expression</code></em> and
 matches it against the JSON tree pointed by <em class="parameter"><code>root</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>expression</code></em> :</span></p></td>

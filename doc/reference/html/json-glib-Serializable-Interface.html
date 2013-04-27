@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Serializable Interface</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="JSON-GLib Reference Manual">
 <link rel="up" href="json-advanced.html" title="Part IV. JSON-GLib Advanced API">
 <link rel="prev" href="json-glib-GObject-Serialization.html" title="GObject Serialization">
@@ -116,8 +116,11 @@ function will check if the passed <span class="type">GObject</span> implements t
 so it can also be used to override the default property serialization
 sequence.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="JsonSerializableIface.serialize-property"></a>serialize_property</code></em> ()</span></p></td>
@@ -163,8 +166,11 @@ definitions</td>
 Asks a <span class="type">JsonSerializable</span> implementation to serialize a <span class="type">GObject</span>
 property into a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> object.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>serializable</code></em> :</span></p></td>
@@ -203,8 +209,11 @@ property into a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="
 Asks a <span class="type">JsonSerializable</span> implementation to deserialize the
 property contained inside <em class="parameter"><code>property_node</code></em> into <em class="parameter"><code>value</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>serializable</code></em> :</span></p></td>
@@ -245,8 +254,11 @@ property contained inside <em class="parameter"><code>property_node</code></em> 
 <p>
 FIXME
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>serializable</code></em> :</span></p></td>
@@ -282,8 +294,11 @@ or <code class="literal">NULL</code> if no property was found. <span class="anno
 <p>
 FIXME
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>serializable</code></em> :</span></p></td>
@@ -356,8 +371,11 @@ of the <code class="function">serialize_property()</code> virtual function in li
 
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>serializable</code></em> :</span></p></td>
@@ -432,8 +450,11 @@ of the <code class="function">deserialize_property()</code> virtual function in 
 
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>serializable</code></em> :</span></p></td>

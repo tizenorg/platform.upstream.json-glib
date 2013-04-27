@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Boxed Types Serialization</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="JSON-GLib Reference Manual">
 <link rel="up" href="json-advanced.html" title="Part IV. JSON-GLib Advanced API">
 <link rel="prev" href="json-glib-Serializable-Interface.html" title="Serializable Interface">
@@ -145,8 +145,11 @@ and to which specific <a class="link" href="json-glib-JSON-Node.html#JsonNodeTyp
 <p>
 Serializes the passed <span class="type">GBoxed</span> and stores it inside a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>boxed</code></em> :</span></p></td>
@@ -169,8 +172,11 @@ Serializes the passed <span class="type">GBoxed</span> and stores it inside a <a
 <p>
 Deserializes the contents of the passed <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> into a <span class="type">GBoxed</span>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
@@ -195,8 +201,11 @@ Deserializes the contents of the passed <a class="link" href="json-glib-JSON-Nod
 Registers a serialization function for a <span class="type">GBoxed</span> of type <em class="parameter"><code>gboxed_type</code></em>
 to a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> of type <em class="parameter"><code>node_type</code></em>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>gboxed_type</code></em> :</span></p></td>
@@ -227,8 +236,11 @@ a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><spa
 Registers a deserialization function for a <span class="type">GBoxed</span> of type <em class="parameter"><code>gboxed_type</code></em>
 from a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> of type <em class="parameter"><code>node_type</code></em>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>gboxed_type</code></em> :</span></p></td>
@@ -259,8 +271,11 @@ type <em class="parameter"><code>gboxed_type</code></em> into a <a class="link" 
 <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> is placed inside <em class="parameter"><code>node_type</code></em> if the function
 returns <code class="literal">TRUE</code> and it's undefined otherwise.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>gboxed_type</code></em> :</span></p></td>
@@ -291,8 +306,11 @@ and <code class="literal">FALSE</code> otherwise.</td>
 Checks whether it is possible to deserialize a <span class="type">GBoxed</span> of
 type <em class="parameter"><code>gboxed_type</code></em> from a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> of type <em class="parameter"><code>node_type</code></em>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>gboxed_type</code></em> :</span></p></td>
@@ -320,8 +338,11 @@ type <em class="parameter"><code>gboxed_type</code></em> from a <a class="link" 
 Serializes <em class="parameter"><code>boxed</code></em>, a pointer to a <span class="type">GBoxed</span> of type <em class="parameter"><code>gboxed_type</code></em>,
 into a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>gboxed_type</code></em> :</span></p></td>
@@ -350,8 +371,11 @@ boxed type, or <code class="literal">NULL</code> if serialization either failed 
 <p>
 Deserializes <em class="parameter"><code>node</code></em> into a <span class="type">GBoxed</span> of <em class="parameter"><code>gboxed_type</code></em>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>gboxed_type</code></em> :</span></p></td>

@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JSON GVariant Integration</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="JSON-GLib Reference Manual">
 <link rel="up" href="json-advanced.html" title="Part IV. JSON-GLib Advanced API">
 <link rel="prev" href="json-glib-Boxed-Types-Serialization.html" title="Boxed Types Serialization">
@@ -60,6 +60,8 @@ representation.
 Use <a class="link" href="json-glib-JSON-GVariant-Integration.html#json-gvariant-deserialize" title="json_gvariant_deserialize ()"><code class="function">json_gvariant_deserialize()</code></a> and <a class="link" href="json-glib-JSON-GVariant-Integration.html#json-gvariant-deserialize-data" title="json_gvariant_deserialize_data ()"><code class="function">json_gvariant_deserialize_data()</code></a> to
 obtain the <span class="type">GVariant</span> value from a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> tree or directly from a JSON
 string.
+</p>
+<p>
 Since many <span class="type">GVariant</span> data types cannot be directly represented as
 JSON, a <span class="type">GVariant</span> type string (signature) should be provided to these
 methods in order to obtain a correct, type-contrained result.
@@ -70,7 +72,7 @@ according to the following table:
 <p>
 </p>
 <div class="table">
-<a name="id549765"></a><p class="title"><b>Table 2. Default JSON to GVariant conversion (without signature constrains)</b></p>
+<a name="id-1.5.5.4.5.1"></a><p class="title"><b>Table 2. Default JSON to GVariant conversion (without signature constrains)</b></p>
 <div class="table-contents"><table summary="Default JSON to GVariant conversion (without signature constrains)" border="1">
 <colgroup>
 <col>
@@ -123,8 +125,11 @@ according to the following table:
 <p>
 Converts <em class="parameter"><code>variant</code></em> to a JSON tree.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>variant</code></em> :</span></p></td>
@@ -150,8 +155,11 @@ Converts <em class="parameter"><code>variant</code></em> to its JSON encoded str
 is actually a helper function. It uses <a class="link" href="json-glib-JSON-GVariant-Integration.html#json-gvariant-serialize" title="json_gvariant_serialize ()"><code class="function">json_gvariant_serialize()</code></a> to obtain the
 JSON tree, and then <a class="link" href="JsonGenerator.html" title="JsonGenerator"><span class="type">JsonGenerator</span></a> to stringify it.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>variant</code></em> :</span></p></td>
@@ -192,8 +200,15 @@ If a <em class="parameter"><code>signature</code></em> is provided but the JSON 
 If <em class="parameter"><code>signature</code></em> is <code class="literal">NULL</code>, the conversion is done based strictly on the types
 in the JSON nodes.
 </p>
-<div class="variablelist"><table border="0">
+<p>
+The returned variant has a floating reference that will need to be sunk
+by the caller code.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>json_node</code></em> :</span></p></td>
@@ -211,8 +226,8 @@ in the JSON nodes.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A newly created <span class="type">GVariant</span> compliant with
-<em class="parameter"><code>signature</code></em>, or <code class="literal">NULL</code> on error. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+<td>A newly created, floating <span class="type">GVariant</span>
+compliant with <em class="parameter"><code>signature</code></em>, or <code class="literal">NULL</code> on error. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
 </td>
 </tr>
 </tbody>
@@ -232,8 +247,15 @@ like <a class="link" href="json-glib-JSON-GVariant-Integration.html#json-gvarian
 The string is first converted to a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> using <a class="link" href="JsonParser.html" title="JsonParser"><span class="type">JsonParser</span></a>, and then
 <a class="link" href="json-glib-JSON-GVariant-Integration.html#json-gvariant-deserialize" title="json_gvariant_deserialize ()"><code class="function">json_gvariant_deserialize()</code></a> is called.
 </p>
-<div class="variablelist"><table border="0">
+<p>
+The returned variant has a floating reference that will need to be sunk
+by the caller code.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>json</code></em> :</span></p></td>
@@ -255,8 +277,8 @@ The string is first converted to a <a class="link" href="json-glib-JSON-Node.htm
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A newly created <span class="type">GVariant</span> compliant with
-<em class="parameter"><code>signature</code></em>, or <code class="literal">NULL</code> on error. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+<td>A newly created, floating <span class="type">GVariant</span> compliant
+with <em class="parameter"><code>signature</code></em>, or <code class="literal">NULL</code> on error. <span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span>
 </td>
 </tr>
 </tbody>

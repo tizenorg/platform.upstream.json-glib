@@ -51,6 +51,15 @@
     <keyword type="macro" name="JSON_NODE_HOLDS_OBJECT()" link="json-glib-JSON-Node.html#JSON-NODE-HOLDS-OBJECT:CAPS" since="0.10"/>
     <keyword type="macro" name="JSON_NODE_HOLDS_ARRAY()" link="json-glib-JSON-Node.html#JSON-NODE-HOLDS-ARRAY:CAPS" since="0.10"/>
     <keyword type="macro" name="JSON_NODE_HOLDS_NULL()" link="json-glib-JSON-Node.html#JSON-NODE-HOLDS-NULL:CAPS" since="0.10"/>
+    <keyword type="function" name="json_node_alloc ()" link="json-glib-JSON-Node.html#json-node-alloc" since="0.16"/>
+    <keyword type="function" name="json_node_init ()" link="json-glib-JSON-Node.html#json-node-init" since="0.16"/>
+    <keyword type="function" name="json_node_init_int ()" link="json-glib-JSON-Node.html#json-node-init-int" since="0.16"/>
+    <keyword type="function" name="json_node_init_double ()" link="json-glib-JSON-Node.html#json-node-init-double" since="0.16"/>
+    <keyword type="function" name="json_node_init_boolean ()" link="json-glib-JSON-Node.html#json-node-init-boolean" since="0.16"/>
+    <keyword type="function" name="json_node_init_string ()" link="json-glib-JSON-Node.html#json-node-init-string" since="0.16"/>
+    <keyword type="function" name="json_node_init_null ()" link="json-glib-JSON-Node.html#json-node-init-null" since="0.16"/>
+    <keyword type="function" name="json_node_init_object ()" link="json-glib-JSON-Node.html#json-node-init-object" since="0.16"/>
+    <keyword type="function" name="json_node_init_array ()" link="json-glib-JSON-Node.html#json-node-init-array" since="0.16"/>
     <keyword type="function" name="json_node_new ()" link="json-glib-JSON-Node.html#json-node-new"/>
     <keyword type="function" name="json_node_copy ()" link="json-glib-JSON-Node.html#json-node-copy"/>
     <keyword type="function" name="json_node_free ()" link="json-glib-JSON-Node.html#json-node-free"/>
@@ -268,6 +277,7 @@
     <keyword type="constant" name="JSON_PARSER_ERROR_MISSING_COMMA" link="JsonParser.html#JSON-PARSER-ERROR-MISSING-COMMA:CAPS"/>
     <keyword type="constant" name="JSON_PARSER_ERROR_MISSING_COLON" link="JsonParser.html#JSON-PARSER-ERROR-MISSING-COLON:CAPS"/>
     <keyword type="constant" name="JSON_PARSER_ERROR_INVALID_BAREWORD" link="JsonParser.html#JSON-PARSER-ERROR-INVALID-BAREWORD:CAPS"/>
+    <keyword type="constant" name="JSON_PARSER_ERROR_EMPTY_MEMBER_NAME" link="JsonParser.html#JSON-PARSER-ERROR-EMPTY-MEMBER-NAME:CAPS"/>
     <keyword type="constant" name="JSON_PARSER_ERROR_UNKNOWN" link="JsonParser.html#JSON-PARSER-ERROR-UNKNOWN:CAPS"/>
     <keyword type="constant" name="JSON_READER_ERROR_NO_ARRAY" link="JsonReader.html#JSON-READER-ERROR-NO-ARRAY:CAPS"/>
     <keyword type="constant" name="JSON_READER_ERROR_INVALID_INDEX" link="JsonReader.html#JSON-READER-ERROR-INVALID-INDEX:CAPS"/>

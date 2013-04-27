@@ -58,6 +58,12 @@ test_set_member (void)
   json_object_set_string_member (object, "String", "Goodbye");
   g_assert_cmpstr (json_object_get_string_member (object, "String"), ==, "Goodbye");
 
+  json_object_set_array_member (object, "Array", NULL);
+  g_assert_cmpint (JSON_NODE_TYPE (json_object_get_member (object, "Array")), ==, JSON_NODE_NULL);
+
+  json_object_set_object_member (object, "Object", NULL);
+  g_assert (json_object_get_null_member (object, "Object") == TRUE);
+
   json_object_unref (object);
 }
 
@@ -146,6 +152,13 @@ test_empty_member (void)
   g_assert (json_object_has_member (object, "null"));
   g_assert (json_object_get_string_member (object, "null") == NULL);
 
+  json_object_set_null_member (object, "array");
+  g_assert (json_object_get_array_member (object, "array") == NULL);
+
+  json_object_set_object_member (object, "object", NULL);
+  g_assert (json_object_get_member (object, "object") != NULL);
+  g_assert (json_object_get_object_member (object, "object") == NULL);
+
   json_object_unref (object);
 }
 
@@ -153,7 +166,9 @@ int
 main (int   argc,
       char *argv[])
 {
+#if !GLIB_CHECK_VERSION (2, 35, 1)
   g_type_init ();
+#endif
   g_test_init (&argc, &argv, NULL);
 
   g_test_add_func ("/object/empty-object", test_empty_object);

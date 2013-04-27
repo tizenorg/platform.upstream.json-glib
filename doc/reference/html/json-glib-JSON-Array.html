@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JSON Array</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="JSON-GLib Reference Manual">
 <link rel="up" href="ch01.html" title="Data Types">
 <link rel="prev" href="json-glib-JSON-Node.html" title="JSON Node">
@@ -125,8 +125,11 @@ and should only be accessed by the provided API
 <p>
 Creates a new <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>the newly created <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a>
@@ -141,8 +144,11 @@ Creates a new <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="
 <p>
 Creates a new <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a> with <em class="parameter"><code>n_elements</code></em> slots already allocated.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>n_elements</code></em> :</span></p></td>
@@ -163,8 +169,11 @@ Creates a new <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="
 <p>
 Increase by one the reference count of a <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -188,8 +197,11 @@ Decreases by one the reference count of a <a class="link" href="json-glib-JSON-A
 reference count reaches zero, the array is destroyed and all
 its allocated resources are freed.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
 <td>a <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a>
@@ -206,8 +218,11 @@ its allocated resources are freed.
 Appends <em class="parameter"><code>node</code></em> inside <em class="parameter"><code>array</code></em>. The array will take ownership of the
 <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -231,8 +246,11 @@ Appends <em class="parameter"><code>node</code></em> inside <em class="parameter
 Retrieves the <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> containing the value of the element at <em class="parameter"><code>index_</code></em>
 inside a <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -260,8 +278,11 @@ inside a <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonA
 Retrieves a copy of the <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> containing the value of the
 element at <em class="parameter"><code>index_</code></em> inside a <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -289,8 +310,11 @@ index. Use <a class="link" href="json-glib-JSON-Node.html#json-node-free" title=
 <p>
 Gets the elements of a <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a> as a list of <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a>s.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -315,8 +339,11 @@ owned by the array and should never be modified or freed. Use
 <p>
 Retrieves the length of a <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -339,8 +366,11 @@ Retrieves the length of a <a class="link" href="json-glib-JSON-Array.html#JsonAr
 Removes the <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> inside <em class="parameter"><code>array</code></em> at <em class="parameter"><code>index_</code></em> freeing its allocated
 resources.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -366,8 +396,11 @@ The function to be passed to <a class="link" href="json-glib-JSON-Array.html#jso
 should not add or remove elements to and from <em class="parameter"><code>array</code></em> within
 this function. It is safe to change the value of <em class="parameter"><code>element_node</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -406,8 +439,11 @@ It is safe to change the value of a <a class="link" href="json-glib-JSON-Node.ht
 from within the iterator <em class="parameter"><code>func</code></em>, but it is not safe to add or
 remove elements from the <em class="parameter"><code>array</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -440,8 +476,11 @@ of the newly added <a class="link" href="json-glib-JSON-Array.html#JsonArray" ti
 <p>
 See also: <a class="link" href="json-glib-JSON-Array.html#json-array-add-element" title="json_array_add_element ()"><code class="function">json_array_add_element()</code></a>, <a class="link" href="json-glib-JSON-Node.html#json-node-take-array" title="json_node_take_array ()"><code class="function">json_node_take_array()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -450,7 +489,7 @@ See also: <a class="link" href="json-glib-JSON-Array.html#json-array-add-element
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
-<td>a <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a>. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+<td>a <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a>. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
 </td>
 </tr>
 </tbody>
@@ -469,8 +508,11 @@ inside <em class="parameter"><code>array</code></em>
 <p>
 See also: <a class="link" href="json-glib-JSON-Array.html#json-array-get-element" title="json_array_get_element ()"><code class="function">json_array_get_element()</code></a>, <a class="link" href="json-glib-JSON-Node.html#json-node-get-array" title="json_node_get_array ()"><code class="function">json_node_get_array()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -501,8 +543,11 @@ Conveniently adds a boolean <em class="parameter"><code>value</code></em> into <
 <p>
 See also: <a class="link" href="json-glib-JSON-Array.html#json-array-add-element" title="json_array_add_element ()"><code class="function">json_array_add_element()</code></a>, <a class="link" href="json-glib-JSON-Node.html#json-node-set-boolean" title="json_node_set_boolean ()"><code class="function">json_node_set_boolean()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -529,8 +574,11 @@ inside <em class="parameter"><code>array</code></em>
 <p>
 See also: <a class="link" href="json-glib-JSON-Array.html#json-array-get-element" title="json_array_get_element ()"><code class="function">json_array_get_element()</code></a>, <a class="link" href="json-glib-JSON-Node.html#json-node-get-boolean" title="json_node_get_boolean ()"><code class="function">json_node_get_boolean()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -560,8 +608,11 @@ Conveniently adds a floating point <em class="parameter"><code>value</code></em>
 <p>
 See also: <a class="link" href="json-glib-JSON-Array.html#json-array-add-element" title="json_array_add_element ()"><code class="function">json_array_add_element()</code></a>, <a class="link" href="json-glib-JSON-Node.html#json-node-set-double" title="json_node_set_double ()"><code class="function">json_node_set_double()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -588,8 +639,11 @@ Conveniently retrieves the floating point value of the element at
 <p>
 See also: <a class="link" href="json-glib-JSON-Array.html#json-array-get-element" title="json_array_get_element ()"><code class="function">json_array_get_element()</code></a>, <a class="link" href="json-glib-JSON-Node.html#json-node-get-double" title="json_node_get_double ()"><code class="function">json_node_get_double()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -619,8 +673,11 @@ Conveniently adds an integer <em class="parameter"><code>value</code></em> into 
 <p>
 See also: <a class="link" href="json-glib-JSON-Array.html#json-array-add-element" title="json_array_add_element ()"><code class="function">json_array_add_element()</code></a>, <a class="link" href="json-glib-JSON-Node.html#json-node-set-int" title="json_node_set_int ()"><code class="function">json_node_set_int()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -647,8 +704,11 @@ inside <em class="parameter"><code>array</code></em>
 <p>
 See also: <a class="link" href="json-glib-JSON-Array.html#json-array-get-element" title="json_array_get_element ()"><code class="function">json_array_get_element()</code></a>, <a class="link" href="json-glib-JSON-Node.html#json-node-get-int" title="json_node_get_int ()"><code class="function">json_node_get_int()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -677,8 +737,11 @@ Conveniently adds a null element into <em class="parameter"><code>array</code></
 <p>
 See also: <a class="link" href="json-glib-JSON-Array.html#json-array-add-element" title="json_array_add_element ()"><code class="function">json_array_add_element()</code></a>, <a class="link" href="json-glib-JSON-Node.html#JSON-NODE-NULL:CAPS"><code class="literal">JSON_NODE_NULL</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
 <td>a <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a>
@@ -698,8 +761,11 @@ Conveniently retrieves whether the element at <em class="parameter"><code>index_
 <p>
 See also: <a class="link" href="json-glib-JSON-Array.html#json-array-get-element" title="json_array_get_element ()"><code class="function">json_array_get_element()</code></a>, <a class="link" href="json-glib-JSON-Node.html#JSON-NODE-TYPE:CAPS" title="JSON_NODE_TYPE()"><code class="function">JSON_NODE_TYPE()</code></a>, <a class="link" href="json-glib-JSON-Node.html#JSON-NODE-NULL:CAPS"><code class="literal">JSON_NODE_NULL</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -731,8 +797,11 @@ of the newly added <a class="link" href="json-glib-JSON-Object.html#JsonObject" 
 <p>
 See also: <a class="link" href="json-glib-JSON-Array.html#json-array-add-element" title="json_array_add_element ()"><code class="function">json_array_add_element()</code></a>, <a class="link" href="json-glib-JSON-Node.html#json-node-take-object" title="json_node_take_object ()"><code class="function">json_node_take_object()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -760,8 +829,11 @@ inside <em class="parameter"><code>array</code></em>
 <p>
 See also: <a class="link" href="json-glib-JSON-Array.html#json-array-get-element" title="json_array_get_element ()"><code class="function">json_array_get_element()</code></a>, <a class="link" href="json-glib-JSON-Node.html#json-node-get-object" title="json_node_get_object ()"><code class="function">json_node_get_object()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -792,8 +864,11 @@ Conveniently adds a string <em class="parameter"><code>value</code></em> into <e
 <p>
 See also: <a class="link" href="json-glib-JSON-Array.html#json-array-add-element" title="json_array_add_element ()"><code class="function">json_array_add_element()</code></a>, <a class="link" href="json-glib-JSON-Node.html#json-node-set-string" title="json_node_set_string ()"><code class="function">json_node_set_string()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>
@@ -820,8 +895,11 @@ inside <em class="parameter"><code>array</code></em>
 <p>
 See also: <a class="link" href="json-glib-JSON-Array.html#json-array-get-element" title="json_array_get_element ()"><code class="function">json_array_get_element()</code></a>, <a class="link" href="json-glib-JSON-Node.html#json-node-get-string" title="json_node_get_string ()"><code class="function">json_node_get_string()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>array</code></em> :</span></p></td>

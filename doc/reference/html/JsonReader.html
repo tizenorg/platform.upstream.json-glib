@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JsonReader</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="JSON-GLib Reference Manual">
 <link rel="up" href="ch02.html" title="Parser">
 <link rel="prev" href="JsonParser.html" title="JsonParser">
@@ -203,8 +203,11 @@ private data
 Creates a new <a class="link" href="JsonReader.html" title="JsonReader"><span class="type">JsonReader</span></a>. You can use this object to read the contents of
 the JSON tree starting from <em class="parameter"><code>node</code></em>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>node</code></em> :</span></p></td>
@@ -232,8 +235,11 @@ a copy of <em class="parameter"><code>root</code></em>
 <p>
 If another <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> is currently set as root, it will be replaced.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reader</code></em> :</span></p></td>
@@ -315,8 +321,11 @@ If <em class="parameter"><code>reader</code></em> is not currently on an array o
 bigger than the size of the array or the object, the <a class="link" href="JsonReader.html" title="JsonReader"><span class="type">JsonReader</span></a> will be
 put in an error state until <a class="link" href="JsonReader.html#json-reader-end-element" title="json_reader_end_element ()"><code class="function">json_reader_end_element()</code></a> is called.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reader</code></em> :</span></p></td>
@@ -347,8 +356,11 @@ inside an array
 <p>
 This function resets the error state of <em class="parameter"><code>reader</code></em>, if any was set
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>reader</code></em> :</span></p></td>
 <td>a <a class="link" href="JsonReader.html" title="JsonReader"><span class="type">JsonReader</span></a>
@@ -364,8 +376,11 @@ This function resets the error state of <em class="parameter"><code>reader</code
 <p>
 Checks whether the <em class="parameter"><code>reader</code></em> is currently on an array
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reader</code></em> :</span></p></td>
@@ -390,8 +405,11 @@ otherwise</td>
 Counts the elements of the current position, if <em class="parameter"><code>reader</code></em> is
 positioned on an array
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reader</code></em> :</span></p></td>
@@ -473,8 +491,11 @@ If <em class="parameter"><code>reader</code></em> is not currently on an object,
 defined in the object, the <a class="link" href="JsonReader.html" title="JsonReader"><span class="type">JsonReader</span></a> will be put in an error state until
 <a class="link" href="JsonReader.html#json-reader-end-member" title="json_reader_end_member ()"><code class="function">json_reader_end_member()</code></a> is called.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reader</code></em> :</span></p></td>
@@ -505,8 +526,11 @@ inside an object
 <p>
 This function resets the error state of <em class="parameter"><code>reader</code></em>, if any was set
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>reader</code></em> :</span></p></td>
 <td>a <a class="link" href="JsonReader.html" title="JsonReader"><span class="type">JsonReader</span></a>
@@ -522,8 +546,11 @@ This function resets the error state of <em class="parameter"><code>reader</code
 <p>
 Checks whether the <em class="parameter"><code>reader</code></em> is currently on an object
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reader</code></em> :</span></p></td>
@@ -548,8 +575,11 @@ otherwise</td>
 Counts the members of the current position, if <em class="parameter"><code>reader</code></em> is
 positioned on an object
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reader</code></em> :</span></p></td>
@@ -573,8 +603,11 @@ the <a class="link" href="JsonReader.html" title="JsonReader"><span class="type"
 Retrieves a list of member names from the current position, if <em class="parameter"><code>reader</code></em>
 is positioned on an object.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reader</code></em> :</span></p></td>
@@ -599,8 +632,11 @@ done. <span class="annotation">[<acronym title="Free data after the code is done
 <p>
 Retrieves the name of the current member.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reader</code></em> :</span></p></td>
@@ -623,8 +659,11 @@ Retrieves the name of the current member.
 <p>
 Checks whether the <em class="parameter"><code>reader</code></em> is currently on a value
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reader</code></em> :</span></p></td>
@@ -648,8 +687,11 @@ otherwise</td>
 <p>
 Retrieves the <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> of the current position of <em class="parameter"><code>reader</code></em>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reader</code></em> :</span></p></td>
@@ -674,8 +716,11 @@ directly. <span class="annotation">[<acronym title="Don't free data after the co
 <p>
 Retrieves the integer value of the current position of <em class="parameter"><code>reader</code></em>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reader</code></em> :</span></p></td>
@@ -697,8 +742,11 @@ Retrieves the integer value of the current position of <em class="parameter"><co
 <p>
 Retrieves the floating point value of the current position of <em class="parameter"><code>reader</code></em>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reader</code></em> :</span></p></td>
@@ -720,8 +768,11 @@ Retrieves the floating point value of the current position of <em class="paramet
 <p>
 Retrieves the string value of the current position of <em class="parameter"><code>reader</code></em>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reader</code></em> :</span></p></td>
@@ -743,8 +794,11 @@ Retrieves the string value of the current position of <em class="parameter"><cod
 <p>
 Retrieves the boolean value of the current position of <em class="parameter"><code>reader</code></em>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reader</code></em> :</span></p></td>
@@ -766,8 +820,11 @@ Retrieves the boolean value of the current position of <em class="parameter"><co
 <p>
 Checks whether the value of the current position of <em class="parameter"><code>reader</code></em> is 'null'
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reader</code></em> :</span></p></td>
@@ -799,8 +856,11 @@ Checks whether the value of the current position of <em class="parameter"><code>
 <p>
 Error codes enumeration for <a class="link" href="JsonReader.html" title="JsonReader"><span class="type">JsonReader</span></a> errors
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><a name="JSON-READER-ERROR-NO-ARRAY:CAPS"></a><span class="term"><code class="literal">JSON_READER_ERROR_NO_ARRAY</code></span></p></td>
@@ -861,8 +921,11 @@ Error domain for <a class="link" href="JsonReader.html" title="JsonReader"><span
 Retrieves the <span class="type">GError</span> currently set on <em class="parameter"><code>reader</code></em>, if the <a class="link" href="JsonReader.html" title="JsonReader"><span class="type">JsonReader</span></a>
 is in error state
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reader</code></em> :</span></p></td>

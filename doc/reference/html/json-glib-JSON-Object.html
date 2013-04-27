@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JSON Object</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="JSON-GLib Reference Manual">
 <link rel="up" href="ch01.html" title="Data Types">
 <link rel="prev" href="json-glib-JSON-Array.html" title="JSON Array">
@@ -139,8 +139,11 @@ and should only be accessed by the provided API
 <p>
 Creates a new <a class="link" href="json-glib-JSON-Object.html#JsonObject" title="JsonObject"><span class="type">JsonObject</span></a>, an JSON object type representation.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>the newly created <a class="link" href="json-glib-JSON-Object.html#JsonObject" title="JsonObject"><span class="type">JsonObject</span></a>
@@ -155,8 +158,11 @@ Creates a new <a class="link" href="json-glib-JSON-Object.html#JsonObject" title
 <p>
 Increase by one the reference count of a <a class="link" href="json-glib-JSON-Object.html#JsonObject" title="JsonObject"><span class="type">JsonObject</span></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -180,8 +186,11 @@ Decreases by one the reference count of a <a class="link" href="json-glib-JSON-O
 reference count reaches zero, the object is destroyed and all
 its allocated resources are freed.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
 <td>a <a class="link" href="json-glib-JSON-Object.html#JsonObject" title="JsonObject"><span class="type">JsonObject</span></a>
@@ -207,8 +216,11 @@ The object will take ownership of the <a class="link" href="json-glib-JSON-Node.
 This function will return if the <em class="parameter"><code>object</code></em> already contains a member
 <em class="parameter"><code>member_name</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -241,8 +253,11 @@ If <em class="parameter"><code>object</code></em> already contains a member call
 the member's current value is overwritten. Otherwise, a new
 member is added to <em class="parameter"><code>object</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -270,8 +285,11 @@ member is added to <em class="parameter"><code>object</code></em>.
 <p>
 Checks whether <em class="parameter"><code>object</code></em> has a member named <em class="parameter"><code>member_name</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -299,8 +317,11 @@ Checks whether <em class="parameter"><code>object</code></em> has a member named
 Retrieves the <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> containing the value of <em class="parameter"><code>member_name</code></em> inside
 a <a class="link" href="json-glib-JSON-Object.html#JsonObject" title="JsonObject"><span class="type">JsonObject</span></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -329,8 +350,11 @@ member, or <code class="literal">NULL</code>. <span class="annotation">[<acronym
 Retrieves a copy of the <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> containing the value of <em class="parameter"><code>member_name</code></em>
 inside a <a class="link" href="json-glib-JSON-Object.html#JsonObject" title="JsonObject"><span class="type">JsonObject</span></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -359,8 +383,11 @@ object member or <code class="literal">NULL</code>. Use <a class="link" href="js
 Retrieves all the names of the members of a <a class="link" href="json-glib-JSON-Object.html#JsonObject" title="JsonObject"><span class="type">JsonObject</span></a>. You can
 obtain the value for each member using <a class="link" href="json-glib-JSON-Object.html#json-object-get-member" title="json_object_get_member ()"><code class="function">json_object_get_member()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -386,8 +413,11 @@ allocated. <span class="annotation">[<acronym title="Generics and defining eleme
 <p>
 Retrieves all the values of the members of a <a class="link" href="json-glib-JSON-Object.html#JsonObject" title="JsonObject"><span class="type">JsonObject</span></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -412,8 +442,11 @@ returned list, use <code class="function">g_list_free()</code> to free the resou
 <p>
 Retrieves the number of members of a <a class="link" href="json-glib-JSON-Object.html#JsonObject" title="JsonObject"><span class="type">JsonObject</span></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -435,8 +468,11 @@ Retrieves the number of members of a <a class="link" href="json-glib-JSON-Object
 <p>
 Removes <em class="parameter"><code>member_name</code></em> from <em class="parameter"><code>object</code></em>, freeing its allocated resources.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -462,8 +498,11 @@ The function to be passed to <a class="link" href="json-glib-JSON-Object.html#js
 should not add or remove members to and from <em class="parameter"><code>object</code></em> within
 this function. It is safe to change the value of <em class="parameter"><code>member_node</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -501,8 +540,11 @@ It is safe to change the value of a <a class="link" href="json-glib-JSON-Node.ht
 from within the iterator <em class="parameter"><code>func</code></em>, but it is not safe to add or
 remove members from the <em class="parameter"><code>object</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -539,8 +581,11 @@ The <em class="parameter"><code>object</code></em> will take ownership of the pa
 <p>
 See also: <a class="link" href="json-glib-JSON-Object.html#json-object-set-member" title="json_object_set_member ()"><code class="function">json_object_set_member()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -572,8 +617,11 @@ stored in <em class="parameter"><code>member_name</code></em> of <em class="para
 <p>
 See also: <a class="link" href="json-glib-JSON-Object.html#json-object-get-member" title="json_object_get_member ()"><code class="function">json_object_get_member()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -606,8 +654,11 @@ Convenience function for setting a boolean <em class="parameter"><code>value</co
 <p>
 See also: <a class="link" href="json-glib-JSON-Object.html#json-object-set-member" title="json_object_set_member ()"><code class="function">json_object_set_member()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -638,8 +689,11 @@ stored in <em class="parameter"><code>member_name</code></em> of <em class="para
 <p>
 See also: <a class="link" href="json-glib-JSON-Object.html#json-object-get-member" title="json_object_get_member ()"><code class="function">json_object_get_member()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -671,8 +725,11 @@ of <em class="parameter"><code>member_name</code></em> inside <em class="paramet
 <p>
 See also: <a class="link" href="json-glib-JSON-Object.html#json-object-set-member" title="json_object_set_member ()"><code class="function">json_object_set_member()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -703,8 +760,11 @@ stored in <em class="parameter"><code>member_name</code></em> of <em class="para
 <p>
 See also: <a class="link" href="json-glib-JSON-Object.html#json-object-get-member" title="json_object_get_member ()"><code class="function">json_object_get_member()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -736,8 +796,11 @@ Convenience function for setting an integer <em class="parameter"><code>value</c
 <p>
 See also: <a class="link" href="json-glib-JSON-Object.html#json-object-set-member" title="json_object_set_member ()"><code class="function">json_object_set_member()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -768,8 +831,11 @@ stored in <em class="parameter"><code>member_name</code></em> of <em class="para
 <p>
 See also: <a class="link" href="json-glib-JSON-Object.html#json-object-get-member" title="json_object_get_member ()"><code class="function">json_object_get_member()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -800,8 +866,11 @@ Convenience function for setting a null <em class="parameter"><code>value</code>
 <p>
 See also: <a class="link" href="json-glib-JSON-Object.html#json-object-set-member" title="json_object_set_member ()"><code class="function">json_object_set_member()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -828,8 +897,11 @@ stored in <em class="parameter"><code>member_name</code></em> of <em class="para
 <p>
 See also: <a class="link" href="json-glib-JSON-Object.html#json-object-get-member" title="json_object_get_member ()"><code class="function">json_object_get_member()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -865,8 +937,11 @@ The <em class="parameter"><code>object</code></em> will take ownership of the pa
 <p>
 See also: <a class="link" href="json-glib-JSON-Object.html#json-object-set-member" title="json_object_set_member ()"><code class="function">json_object_set_member()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -898,8 +973,11 @@ stored in <em class="parameter"><code>member_name</code></em> of <em class="para
 <p>
 See also: <a class="link" href="json-glib-JSON-Object.html#json-object-get-member" title="json_object_get_member ()"><code class="function">json_object_get_member()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -932,8 +1010,11 @@ Convenience function for setting a string <em class="parameter"><code>value</cod
 <p>
 See also: <a class="link" href="json-glib-JSON-Object.html#json-object-set-member" title="json_object_set_member ()"><code class="function">json_object_set_member()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -964,8 +1045,11 @@ stored in <em class="parameter"><code>member_name</code></em> of <em class="para
 <p>
 See also: <a class="link" href="json-glib-JSON-Object.html#json-object-get-member" title="json_object_get_member ()"><code class="function">json_object_get_member()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>

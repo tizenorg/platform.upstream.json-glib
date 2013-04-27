@@ -14,6 +14,15 @@
 <ANCHOR id="JSON-NODE-HOLDS-OBJECT:CAPS" href="json-glib/json-glib-JSON-Node.html#JSON-NODE-HOLDS-OBJECT:CAPS">
 <ANCHOR id="JSON-NODE-HOLDS-ARRAY:CAPS" href="json-glib/json-glib-JSON-Node.html#JSON-NODE-HOLDS-ARRAY:CAPS">
 <ANCHOR id="JSON-NODE-HOLDS-NULL:CAPS" href="json-glib/json-glib-JSON-Node.html#JSON-NODE-HOLDS-NULL:CAPS">
+<ANCHOR id="json-node-alloc" href="json-glib/json-glib-JSON-Node.html#json-node-alloc">
+<ANCHOR id="json-node-init" href="json-glib/json-glib-JSON-Node.html#json-node-init">
+<ANCHOR id="json-node-init-int" href="json-glib/json-glib-JSON-Node.html#json-node-init-int">
+<ANCHOR id="json-node-init-double" href="json-glib/json-glib-JSON-Node.html#json-node-init-double">
+<ANCHOR id="json-node-init-boolean" href="json-glib/json-glib-JSON-Node.html#json-node-init-boolean">
+<ANCHOR id="json-node-init-string" href="json-glib/json-glib-JSON-Node.html#json-node-init-string">
+<ANCHOR id="json-node-init-null" href="json-glib/json-glib-JSON-Node.html#json-node-init-null">
+<ANCHOR id="json-node-init-object" href="json-glib/json-glib-JSON-Node.html#json-node-init-object">
+<ANCHOR id="json-node-init-array" href="json-glib/json-glib-JSON-Node.html#json-node-init-array">
 <ANCHOR id="json-node-new" href="json-glib/json-glib-JSON-Node.html#json-node-new">
 <ANCHOR id="json-node-copy" href="json-glib/json-glib-JSON-Node.html#json-node-copy">
 <ANCHOR id="json-node-free" href="json-glib/json-glib-JSON-Node.html#json-node-free">
@@ -118,6 +127,7 @@
 <ANCHOR id="JSON-PARSER-ERROR-MISSING-COMMA:CAPS" href="json-glib/JsonParser.html#JSON-PARSER-ERROR-MISSING-COMMA:CAPS">
 <ANCHOR id="JSON-PARSER-ERROR-MISSING-COLON:CAPS" href="json-glib/JsonParser.html#JSON-PARSER-ERROR-MISSING-COLON:CAPS">
 <ANCHOR id="JSON-PARSER-ERROR-INVALID-BAREWORD:CAPS" href="json-glib/JsonParser.html#JSON-PARSER-ERROR-INVALID-BAREWORD:CAPS">
+<ANCHOR id="JSON-PARSER-ERROR-EMPTY-MEMBER-NAME:CAPS" href="json-glib/JsonParser.html#JSON-PARSER-ERROR-EMPTY-MEMBER-NAME:CAPS">
 <ANCHOR id="JSON-PARSER-ERROR-UNKNOWN:CAPS" href="json-glib/JsonParser.html#JSON-PARSER-ERROR-UNKNOWN:CAPS">
 <ANCHOR id="JsonParser-struct" href="json-glib/JsonParser.html#JsonParser-struct">
 <ANCHOR id="JsonParserClass" href="json-glib/JsonParser.html#JsonParserClass">

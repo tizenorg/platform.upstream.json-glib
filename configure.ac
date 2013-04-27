@@ -1,8 +1,8 @@
 # bump micro_version to the next even number for each point release
 # bump micro_version to the next odd number after each release
 m4_define([json_major_version], [0])
-m4_define([json_minor_version], [15])
-m4_define([json_micro_version], [2])
+m4_define([json_minor_version], [16])
+m4_define([json_micro_version], [0])
 
 m4_define([json_version], [json_major_version.json_minor_version.json_micro_version])
 
@@ -20,7 +20,7 @@ m4_define([lt_current], [m4_eval(100 * json_minor_version + json_micro_version -
 m4_define([lt_revision], [json_interface_age])
 m4_define([lt_age], [m4_eval(json_binary_age - json_interface_age)])
 
-m4_define([glib_req_version], [2.31.0])
+m4_define([glib_req_version], [2.34.0])
 
 AC_PREREQ([2.63])
 

@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>GObject Serialization</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="JSON-GLib Reference Manual">
 <link rel="up" href="json-advanced.html" title="Part IV. JSON-GLib Advanced API">
 <link rel="prev" href="json-advanced.html" title="Part IV. JSON-GLib Advanced API">
@@ -80,8 +80,11 @@ Creates a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNo
 instance. Each member of the returned JSON object will
 map to a property of the <span class="type">GObject</span>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>gobject</code></em> :</span></p></td>
@@ -108,8 +111,11 @@ the resources allocated by this function. <span class="annotation">[<acronym tit
 Creates a new <span class="type">GObject</span> of type <em class="parameter"><code>gtype</code></em>, and constructs it
 using the members of the passed <a class="link" href="json-glib-JSON-Object.html#JsonObject" title="JsonObject"><span class="type">JsonObject</span></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>gtype</code></em> :</span></p></td>
@@ -147,8 +153,11 @@ be asked to serialize all its properties; otherwise, the default
 implementation will be use to translate the compatible types into
 JSON native types.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>gobject</code></em> :</span></p></td>
@@ -186,8 +195,11 @@ will be used to translate the compatible JSON native types.
 <p>
 Note: the JSON data stream must be an object declaration.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>gtype</code></em> :</span></p></td>
@@ -236,8 +248,11 @@ will be used to translate the compatible JSON native types.
 <p>
 Note: the JSON data stream must be an object declaration.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>gtype</code></em> :</span></p></td>
@@ -280,8 +295,11 @@ the <a class="link" href="json-glib-Serializable-Interface.html#JsonSerializable
 its properties; otherwise, the default implementation will be use to
 translate the compatible types into JSON native types.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>gobject</code></em> :</span></p></td>

@@ -18,6 +18,26 @@
 		AdditionalLibraryDirectories="$(GlibEtcInstallRoot)\lib"
 	/>
 	<UserMacro
+		Name="VSVer"
+		Value="9"
+	/>
+	<UserMacro
+		Name="GlibEtcInstallRoot"
+		Value="..\..\..\..\vs$(VSVer)\$(PlatformName)"
+	/>
+	<UserMacro
+		Name="GlibEtcInstallRootFromBuildWin32"
+		Value="..\..\..\vs$(VSVer)\$(PlatformName)"
+	/>
+	<UserMacro
+		Name="CopyDir"
+		Value="$(GlibEtcInstallRoot)"
+	/>
+	<UserMacro
+		Name="DefDir"
+		Value="$(SolutionDir)$(ConfigurationName)\$(PlatformName)\obj\$(ProjectName)"
+	/>
+	<UserMacro
 		Name="PrepBuild"
 		Value="
 if exist ..\..\..\config.h goto DONE_CONFIG_H&#x0D;&#x0A;
@@ -26,41 +46,57 @@ copy ..\config.h.win32 ..\..\..\config.h&#x0D;&#x0A;
 "
 	/>
 	<UserMacro
-		Name="JsonGlibVersion"
+		Name="ApiVersion"
 		Value="1.0"
 	/>
 	<UserMacro
 		Name="JsonGlibDoInstall"
 		Value="
-mkdir $(OutDir)&#x0D;&#x0A;
-mkdir $(OutDir)\bin&#x0D;&#x0A;
-mkdir $(OutDir)\lib&#x0D;&#x0A;
+mkdir $(CopyDir)&#x0D;&#x0A;
+mkdir $(CopyDir)\bin&#x0D;&#x0A;
+mkdir $(CopyDir)\lib&#x0D;&#x0A;
 
-copy $(SolutionDir)$(ConfigurationName)\$(PlatformName)\bin\*.lib $(OutDir)\lib&#x0D;&#x0A;
+copy $(SolutionDir)$(ConfigurationName)\$(PlatformName)\bin\*.lib $(CopyDir)\lib&#x0D;&#x0A;
 
-copy $(SolutionDir)$(ConfigurationName)\$(PlatformName)\bin\*.dll $(OutDir)\bin&#x0D;&#x0A;
-copy $(SolutionDir)$(ConfigurationName)\$(PlatformName)\bin\*.exe $(OutDir)\bin&#x0D;&#x0A;
-copy ..\..\..\json-glib\tests\stream-load.json $(OutDir)\bin&#x0D;&#x0A;
+copy $(SolutionDir)$(ConfigurationName)\$(PlatformName)\bin\*.dll $(CopyDir)\bin&#x0D;&#x0A;
+copy $(SolutionDir)$(ConfigurationName)\$(PlatformName)\bin\*.exe $(CopyDir)\bin&#x0D;&#x0A;
+copy ..\..\..\json-glib\tests\stream-load.json $(CopyDir)\bin&#x0D;&#x0A;
 
-mkdir $(OutDir)\include\json-glib-$(JsonGlibVersion)\json-glib&#x0D;&#x0A;
+mkdir $(CopyDir)\include\json-glib-$(ApiVersion)\json-glib&#x0D;&#x0A;
 
-copy ..\..\..\json-glib\json-enum-types.h $(OutDir)\include\json-glib-$(JsonGlibVersion)\json-glib&#x0D;&#x0A;
-copy ..\..\..\json-glib\json-version.h $(OutDir)\include\json-glib-$(JsonGlibVersion)\json-glib&#x0D;&#x0A;
-copy ..\..\..\json-glib\json-glib.h $(OutDir)\include\json-glib-$(JsonGlibVersion)\json-glib&#x0D;&#x0A;
+copy ..\..\..\json-glib\json-enum-types.h $(CopyDir)\include\json-glib-$(ApiVersion)\json-glib&#x0D;&#x0A;
+copy ..\..\..\json-glib\json-version.h $(CopyDir)\include\json-glib-$(ApiVersion)\json-glib&#x0D;&#x0A;
+copy ..\..\..\json-glib\json-glib.h $(CopyDir)\include\json-glib-$(ApiVersion)\json-glib&#x0D;&#x0A;
 
-copy ..\..\..\json-glib\json-builder.h $(OutDir)\include\json-glib-$(JsonGlibVersion)\json-glib&#x0D;&#x0A;
-copy ..\..\..\json-glib\json-generator.h $(OutDir)\include\json-glib-$(JsonGlibVersion)\json-glib&#x0D;&#x0A;
-copy ..\..\..\json-glib\json-gobject.h $(OutDir)\include\json-glib-$(JsonGlibVersion)\json-glib&#x0D;&#x0A;
-copy ..\..\..\json-glib\json-gvariant.h $(OutDir)\include\json-glib-$(JsonGlibVersion)\json-glib&#x0D;&#x0A;
-copy ..\..\..\json-glib\json-path.h $(OutDir)\include\json-glib-$(JsonGlibVersion)\json-glib&#x0D;&#x0A;
-copy ..\..\..\json-glib\json-parser.h $(OutDir)\include\json-glib-$(JsonGlibVersion)\json-glib&#x0D;&#x0A;
-copy ..\..\..\json-glib\json-reader.h $(OutDir)\include\json-glib-$(JsonGlibVersion)\json-glib&#x0D;&#x0A;
-copy ..\..\..\json-glib\json-types.h $(OutDir)\include\json-glib-$(JsonGlibVersion)\json-glib&#x0D;&#x0A;
+copy ..\..\..\json-glib\json-builder.h $(CopyDir)\include\json-glib-$(ApiVersion)\json-glib&#x0D;&#x0A;
+copy ..\..\..\json-glib\json-generator.h $(CopyDir)\include\json-glib-$(ApiVersion)\json-glib&#x0D;&#x0A;
+copy ..\..\..\json-glib\json-gobject.h $(CopyDir)\include\json-glib-$(ApiVersion)\json-glib&#x0D;&#x0A;
+copy ..\..\..\json-glib\json-gvariant.h $(CopyDir)\include\json-glib-$(ApiVersion)\json-glib&#x0D;&#x0A;
+copy ..\..\..\json-glib\json-path.h $(CopyDir)\include\json-glib-$(ApiVersion)\json-glib&#x0D;&#x0A;
+copy ..\..\..\json-glib\json-parser.h $(CopyDir)\include\json-glib-$(ApiVersion)\json-glib&#x0D;&#x0A;
+copy ..\..\..\json-glib\json-reader.h $(CopyDir)\include\json-glib-$(ApiVersion)\json-glib&#x0D;&#x0A;
+copy ..\..\..\json-glib\json-types.h $(CopyDir)\include\json-glib-$(ApiVersion)\json-glib&#x0D;&#x0A;
 "
 	/>
 	<UserMacro
+		Name="DoGenGir"
+		Value="
+set VSVER=$(VSVer)&#x0D;&#x0A;
+set CONF=$(ConfigurationName)&#x0D;&#x0A;
+set PLAT=$(PlatformName)&#x0D;&#x0A;
+set BASEDIR=$(GlibEtcInstallRootFromBuildWin32)&#x0D;&#x0A;
+
+cd ..&#x0D;&#x0A;
+call gengir_jsonglib.bat&#x0D;&#x0A;
+cd vs$(VSVer)&#x0D;&#x0A;
+			  "
+	/>
+	<UserMacro
 		Name="JsonGlibGenerateDef"
-		Value="echo EXPORTS &gt;&quot;..\..\..\json-glib\json-glib.def&quot; &amp;&amp; cl /EP ..\..\..\json-glib\json-glib.symbols &gt;&gt;&quot;..\..\..\json-glib\json-glib.def&quot;"
+		Value="
+echo EXPORTS &gt;$(DefDir)\json-glib.def&#x0D;&#x0A;
+cl /EP ..\..\..\json-glib\json-glib.symbols &gt;&gt;$(DefDir)\json-glib.def&#x0D;&#x0A;
+		      "
 	/>
 	<UserMacro
 		Name="JsonGlibDefines"
@@ -75,25 +111,21 @@ copy ..\..\..\json-glib\json-types.h $(OutDir)\include\json-glib-$(JsonGlibVersi
 		Value="-1.0-0"
 	/>
 	<UserMacro
-		Name="JsonGlibSeparateVS9DllPrefix"
+		Name="JsonGlibSeparateVSDllPrefix"
 		Value=""
 	/>
 	<UserMacro
-		Name="JsonGlibSeparateVS9DllSuffix"
-		Value="-1-vs9"
+		Name="JsonGlibSeparateVSDllSuffix"
+		Value="-1-vs$(VSVer)"
 	/>
 	<!-- Change these two to JsonGlibLibtoolCompatibleDllPrefix and
 	JsonGlibLibtoolCompatibleDllSuffix if that is what you want -->
 	<UserMacro
 		Name="JsonGlibDllPrefix"
-		Value="$(JsonGlibSeparateVS9DllPrefix)"
+		Value="$(JsonGlibSeparateVSDllPrefix)"
 	/>
 	<UserMacro
 		Name="JsonGlibDllSuffix"
-		Value="$(JsonGlibSeparateVS9DllSuffix)"
-	/>
-	<UserMacro
-		Name="GlibEtcInstallRoot"
-		Value="..\..\..\..\vs9\$(PlatformName)"
+		Value="$(JsonGlibSeparateVSDllSuffix)"
 	/>
 </VisualStudioPropertySheet>

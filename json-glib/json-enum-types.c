@@ -18,6 +18,7 @@ json_parser_error_get_type(void) {
         { JSON_PARSER_ERROR_MISSING_COMMA, "JSON_PARSER_ERROR_MISSING_COMMA", "missing-comma" },
         { JSON_PARSER_ERROR_MISSING_COLON, "JSON_PARSER_ERROR_MISSING_COLON", "missing-colon" },
         { JSON_PARSER_ERROR_INVALID_BAREWORD, "JSON_PARSER_ERROR_INVALID_BAREWORD", "invalid-bareword" },
+        { JSON_PARSER_ERROR_EMPTY_MEMBER_NAME, "JSON_PARSER_ERROR_EMPTY_MEMBER_NAME", "empty-member-name" },
         { JSON_PARSER_ERROR_UNKNOWN, "JSON_PARSER_ERROR_UNKNOWN", "unknown" },
         { 0, NULL, NULL }
       };
