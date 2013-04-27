@@ -1,7 +1,7 @@
 %bcond_with introspection
 
 Name:           json-glib
-Version:        0.15.2
+Version:        0.16.0
 Release:        0
 License:        LGPL-2.1+
 Summary:        Library for JavaScript Object Notation format
