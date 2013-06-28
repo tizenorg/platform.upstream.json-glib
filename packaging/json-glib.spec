@@ -9,6 +9,7 @@ Url:            http://live.gnome.org/JsonGlib
 Group:          Development/Libraries/C and C++
 Source0:        http://download.gnome.org/sources/json-glib/0.15/%{name}-%{version}.tar.xz
 Source99:       baselibs.conf
+Source1001: 	json-glib.manifest
 %if %{with introspection}
 BuildRequires:  gobject-introspection-devel
 %endif
@@ -92,6 +93,7 @@ json-glib library.
 %lang_package
 %prep
 %setup -q
+cp %{SOURCE1001} .
 
 %build
 %configure
@@ -108,17 +110,20 @@ mv %{name}-1.0.lang %{name}.lang
 %postun -n libjson-glib -p /sbin/ldconfig
 
 %files -n libjson-glib
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %license COPYING
 %{_libdir}/*.so.*
 
 %if %{with introspection}
 %files -n typelib-Json
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %{_libdir}/girepository-1.0/Json-1.0.typelib
 %endif
 
 %files devel
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %{_includedir}/%{name}-1.0
 %{_libdir}/*.so
