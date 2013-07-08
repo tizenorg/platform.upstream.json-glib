@@ -1,0 +1,8 @@
+Change-Id: Ida80e8a48ecd0ab5580b895a29dff889b87090a8
+Code-Review+2: Ryan Ware <ware@linux.intel.com>
+Verified+1: Ryan Ware <ware@linux.intel.com>
+Submitted-by: Ryan Ware <ware@linux.intel.com>
+Submitted-at: Mon, 08 Jul 2013 09:40:37 -0700
+Reviewed-on: https://review.tizen.org/gerrit/4758
+Project: platform/upstream/json-glib
+Branch: refs/heads/tizen
