@@ -1,13 +1,14 @@
 %bcond_with introspection
 
 Name:           json-glib
-Version:        0.16.0
+Version:        1.0.0
 Release:        0
 License:        LGPL-2.1+
 Summary:        Library for JavaScript Object Notation format
 Url:            http://live.gnome.org/JsonGlib
-Group:          Development/Libraries/C and C++
-Source0:        http://download.gnome.org/sources/json-glib/0.15/%{name}-%{version}.tar.xz
+Group:          System/Libraries
+#X-Vcs-Url:     git://git.gnome.org/json-glib
+Source0:        http://download.gnome.org/sources/json-glib/%{version}/%{name}-%{version}.tar.xz
 Source99:       baselibs.conf
 Source1001: 	json-glib.manifest
 %if %{with introspection}
@@ -30,7 +31,7 @@ JSON data streams.
 
 %package -n libjson-glib
 Summary:        Library for JavaScript Object Notation format
-Group:          Development/Libraries/C and C++
+Group:          System/Libraries
 # To make lang subpackage installable
 Provides:       %{name} = %{version}
 
@@ -68,11 +69,13 @@ This package provides the GObject Introspection bindings for JSON-GLib.
 
 %package devel
 Summary:        Library for JavaScript Object Notation format - Development Files
-Group:          Development/Libraries/C and C++
+Group:          System/Libraries
 Requires:       libjson-glib = %{version}
 %if %{with introspection}
 Requires:       typelib-Json = %{version}
 %endif
+BuildRequires:	gettext
+BuildRequires:	gtk-doc
 
 %description devel
 JSON is a lightweight data-interchange format.It is easy for humans to
@@ -96,7 +99,9 @@ json-glib library.
 cp %{SOURCE1001} .
 
 %build
-%configure
+NOCONFIGURE=1
+%autogen
+%reconfigure --disable-man 
 make %{?_smp_mflags}
 
 %install
@@ -114,6 +119,7 @@ mv %{name}-1.0.lang %{name}.lang
 %defattr(-,root,root)
 %license COPYING
 %{_libdir}/*.so.*
+%{_bindir}/*
 
 %if %{with introspection}
 %files -n typelib-Json
@@ -131,9 +137,5 @@ mv %{name}-1.0.lang %{name}.lang
 %if %{with introspection}
 %{_datadir}/gir-1.0/*.gir
 %endif
-%dir %{_datadir}/gtk-doc
-%dir %{_datadir}/gtk-doc/html
-%{_datadir}/gtk-doc/html/%{name}
-
 
 %changelog
