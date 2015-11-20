@@ -22,13 +22,9 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="2"
-			InheritedPropertySheets=".\json-glib.vsprops"
+			InheritedPropertySheets=".\json-glib-gen-srcs.vsprops"
 			CharacterSet="2"
 			>
-			<Tool
-				Name="VCPreBuildEventTool"
-				CommandLine="$(PrepBuild)"
-			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
@@ -46,7 +42,6 @@
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)\$(JsonGlibDllPrefix)$(ProjectName)$(JsonGlibDllSuffix).dll"
 				LinkIncremental="2"
-				ModuleDefinitionFile="$(IntDir)\json-glib.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				ImportLibrary="$(TargetDir)$(ProjectName)-$(ApiVersion).lib"
@@ -55,14 +50,10 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
-			InheritedPropertySheets=".\json-glib.vsprops"
+			InheritedPropertySheets=".\json-glib-gen-srcs.vsprops"
 			ConfigurationType="2"
 			CharacterSet="2"
 			>
-			<Tool
-				Name="VCPreBuildEventTool"
-				CommandLine="$(PrepBuild)"
-			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
@@ -79,7 +70,6 @@
 				AdditionalDependencies=""
 				OutputFile="$(OutDir)\$(JsonGlibDllPrefix)$(ProjectName)$(JsonGlibDllSuffix).dll"
 				LinkIncremental="2"
-				ModuleDefinitionFile="$(IntDir)\json-glib.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				ImportLibrary="$(TargetDir)$(ProjectName)-$(ApiVersion).lib"
@@ -89,14 +79,10 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="2"
-			InheritedPropertySheets=".\json-glib.vsprops"
+			InheritedPropertySheets=".\json-glib-gen-srcs.vsprops"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
-			<Tool
-				Name="VCPreBuildEventTool"
-				CommandLine="$(PrepBuild)"
-			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
@@ -114,7 +100,6 @@
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)\$(JsonGlibDllPrefix)$(ProjectName)$(JsonGlibDllSuffix).dll"
 				LinkIncremental="1"
-				ModuleDefinitionFile="$(IntDir)\json-glib.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -125,14 +110,10 @@
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			InheritedPropertySheets=".\json-glib.vsprops"
+			InheritedPropertySheets=".\json-glib-gen-srcs.vsprops"
 			ConfigurationType="2"
 			CharacterSet="2"
 			>
-			<Tool
-				Name="VCPreBuildEventTool"
-				CommandLine="$(PrepBuild)"
-			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="$(JsonGlibDefines)"
@@ -146,7 +127,6 @@
 				AdditionalDependencies=""
 				OutputFile="$(OutDir)\$(JsonGlibDllPrefix)$(ProjectName)$(JsonGlibDllSuffix).dll"
 				LinkIncremental="2"
-				ModuleDefinitionFile="$(IntDir)\json-glib.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -177,37 +157,37 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
-			<File RelativePath="..\..\..\json-glib\json-glib.symbols">
+			<File RelativePath="..\config.h.win32">
 				<FileConfiguration Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Generating json-glib.def..."
-						CommandLine="$(JsonGlibGenerateDef)"
-						Outputs="$(IntDir)\json-glib.def"
+						Description="Copying config.h from config.h.win32..."
+						CommandLine="$(CopyConfigH)"
+						Outputs="..\..\..\config.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Generating json-glib.def..."
-						CommandLine="$(JsonGlibGenerateDef)"
-						Outputs="$(IntDir)\json-glib.def"
+						Description="Copying config.h from config.h.win32..."
+						CommandLine="$(CopyConfigH)"
+						Outputs="..\..\..\config.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration Name="Debug|x64">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Generating json-glib.def..."
-						CommandLine="$(JsonGlibGenerateDef)"
-						Outputs="$(IntDir)\json-glib.def"
+						Description="Copying config.h from config.h.win32..."
+						CommandLine="$(CopyConfigH)"
+						Outputs="..\..\..\config.h"
 					/>
 				</FileConfiguration>
 				<FileConfiguration Name="Release|x64">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="Generating json-glib.def..."
-						CommandLine="$(JsonGlibGenerateDef)"
-						Outputs="$(IntDir)\json-glib.def"
+						Description="Copying config.h from config.h.win32..."
+						CommandLine="$(CopyConfigH)"
+						Outputs="..\..\..\config.h"
 					/>
 				</FileConfiguration>
 			</File>

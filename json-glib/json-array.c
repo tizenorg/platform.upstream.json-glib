@@ -21,9 +21,7 @@
  *   Emmanuele Bassi  <ebassi@linux.intel.com>
  */
 
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
 #include "json-types-private.h"
 
@@ -32,7 +30,7 @@
  * @short_description: a JSON array representation
  *
  * #JsonArray is the representation of the array type inside JSON. It contains
- * #JsonNode<!-- -->s, which may contain fundamental types, other arrays or
+ * #JsonNode elements, which may contain fundamental types, other arrays or
  * objects.
  *
  * Since arrays can be expensive, they are reference counted. You can control
@@ -47,11 +45,11 @@
 G_DEFINE_BOXED_TYPE (JsonArray, json_array, json_array_ref, json_array_unref);
 
 /**
- * json_array_new:
+ * json_array_new: (constructor)
  *
  * Creates a new #JsonArray.
  *
- * Return value: the newly created #JsonArray
+ * Return value: (transfer full): the newly created #JsonArray
  */
 JsonArray *
 json_array_new (void)
@@ -67,12 +65,12 @@ json_array_new (void)
 }
 
 /**
- * json_array_sized_new:
+ * json_array_sized_new: (constructor)
  * @n_elements: number of slots to pre-allocate
  *
  * Creates a new #JsonArray with @n_elements slots already allocated.
  *
- * Return value: the newly created #JsonArray
+ * Return value: (transfer full): the newly created #JsonArray
  */
 JsonArray *
 json_array_sized_new (guint n_elements)
@@ -93,7 +91,7 @@ json_array_sized_new (guint n_elements)
  *
  * Increase by one the reference count of a #JsonArray.
  *
- * Return value: the passed #JsonArray, with the reference count
+ * Return value: (transfer none): the passed #JsonArray, with the reference count
  *   increased by one.
  */
 JsonArray *
@@ -139,7 +137,7 @@ json_array_unref (JsonArray *array)
  * json_array_get_elements:
  * @array: a #JsonArray
  *
- * Gets the elements of a #JsonArray as a list of #JsonNode<!-- -->s.
+ * Gets the elements of a #JsonArray as a list of #JsonNode instances.
  *
  * Return value: (element-type JsonNode) (transfer container): a #GList
  *   containing the elements of the array. The contents of the list are

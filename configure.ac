@@ -1,8 +1,8 @@
 # bump micro_version to the next even number for each point release
 # bump micro_version to the next odd number after each release
-m4_define([json_major_version], [0])
-m4_define([json_minor_version], [99])
-m4_define([json_micro_version], [2])
+m4_define([json_major_version], [1])
+m4_define([json_minor_version], [0])
+m4_define([json_micro_version], [0])
 
 m4_define([json_version], [json_major_version.json_minor_version.json_micro_version])
 
@@ -118,6 +118,37 @@ AS_IF([test "x$enable_Bsymbolic" = "xyes"], [JSON_LINK_FLAGS=-Wl[,]-Bsymbolic-fu
 JSON_LT_LDFLAGS="$JSON_LT_LDFLAGS $JSON_LINK_FLAGS"
 
 AC_SUBST(JSON_LT_LDFLAGS)
+
+dnl === Visibility ============================================================
+
+JSON_HIDDEN_VISIBILITY_CFLAGS=""
+case "$host" in
+  *-*-mingw*)
+    dnl on mingw32 we do -fvisibility=hidden and __declspec(dllexport)
+    AC_DEFINE([_JSON_EXTERN], [__attribute__((visibility("default"))) __declspec(dllexport) extern],
+              [defines how to decorate public symbols while building])
+    CFLAGS="${CFLAGS} -fvisibility=hidden"
+    ;;
+  *)
+    dnl on other compilers, check if we can do -fvisibility=hidden
+    SAVED_CFLAGS="${CFLAGS}"
+    CFLAGS="-fvisibility=hidden"
+    AC_MSG_CHECKING([for -fvisibility=hidden compiler flag])
+    AC_TRY_COMPILE([], [int main (void) { return 0; }],
+                   AC_MSG_RESULT(yes)
+                   enable_fvisibility_hidden=yes,
+                   AC_MSG_RESULT(no)
+                   enable_fvisibility_hidden=no)
+    CFLAGS="${SAVED_CFLAGS}"
+
+    AS_IF([test "${enable_fvisibility_hidden}" = "yes"], [
+      AC_DEFINE([_JSON_EXTERN], [__attribute__((visibility("default"))) extern],
+                [defines how to decorate public symbols while building])
+      JSON_HIDDEN_VISIBILITY_CFLAGS="-fvisibility=hidden"
+    ])
+    ;;
+esac
+AC_SUBST(JSON_HIDDEN_VISIBILITY_CFLAGS)
 
 dnl === Dependencies ==========================================================
 
@@ -263,7 +294,7 @@ AM_CONDITIONAL(ENABLE_GCOV, test "x$use_gcov" = "xyes")
 
 dnl === Documentation =========================================================
 
-GTK_DOC_CHECK([1.13], [--flavour no-tmpl])
+GTK_DOC_CHECK([1.20], [--flavour no-tmpl])
 
 AC_ARG_ENABLE([man,],
               [AS_HELP_STRING([--enable-man], [generate man pages @<:@default=auto@:>@])],

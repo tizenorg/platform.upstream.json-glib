@@ -254,6 +254,7 @@ JSON_CFLAGS = @JSON_CFLAGS@
 JSON_DEBUG_CFLAGS = @JSON_DEBUG_CFLAGS@
 JSON_GCOV_CFLAGS = @JSON_GCOV_CFLAGS@
 JSON_GCOV_LDADD = @JSON_GCOV_LDADD@
+JSON_HIDDEN_VISIBILITY_CFLAGS = @JSON_HIDDEN_VISIBILITY_CFLAGS@
 JSON_LIBS = @JSON_LIBS@
 JSON_LT_LDFLAGS = @JSON_LT_LDFLAGS@
 JSON_MAJOR_VERSION = @JSON_MAJOR_VERSION@
@@ -373,7 +374,9 @@ EXTRA_DIST = \
 	config.h.win32.in	\
 	config.h.win32	\
 	gen-file-list-jsonglib.py	\
-	gengir_jsonglib.bat
+	detectenv_msvc.mak	\
+	introspection-msvc.mak	\
+	json-glib-introspection-msvc.mak
 
 all: all-recursive
 

@@ -1,3 +1,555 @@
+commit cb7212b5ee71f18f4023e928884fd55ef54b9327
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 25 11:50:36 2014 +0000
+
+    Release JSON-GLib 1.0.0
+
+ configure.ac | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 19981d54171acff70f8a8987e0731fe1d8dd5d89
+Author: Gábor Kelemen <kelemeng@gnome.hu>
+Date:   Fri Mar 21 17:09:53 2014 +0000
+
+    Updated Hungarian translation
+
+ po/hu.po | 181 +++++++++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 141 insertions(+), 40 deletions(-)
+
+commit bf5295a8b72954bfff5ba89c389f8ace0d913082
+Author: Мирослав Николић <miroslavnikolic@rocketmail.com>
+Date:   Fri Mar 21 04:00:22 2014 +0100
+
+    Updated Serbian translation
+
+ po/sr.po       | 174 +++++++++++++++++++++++++++++++++++++++++++++------------
+ po/sr@latin.po | 174 +++++++++++++++++++++++++++++++++++++++++++++------------
+ 2 files changed, 274 insertions(+), 74 deletions(-)
+
+commit a8c56f54d5f47e35921e50a63e2a59190da13ad0
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Thu Mar 20 10:23:36 2014 +0800
+
+    Visual Studio Builds: Don't Generate .def File
+    
+    The symbols for json-glib is now exported via a visibility-based method,
+    like GLib and GTK+, so do likewise for the Visual Studio builds, by using
+    __declspec(dllexport).  This will also mean that the .def file is no longer
+    needed to export the symbols for json-glib.
+
+ build/win32/config.h.win32.in                |  7 +++++
+ build/win32/vs10/json-glib-gen-srcs.props    |  7 -----
+ build/win32/vs10/json-glib.vcxproj.filtersin |  1 -
+ build/win32/vs10/json-glib.vcxprojin         | 18 -------------
+ build/win32/vs9/json-glib-gen-srcs.vsprops   |  7 -----
+ build/win32/vs9/json-glib.vcprojin           | 38 ----------------------------
+ 6 files changed, 7 insertions(+), 71 deletions(-)
+
+commit b177715f1cb21edf5716a0768d6678096443ad51
+Author: Ask H. Larsen <asklarsen@gmail.com>
+Date:   Wed Mar 19 22:31:43 2014 +0100
+
+    Updated Danish translation
+
+ po/da.po | 171 ++++++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 136 insertions(+), 35 deletions(-)
+
+commit 75f00bf9a9d3326444d77a400ca2d5a0378f8d32
+Author: Duarte Loreto <happyguy_pt@hotmail.com>
+Date:   Tue Mar 18 23:32:42 2014 +0000
+
+    Updated Portuguese translation
+
+ po/pt.po | 179 +++++++++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 140 insertions(+), 39 deletions(-)
+
+commit 7b9d72519777b313d094a0e63a9f138e3fafd54c
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 18 19:22:15 2014 +0000
+
+    build: Resync our copy of introspection.m4
+
+ build/autotools/introspection.m4 | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 5adb54c97fb5a87a609584727285f742cd0e2f09
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 18 18:41:40 2014 +0000
+
+    build: Include $(top_builddir)
+    
+    Fixes compilation in cases where builddir != srcdir.
+
+ json-glib/tests/Makefile.am | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit d3fcd43a73061a64dc5f8b7551c138849a32b719
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 18 18:10:14 2014 +0000
+
+    Remove conditional inclusion of config.h
+    
+    All the platforms and build system we support have a config.h header.
+
+ json-glib/json-array.c        | 2 --
+ json-glib/json-builder.c      | 2 --
+ json-glib/json-debug.c        | 2 --
+ json-glib/json-gboxed.c       | 2 --
+ json-glib/json-generator.c    | 2 --
+ json-glib/json-gobject.c      | 2 --
+ json-glib/json-gvariant.c     | 2 --
+ json-glib/json-node.c         | 2 --
+ json-glib/json-object.c       | 3 ---
+ json-glib/json-parser.c       | 2 --
+ json-glib/json-path.c         | 2 --
+ json-glib/json-reader.c       | 4 ----
+ json-glib/json-scanner.c      | 2 --
+ json-glib/json-serializable.c | 2 --
+ json-glib/json-value.c        | 2 --
+ json-glib/tests/generator.c   | 2 --
+ json-glib/tests/invalid.c     | 2 --
+ json-glib/tests/parser.c      | 2 --
+ 18 files changed, 39 deletions(-)
+
+commit 445b1c4c1efec99ed640c16b92a9b19a87b39082
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Mar 6 15:09:50 2014 +0000
+
+    Add version constants to introspection
+    
+    We need to let g-ir-scanner parse json-version.h.
+
+ json-glib/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit d3095c5f8fe91209cc98e1e2d7e75a8aad1e8d88
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Mar 6 15:09:04 2014 +0000
+
+    Reimplement JSON_VERSION_HEX as a macro call
+    
+    Add a JSON_ENCODE_VERSION macro and use it in JSON_VERSION_HEX.
+
+ doc/reference/json-glib-sections.txt |  1 +
+ json-glib/json-version.h.in          | 12 +++++++-----
+ 2 files changed, 8 insertions(+), 5 deletions(-)
+
+commit 794664746dcbe8894255f9615357dd51f7f836c3
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Mar 6 14:35:49 2014 +0000
+
+    Use compiler annotations to determine symbol visibility
+    
+    Instead of relying on a separate file that requires being update every
+    time we add a new public function we should use compiler annotations to
+    let the linker know which symbols are public and exported.
+    
+    In order to achieve this we have to:
+    
+     * check for the visibility=hidden attribute
+     * add -fvisibility=hidden to the linker flags
+     * add a macro to annotate all public symbols
+    
+    While we're at it, we should copy the versioned symbols macro layout
+    already used by GLib, GTK+, and other G* libraries, including the
+    ability to express the range of allowed versions of JSON-GLib that
+    third party code can compile against.
+
+ configure.ac                         |  31 ++++++
+ doc/reference/json-glib-sections.txt |  16 +++
+ json-glib/Makefile.am                |  47 ++++-----
+ json-glib/abicheck.sh                |   6 --
+ json-glib/json-builder.h             |  15 +++
+ json-glib/json-enum-types.h.in       |   2 +
+ json-glib/json-generator.h           |  13 +++
+ json-glib/json-glib.h                |   1 +
+ json-glib/json-glib.symbols          | 191 -----------------------------------
+ json-glib/json-gobject.h             |  26 ++++-
+ json-glib/json-gvariant.h            |   4 +
+ json-glib/json-parser.h              |  13 ++-
+ json-glib/json-path.h                |   6 ++
+ json-glib/json-reader.h              |  22 ++++
+ json-glib/json-types.h               | 103 +++++++++++++++++--
+ json-glib/json-version-macros.h      | 135 +++++++++++++++++++++++++
+ 16 files changed, 391 insertions(+), 240 deletions(-)
+
+commit 50bf9cd2f6bc9fb21d9793377f0fd534732d215d
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Mar 6 13:58:52 2014 +0000
+
+    docs: Drop the SGML mode
+    
+    The whole documentation is now MarkDown.
+
+ doc/reference/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 20c861f02f8e41cde2dec92f9d63d8266383c26b
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Mar 6 13:58:15 2014 +0000
+
+    docs: Port to MarkDown
+    
+    Drop the DocBook documentation, and move everything to the MarkDown
+    format used by modern gtk-doc.
+
+ json-glib/json-array.c        |   4 +-
+ json-glib/json-builder.c      |   2 +-
+ json-glib/json-builder.h      |   7 +-
+ json-glib/json-gboxed.c       |   2 +-
+ json-glib/json-generator.c    |   9 +-
+ json-glib/json-gobject.c      |   4 +-
+ json-glib/json-gobject.h      |   2 +-
+ json-glib/json-gvariant.c     |  64 ++++------
+ json-glib/json-node.c         |  13 +-
+ json-glib/json-object.c       |   9 +-
+ json-glib/json-path.c         | 268 +++++++++++++++++-------------------------
+ json-glib/json-path.h         |   9 +-
+ json-glib/json-reader.c       |  19 ++-
+ json-glib/json-reader.h       |   7 +-
+ json-glib/json-serializable.c |  10 +-
+ 15 files changed, 181 insertions(+), 248 deletions(-)
+
+commit ff018d7e560278d65a03c4de71c3cf11b22d3167
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 4 18:30:31 2014 +0000
+
+    build: Bump up the requirement for gtk-doc
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 36872776b354d2b4b39f9da8e12dd51e949b6c90
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sun Mar 2 14:26:44 2014 +0000
+
+    scanner: Clean up the UTF-16 surrogate pairs decoding
+    
+    We over-assert() our pre-conditions, and the conversion is a bit
+    obfuscated. We should use a proper function, and de-obfuscate the
+    code so that the intent is clear.
+
+ json-glib/json-scanner.c | 42 ++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 36 insertions(+), 6 deletions(-)
+
+commit 16396ab205a5f9bfe7a68aec436fe916bbbee342
+Author: Seong-ho Cho <darkcircle.0426@gmail.com>
+Date:   Sun Mar 16 22:18:26 2014 +0900
+
+    Updated Korean translation
+
+ po/ko.po | 189 ++++++++++++++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 145 insertions(+), 44 deletions(-)
+
+commit 87804f9cf3d5cb643b1d92ee8b26547158fbf41a
+Author: Claude Paroz <claude@2xlibre.net>
+Date:   Tue Mar 11 22:44:07 2014 +0100
+
+    Updated French translation
+
+ po/fr.po | 185 +++++++++++++++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 139 insertions(+), 46 deletions(-)
+
+commit e2fd54326c3dfa3927c9e78d865ed349b022a7d3
+Author: Yuri Myasoedov <ymyasoedov@yandex.ru>
+Date:   Tue Mar 11 12:23:24 2014 +0400
+
+    Updated Russian translation
+
+ po/ru.po | 75 ++++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 37 insertions(+), 38 deletions(-)
+
+commit fd3ccd2c7c19305d099b98c62ad6c0dae536f6bc
+Author: Rūdolfs Mazurs <rudolfsm@src.gnome.org>
+Date:   Fri Mar 7 16:52:22 2014 +0200
+
+    Updated Latvian translation
+
+ po/lv.po | 170 ++++++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 135 insertions(+), 35 deletions(-)
+
+commit e76f0283c3605fb04fb03e5aee56200c1abece2e
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Thu Mar 6 18:47:47 2014 +0800
+
+    Visual Studio 2010 Projects: Add PlatformToolset Tag
+    
+    This adds a PlatformToolset tag to each configuration so that the projects
+    can be updated to Visual Studio 2012 or 2013 formats quite easily, using
+    Visual Studio's round-tripping feature which actually looks at this tag.
+    
+    This, for example, can be quite easily processed by a script to produce
+    the Visual Studio 2012 and 2013 projects.
+
+ build/win32/vs10/array.vcxproj              | 4 ++++
+ build/win32/vs10/boxed.vcxproj              | 4 ++++
+ build/win32/vs10/builder.vcxproj            | 4 ++++
+ build/win32/vs10/generator.vcxproj          | 4 ++++
+ build/win32/vs10/gvariant.vcxproj           | 4 ++++
+ build/win32/vs10/install.vcxproj            | 4 ++++
+ build/win32/vs10/invalid.vcxproj            | 4 ++++
+ build/win32/vs10/json-glib-format.vcxproj   | 4 ++++
+ build/win32/vs10/json-glib-validate.vcxproj | 4 ++++
+ build/win32/vs10/json-glib.vcxprojin        | 4 ++++
+ build/win32/vs10/node.vcxproj               | 4 ++++
+ build/win32/vs10/object.vcxproj             | 4 ++++
+ build/win32/vs10/parser.vcxproj             | 4 ++++
+ build/win32/vs10/path.vcxproj               | 4 ++++
+ build/win32/vs10/reader.vcxproj             | 4 ++++
+ build/win32/vs10/serialize-complex.vcxproj  | 4 ++++
+ build/win32/vs10/serialize-full.vcxproj     | 4 ++++
+ build/win32/vs10/serialize-simple.vcxproj   | 4 ++++
+ 18 files changed, 72 insertions(+)
+
+commit da66fd86764d12640ad2d53a869c77df31f5bd82
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Mon Mar 3 01:05:53 2014 +0100
+
+    Updated Polish translation
+
+ po/pl.po | 169 ++++++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 135 insertions(+), 34 deletions(-)
+
+commit a4d731db0780a87304c98be412d72d615b277592
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Tue Feb 25 13:09:32 2014 +0800
+
+    MSVC Builds: Update Introspection Build Process
+    
+    GObject-Introspection was recently changed to support acquiring the name of
+    the DLL from a library (.lib, etc) that was passed into g-ir-scanner on
+    Windows, like the *nix builds, instead of directly passing in the name of
+    the DLL.
+    
+    This updates the introspection build process, so that introspection files
+    for JSON-GLib can continue to be properly built.
+
+ build/win32/json-glib-introspection-msvc.mak | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
+
+commit 9dc47a1f4e66f871e435675ebe09b554b9fc9e8c
+Author: Sphinx Jiang <yishanj13@gmail.com>
+Date:   Sat Feb 22 01:28:27 2014 +0000
+
+    Updated Chinese (China) translation
+
+ po/zh_CN.po | 113 +++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 58 insertions(+), 55 deletions(-)
+
+commit 843b41e885c2528cb6f146f415a50582c07eaef6
+Author: Aurimas Černius <aurisc4@gmail.com>
+Date:   Fri Feb 21 23:18:30 2014 +0200
+
+    Updated Lithuanian translation
+
+ po/lt.po | 103 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 56 insertions(+), 47 deletions(-)
+
+commit d8de1631c41333ba72a11658a2102bb42fb15d09
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Fri Feb 14 17:56:10 2014 +0000
+
+    Add missing annotations
+    
+    JsonNode, JsonObject, and JsonArray have various constructors, so we
+    need to annotate them.
+
+ json-glib/json-array.c  | 10 +++++-----
+ json-glib/json-node.c   |  2 +-
+ json-glib/json-object.c |  6 +++---
+ 3 files changed, 9 insertions(+), 9 deletions(-)
+
+commit 4726ccc490a30aeff95b7c01fc6c44dbce36a7f4
+Author: Kjartan Maraas <kmaraas@gnome.org>
+Date:   Wed Feb 12 19:47:31 2014 +0100
+
+    Updated Norwegian bokmål translation
+
+ po/nb.po | 167 ++++++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 134 insertions(+), 33 deletions(-)
+
+commit d97be101490a46c72f919d3dc45f4bc06e625e0c
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Feb 7 11:39:29 2014 +0800
+
+    tools: Fix build on Visual Studio
+    
+    As unistd.h is not universally available, don't include it unconditionally
+    and include the corresponding Windows headers where necessary.  Also, use
+    gssize in place of ssize_t and define STDOUT_FILENO on Windows when we
+    don't have unistd.h, which is a constant that is defined in unistd.h.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=723813
+
+ json-glib/json-glib-format.c   | 11 ++++++++++-
+ json-glib/json-glib-validate.c |  2 ++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
+
+commit 0b1397ad168078bf2b588ab413ad921c04aab8a2
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Feb 7 18:55:32 2014 +0800
+
+    MSVC Builds: Rework Introspection Files Build
+    
+    Use a set of NMake Makefiles in place of custom Visual Studio Projects to
+    generate the introspection files for JSON-GLib.
+    
+    Although this means that one needs to build the introspection files in two
+    stages, namely using the projects to build the JSON-GLib DLL and then
+    running this NMake Makefile to generate the introspection files.  The
+    original approach required setting lots of environment variables for the
+    building of introspection files to work.  Using NMake Makefiles will make
+    it clearer to the one building the introspection files on what items and
+    variables are needed exactly to do the job
+
+ build/win32/Makefile.am                      |   4 +-
+ build/win32/detectenv_msvc.mak               |  65 +++++++++++++
+ build/win32/gengir_jsonglib.bat              | 132 ---------------------------
+ build/win32/introspection-msvc.mak           |  79 ++++++++++++++++
+ build/win32/json-glib-introspection-msvc.mak |  64 +++++++++++++
+ 5 files changed, 211 insertions(+), 133 deletions(-)
+
+commit ed7f9df3c09209749d0d1be0917a80ad6a4f7546
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Feb 7 18:33:32 2014 +0800
+
+    Overhaul the Visual Studio 2010 Projects
+    
+    Split up the property sheets used to build JSON-GLib. Also add projects to
+    build and "install" the json-glib-validate and json-glib-format tools.
+    
+    Move the introspection file generation out of the Visual Studio projects
+    to add an NMake Makefile later to generate the introspection files, to make
+    the process clearer to people.
+    
+    Stop installing the test programs, although they continue to be built from
+    the projects for now.
+
+ build/win32/vs10/Makefile.am                       |  20 ++-
+ build/win32/vs10/array.vcxproj                     |  12 +-
+ build/win32/vs10/array.vcxproj.filters             |   2 +-
+ build/win32/vs10/boxed.vcxproj                     |  10 +-
+ build/win32/vs10/boxed.vcxproj.filters             |   2 +-
+ build/win32/vs10/builder.vcxproj                   |  10 +-
+ build/win32/vs10/builder.vcxproj.filters           |   2 +-
+ build/win32/vs10/generator.vcxproj                 |  10 +-
+ build/win32/vs10/generator.vcxproj.filters         |   2 +-
+ build/win32/vs10/gengir.vcxproj                    | 104 -------------
+ build/win32/vs10/gvariant.vcxproj                  |  10 +-
+ build/win32/vs10/gvariant.vcxproj.filters          |   2 +-
+ build/win32/vs10/install.vcxproj                   |  76 ++--------
+ build/win32/vs10/invalid.vcxproj                   |  10 +-
+ build/win32/vs10/invalid.vcxproj.filters           |   2 +-
+ build/win32/vs10/json-glib-build-defines.props     |  30 ++++
+ build/win32/vs10/json-glib-format.vcxproj          | 162 +++++++++++++++++++++
+ build/win32/vs10/json-glib-format.vcxproj.filters  |  14 ++
+ build/win32/vs10/json-glib-gen-srcs.props          |  24 +++
+ build/win32/vs10/json-glib-install.props           |  60 ++++++++
+ build/win32/vs10/json-glib-validate.vcxproj        | 162 +++++++++++++++++++++
+ .../win32/vs10/json-glib-validate.vcxproj.filters  |  14 ++
+ build/win32/vs10/json-glib-version-paths.props     |  54 +++++++
+ build/win32/vs10/json-glib.props                   | 150 -------------------
+ build/win32/vs10/json-glib.sln                     |  50 ++++---
+ build/win32/vs10/json-glib.vcxproj.filtersin       |   3 +-
+ build/win32/vs10/json-glib.vcxprojin               |  28 ++--
+ build/win32/vs10/node.vcxproj                      |  10 +-
+ build/win32/vs10/node.vcxproj.filters              |   2 +-
+ build/win32/vs10/object.vcxproj                    |  10 +-
+ build/win32/vs10/object.vcxproj.filters            |   2 +-
+ build/win32/vs10/parser.vcxproj                    |  10 +-
+ build/win32/vs10/parser.vcxproj.filters            |   2 +-
+ build/win32/vs10/path.vcxproj                      |  10 +-
+ build/win32/vs10/path.vcxproj.filters              |   2 +-
+ build/win32/vs10/reader.vcxproj                    |  10 +-
+ build/win32/vs10/reader.vcxproj.filters            |   2 +-
+ build/win32/vs10/serialize-complex.vcxproj         |  10 +-
+ build/win32/vs10/serialize-complex.vcxproj.filters |   2 +-
+ build/win32/vs10/serialize-full.vcxproj            |  10 +-
+ build/win32/vs10/serialize-full.vcxproj.filters    |   2 +-
+ build/win32/vs10/serialize-simple.vcxproj          |  10 +-
+ build/win32/vs10/serialize-simple.vcxproj.filters  |   2 +-
+ 43 files changed, 680 insertions(+), 441 deletions(-)
+
+commit 1e0ef4493d485bfc211bcb2af2f212a3f26a800e
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Feb 7 11:52:48 2014 +0800
+
+    Fix Commit of Visual Studio 2008 Projects
+    
+    Left out the update to json-glib.vcprojin, oops :|
+
+ build/win32/vs9/json-glib.vcprojin | 58 +++++++++++++++++++++++++-------------
+ 1 file changed, 38 insertions(+), 20 deletions(-)
+
+commit 7053ea79f4c90f26e7e25c598a6a1617fbcea990
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Feb 7 11:35:47 2014 +0800
+
+    Overhaul the Visual Studio 2008 Projects
+    
+    Split up the property sheets used to build JSON-GLib, and make all the
+    projects (*.vcproj) and property sheets (*.vsprops) use UNIX line endings
+    to simplify future maintenance.  Also add projects to build and "install"
+    the json-glib-validate and json-glib-format tools.
+    
+    Move the introspection file generation out of the Visual Studio projects
+    to add an NMake Makefile later to generate the introspection files, to make
+    the process clearer to people.
+    
+    Stop installing the test programs, although they continue to be built from
+    the projects for now.
+    
+    Similar changes to the Visual Studio 2010 projects will follow.
+
+ build/win32/vs9/Makefile.am                     |  20 +-
+ build/win32/vs9/array.vcproj                    | 306 +++++++++++-----------
+ build/win32/vs9/boxed.vcproj                    |   8 +-
+ build/win32/vs9/builder.vcproj                  | 306 +++++++++++-----------
+ build/win32/vs9/generator.vcproj                | 306 +++++++++++-----------
+ build/win32/vs9/gengir.vcproj                   |  77 ------
+ build/win32/vs9/gvariant.vcproj                 |   8 +-
+ build/win32/vs9/install.vcproj                  | 160 ++++++------
+ build/win32/vs9/invalid.vcproj                  | 306 +++++++++++-----------
+ build/win32/vs9/json-glib-build-defines.vsprops |  25 ++
+ build/win32/vs9/json-glib-format.vcproj         | 151 +++++++++++
+ build/win32/vs9/json-glib-gen-srcs.vsprops      |  19 ++
+ build/win32/vs9/json-glib-install.vsprops       |  37 +++
+ build/win32/vs9/json-glib-validate.vcproj       | 151 +++++++++++
+ build/win32/vs9/json-glib-version-paths.vsprops |  53 ++++
+ build/win32/vs9/json-glib.sln                   |  75 +++---
+ build/win32/vs9/json-glib.vsprops               | 127 ----------
+ build/win32/vs9/node.vcproj                     | 306 +++++++++++-----------
+ build/win32/vs9/object.vcproj                   | 302 +++++++++++-----------
+ build/win32/vs9/parser.vcproj                   | 324 ++++++++++++------------
+ build/win32/vs9/path.vcproj                     |   8 +-
+ build/win32/vs9/reader.vcproj                   | 308 +++++++++++-----------
+ build/win32/vs9/serialize-complex.vcproj        |   8 +-
+ build/win32/vs9/serialize-full.vcproj           |   8 +-
+ build/win32/vs9/serialize-simple.vcproj         |   8 +-
+ 25 files changed, 1821 insertions(+), 1586 deletions(-)
+
+commit 7b865790ae3233a0636fdc780f843143a7e94a01
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Feb 7 10:23:40 2014 +0800
+
+    Update build/win32/config.h.win32.in
+    
+    Make its entries reflect the entries that are being checked by the
+    autotools build, and also make the entries reflect the situation on
+    non-Visual C++ and newer Visual Studio versions better.
+
+ build/win32/config.h.win32.in | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
+
+commit 4f7dd7f5b004f1bcd478572c1cb6f2dd6822add1
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon Feb 3 23:50:34 2014 +0000
+
+    Post-release version bump to 0.99.3
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 commit 43f40339eae66e0f6545da7638f36c9b07de0bab
 Author: Emmanuele Bassi <ebassi@gnome.org>
 Date:   Mon Feb 3 23:49:11 2014 +0000

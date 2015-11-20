@@ -193,6 +193,7 @@ JSON_CFLAGS = @JSON_CFLAGS@
 JSON_DEBUG_CFLAGS = @JSON_DEBUG_CFLAGS@
 JSON_GCOV_CFLAGS = @JSON_GCOV_CFLAGS@
 JSON_GCOV_LDADD = @JSON_GCOV_LDADD@
+JSON_HIDDEN_VISIBILITY_CFLAGS = @JSON_HIDDEN_VISIBILITY_CFLAGS@
 JSON_LIBS = @JSON_LIBS@
 JSON_LT_LDFLAGS = @JSON_LT_LDFLAGS@
 JSON_MAJOR_VERSION = @JSON_MAJOR_VERSION@
@@ -309,6 +310,19 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 NULL = 
 EXTRA_DIST = \
+	json-glib.sln			\
+	json-glib-version-paths.props	\
+	json-glib-build-defines.props	\
+	json-glib-gen-srcs.props	\
+	json-glib-install.props	\
+	json-glib.vcxproj		\
+	json-glib.vcxprojin		\
+	json-glib.vcxproj.filters	\
+	json-glib.vcxproj.filtersin	\
+	json-glib-format.vcxproj		\
+	json-glib-format.vcxproj.filters	\
+	json-glib-validate.vcxproj		\
+	json-glib-validate.vcxproj.filters	\
 	array.vcxproj		\
 	array.vcxproj.filters	\
 	boxed.vcxproj	\
@@ -320,12 +334,6 @@ EXTRA_DIST = \
 	gvariant.vcxproj		\
 	gvariant.vcxproj.filters	\
 	install.vcxproj			\
-	json-glib.sln			\
-	json-glib.vcxproj		\
-	json-glib.vcxprojin		\
-	json-glib.vcxproj.filters	\
-	json-glib.vcxproj.filtersin	\
-	json-glib.props			\
 	node.vcxproj		\
 	node.vcxproj.filters	\
 	object.vcxproj		\
@@ -343,7 +351,6 @@ EXTRA_DIST = \
 	serialize-simple.vcxproj	\
 	serialize-simple.vcxproj.filters	\
 	README.txt	\
-	gengir.vcxproj		\
 	invalid.vcxproj	\
 	invalid.vcxproj.filters	\
 	$(NULL)

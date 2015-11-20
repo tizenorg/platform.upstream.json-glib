@@ -21,8 +21,8 @@
  * SECTION:json-gobject
  * @short_description: Serialize and deserialize GObjects
  *
- * JSON-GLib provides API for serializing and deserializing #GObject<!-- -->s
- * to and from JSON data streams.
+ * JSON-GLib provides API for serializing and deserializing #GObject
+ * instances to and from JSON data streams.
  *
  * Simple #GObject classes can be (de)serialized into JSON objects, if the
  * properties have compatible types with the native JSON types (integers,
@@ -32,9 +32,7 @@
  * and its virtual functions.
  */
 
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
 #include <string.h>
 #include <stdlib.h>

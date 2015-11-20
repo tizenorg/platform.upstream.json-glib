@@ -32,7 +32,7 @@
  * When registering a #GBoxed type you should also register the
  * corresponding transformation functions, e.g.:
  *
- * |[
+ * |[<!-- language="C" -->
  *   GType
  *   my_struct_get_type (void)
  *   {
@@ -66,9 +66,7 @@
  * and to which specific #JsonNodeType.
  */
 
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
 #include <string.h>
 #include <stdlib.h>

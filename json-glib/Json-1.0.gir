@@ -333,7 +333,7 @@ inside a #JsonArray.</doc>
         </parameters>
       </method>
       <method name="get_elements" c:identifier="json_array_get_elements">
-        <doc xml:space="preserve">Gets the elements of a #JsonArray as a list of #JsonNode&lt;!-- --&gt;s.</doc>
+        <doc xml:space="preserve">Gets the elements of a #JsonArray as a list of #JsonNode instances.</doc>
         <return-value transfer-ownership="container">
           <doc xml:space="preserve">a #GList
   containing the elements of the array. The contents of the list are
@@ -453,7 +453,7 @@ See also: json_array_get_element(), json_node_get_string()</doc>
       </method>
       <method name="ref" c:identifier="json_array_ref">
         <doc xml:space="preserve">Increase by one the reference count of a #JsonArray.</doc>
-        <return-value transfer-ownership="full">
+        <return-value transfer-ownership="none">
           <doc xml:space="preserve">the passed #JsonArray, with the reference count
   increased by one.</doc>
           <type name="Array" c:type="JsonArray*"/>
@@ -562,11 +562,11 @@ this function. It is safe to change the value of @element_node.</doc>
            glib:type-name="JsonBuilder"
            glib:get-type="json_builder_get_type"
            glib:type-struct="BuilderClass">
-      <doc xml:space="preserve">The &lt;structname&gt;JsonBuilder&lt;/structname&gt; structure contains only
-private data and shouls be accessed using the provided API</doc>
+      <doc xml:space="preserve">The `JsonBuilder` structure contains only private data and should be
+accessed using the provided API</doc>
       <constructor name="new" c:identifier="json_builder_new">
         <doc xml:space="preserve">Creates a new #JsonBuilder. You can use this object to generate a
-JSON tree and obtain the root #JsonNode&lt;!-- --&gt;s.</doc>
+JSON tree and obtain the root #JsonNode.</doc>
         <return-value transfer-ownership="full">
           <doc xml:space="preserve">the newly created #JsonBuilder instance</doc>
           <type name="Builder" c:type="JsonBuilder*"/>
@@ -820,8 +820,7 @@ Can be called only if the call is associated to an object.</doc>
             c:type="JsonBuilderClass"
             glib:is-gtype-struct-for="Builder"
             version="0.12">
-      <doc xml:space="preserve">The &lt;structname&gt;JsonBuilder&lt;/structname&gt; structure contains only
-private data</doc>
+      <doc xml:space="preserve">The `JsonBuilderClass` structure contains only private data</doc>
       <field name="parent_class" readable="0" private="1">
         <type name="GObject.ObjectClass" c:type="GObjectClass"/>
       </field>
@@ -854,7 +853,7 @@ are private and should only be accessed via the provided API.</doc>
       <constructor name="new" c:identifier="json_generator_new">
         <doc xml:space="preserve">Creates a new #JsonGenerator. You can use this object to generate a
 JSON data stream starting from a data object model composed by
-#JsonNode&lt;!-- --&gt;s.</doc>
+#JsonNodes.</doc>
         <return-value transfer-ownership="full">
           <doc xml:space="preserve">the newly created #JsonGenerator instance</doc>
           <type name="Generator" c:type="JsonGenerator*"/>
@@ -984,8 +983,8 @@ property and the spacing specified in #JsonGenerator:indent property.</doc>
         <doc xml:space="preserve">Sets @node as the root of the JSON data stream to be serialized by
 the #JsonGenerator.
 
-&lt;note&gt;The node is copied by the generator object, so it can be safely
-freed after calling this function.&lt;/note&gt;</doc>
+The passed @node is copied by the generator object, so it can be
+safely freed after calling this function.</doc>
         <return-value transfer-ownership="none">
           <type name="none" c:type="void"/>
         </return-value>
@@ -1140,6 +1139,18 @@ stream.</doc>
             c:type="JsonGeneratorPrivate"
             disguised="1">
     </record>
+    <constant name="MAJOR_VERSION" value="1" c:type="JSON_MAJOR_VERSION">
+      <doc xml:space="preserve">Json major version component (e.g. 1 if %JSON_VERSION is 1.2.3)</doc>
+      <type name="gint" c:type="gint"/>
+    </constant>
+    <constant name="MICRO_VERSION" value="0" c:type="JSON_MICRO_VERSION">
+      <doc xml:space="preserve">Json micro version component (e.g. 3 if %JSON_VERSION is 1.2.3)</doc>
+      <type name="gint" c:type="gint"/>
+    </constant>
+    <constant name="MINOR_VERSION" value="0" c:type="JSON_MINOR_VERSION">
+      <doc xml:space="preserve">Json minor version component (e.g. 2 if %JSON_VERSION is 1.2.3)</doc>
+      <type name="gint" c:type="gint"/>
+    </constant>
     <record name="Node"
             c:type="JsonNode"
             glib:type-name="JsonNode"
@@ -1148,14 +1159,23 @@ stream.</doc>
       <doc xml:space="preserve">A generic container of JSON data types. The contents of the #JsonNode
 structure are private and should only be accessed via the provided
 functions and never directly.</doc>
+      <constructor name="alloc" c:identifier="json_node_alloc" version="0.16">
+        <doc xml:space="preserve">Allocates a new #JsonNode. Use json_node_init() and its variants
+to initialize the returned value.</doc>
+        <return-value transfer-ownership="full">
+          <doc xml:space="preserve">the newly allocated #JsonNode. Use
+  json_node_free() to free the resources allocated by this function</doc>
+          <type name="Node" c:type="JsonNode*"/>
+        </return-value>
+      </constructor>
       <constructor name="new" c:identifier="json_node_new">
         <doc xml:space="preserve">Creates a new #JsonNode of @type.
 
 This is a convenience function for json_node_alloc() and json_node_init(),
 and it's the equivalent of:
 
-|[
-  return json_node_init (json_node_alloc (), type);
+|[&lt;!-- language="C" --&gt;
+     json_node_init (json_node_alloc (), type);
 ]|</doc>
         <return-value transfer-ownership="full">
           <doc xml:space="preserve">the newly created #JsonNode</doc>
@@ -1552,9 +1572,10 @@ the given type, and any data contained will be cleared.</doc>
         </parameters>
       </method>
       <method name="is_null" c:identifier="json_node_is_null" version="0.8">
-        <doc xml:space="preserve">Checks whether @node is a %JSON_NODE_NULL
+        <doc xml:space="preserve">Checks whether @node is a %JSON_NODE_NULL.
 
-&lt;note&gt;A null node is not the same as a %NULL #JsonNode&lt;/note&gt;</doc>
+A %JSON_NODE_NULL node is not the same as a %NULL #JsonNode; a
+%JSON_NODE_NULL represents a 'null' value in the JSON tree.</doc>
         <return-value transfer-ownership="none">
           <doc xml:space="preserve">%TRUE if the node is null</doc>
           <type name="gboolean" c:type="gboolean"/>
@@ -1746,15 +1767,6 @@ content.</doc>
           </instance-parameter>
         </parameters>
       </method>
-      <function name="alloc" c:identifier="json_node_alloc" version="0.16">
-        <doc xml:space="preserve">Allocates a new #JsonNode. Use json_node_init() and its variants
-to initialize the returned value.</doc>
-        <return-value transfer-ownership="full">
-          <doc xml:space="preserve">the newly allocated #JsonNode. Use
-  json_node_free() to free the resources allocated by this function</doc>
-          <type name="Node" c:type="JsonNode*"/>
-        </return-value>
-      </function>
     </record>
     <enumeration name="NodeType" c:type="JsonNodeType">
       <doc xml:space="preserve">Indicates the content of a #JsonNode.</doc>
@@ -2074,7 +2086,7 @@ See also: json_object_get_member()</doc>
         <doc xml:space="preserve">Retrieves all the values of the members of a #JsonObject.</doc>
         <return-value transfer-ownership="container">
           <doc xml:space="preserve">a #GList of
-  #JsonNode&lt;!-- --&gt;s. The content of the list is owned by the #JsonObject
+  #JsonNodes. The content of the list is owned by the #JsonObject
   and should never be modified or freed. When you have finished using the
   returned list, use g_list_free() to free the resources it has allocated.</doc>
           <type name="GLib.List" c:type="GList*">
@@ -2107,7 +2119,7 @@ See also: json_object_get_member()</doc>
       </method>
       <method name="ref" c:identifier="json_object_ref">
         <doc xml:space="preserve">Increase by one the reference count of a #JsonObject.</doc>
-        <return-value transfer-ownership="full">
+        <return-value transfer-ownership="none">
           <doc xml:space="preserve">the passed #JsonObject, with the reference count
   increased by one.</doc>
           <type name="Object" c:type="JsonObject*"/>
@@ -3103,9 +3115,8 @@ This enumeration can be extended at later date</doc>
            glib:type-name="JsonPath"
            glib:get-type="json_path_get_type"
            glib:type-struct="PathClass">
-      <doc xml:space="preserve">The &lt;structname&gt;JsonPath&lt;/structname&gt; structure is an opaque object
-whose members cannot be directly accessed except through the provided
-API.</doc>
+      <doc xml:space="preserve">The `JsonPath` structure is an opaque object whose members cannot be
+directly accessed except through the provided API.</doc>
       <constructor name="new" c:identifier="json_path_new" version="0.14">
         <doc xml:space="preserve">Creates a new #JsonPath instance.
 
@@ -3134,7 +3145,7 @@ creates a #JsonPath instance, compiles @expression and
 matches it against the JSON tree pointed by @root.</doc>
         <return-value transfer-ownership="full">
           <doc xml:space="preserve">a newly-created #JsonNode of type
-  %JSON_NODE_ARRAY containing an array of matching #JsonNode&lt;!-- --&gt;s.
+  %JSON_NODE_ARRAY containing an array of matching #JsonNodes.
   Use json_node_free() when done</doc>
           <type name="Node" c:type="JsonNode*"/>
         </return-value>
@@ -3177,11 +3188,11 @@ A JSONPath expression must be compiled before calling json_path_match().</doc>
         <doc xml:space="preserve">Matches the JSON tree pointed by @root using the expression compiled
 into the #JsonPath.
 
-The matching #JsonNode&lt;!-- --&gt;s will be copied into a #JsonArray and
+The matching #JsonNodes will be copied into a #JsonArray and
 returned wrapped in a #JsonNode.</doc>
         <return-value transfer-ownership="full">
           <doc xml:space="preserve">a newly-created #JsonNode of type
-  %JSON_NODE_ARRAY containing an array of matching #JsonNode&lt;!-- --&gt;s.
+  %JSON_NODE_ARRAY containing an array of matching #JsonNodes.
   Use json_node_free() when done</doc>
           <type name="Node" c:type="JsonNode*"/>
         </return-value>
@@ -3202,8 +3213,8 @@ returned wrapped in a #JsonNode.</doc>
             disguised="1"
             glib:is-gtype-struct-for="Path"
             version="0.14">
-      <doc xml:space="preserve">The &lt;structname&gt;JsonPathClass&lt;/structname&gt; structure is an opaque
-object class whose members cannot be directly accessed.</doc>
+      <doc xml:space="preserve">The `JsonPathClass` structure is an opaque object class whose members
+cannot be directly accessed.</doc>
     </record>
     <enumeration name="PathError" version="0.14" c:type="JsonPathError">
       <doc xml:space="preserve">Error code enumeration for the %JSON_PATH_ERROR domain.</doc>
@@ -3221,8 +3232,8 @@ object class whose members cannot be directly accessed.</doc>
            glib:type-name="JsonReader"
            glib:get-type="json_reader_get_type"
            glib:type-struct="ReaderClass">
-      <doc xml:space="preserve">The &lt;structname&gt;JsonReader&lt;/structname&gt; structure contains only
-private data and should only be accessed using the provided API</doc>
+      <doc xml:space="preserve">The `JsonReader` structure contains only private data and should
+be accessed using the provided API</doc>
       <constructor name="new" c:identifier="json_reader_new" version="0.12">
         <doc xml:space="preserve">Creates a new #JsonReader. You can use this object to read the contents of
 the JSON tree starting from @node</doc>
@@ -3632,8 +3643,7 @@ If another #JsonNode is currently set as root, it will be replaced.</doc>
             c:type="JsonReaderClass"
             glib:is-gtype-struct-for="Reader"
             version="0.12">
-      <doc xml:space="preserve">The &lt;structname&gt;JsonReaderClass&lt;/structname&gt; structure contains only
-private data</doc>
+      <doc xml:space="preserve">The `JsonReaderClass` structure contains only private data</doc>
       <field name="parent_class" readable="0" private="1">
         <type name="GObject.ObjectClass" c:type="GObjectClass"/>
       </field>
@@ -3855,7 +3865,7 @@ deserialize_property() virtual function
 This function can be used inside a custom implementation
 of the deserialize_property() virtual function in lieu of:
 
-|[
+|[&lt;!-- language="C" --&gt;
   JsonSerializable *iface;
   gboolean res;
 
@@ -3896,12 +3906,14 @@ of the deserialize_property() virtual function in lieu of:
               c:identifier="json_serializable_default_serialize_property"
               version="0.10">
         <doc xml:space="preserve">Calls the default implementation of the #JsonSerializable
-serialize_property() virtual function
+#JsonSerializableIface.serialize_property() virtual function.
 
 This function can be used inside a custom implementation
-of the serialize_property() virtual function in lieu of:
+of the #JsonSerializableIface.serialize_property() virtual
+function in lieu of calling the default implementation
+through g_type_default_interface_peek():
 
-|[
+|[&lt;!-- language="C" --&gt;
   JsonSerializable *iface;
   JsonNode *node;
 
@@ -4079,7 +4091,7 @@ property into a #JsonNode object.</doc>
     <record name="SerializableIface"
             c:type="JsonSerializableIface"
             glib:is-gtype-struct-for="Serializable">
-      <doc xml:space="preserve">Interface that allows serializing and deserializing #GObject&lt;!-- --&gt;s
+      <doc xml:space="preserve">Interface that allows serializing and deserializing #GObject instances
 with properties storing complex data types. The json_serialize_gobject()
 function will check if the passed #GObject implements this interface,
 so it can also be used to override the default property serialization
@@ -4217,6 +4229,11 @@ sequence.</doc>
         </callback>
       </field>
     </record>
+    <constant name="VERSION_S" value="1.0.0" c:type="JSON_VERSION_S">
+      <doc xml:space="preserve">JSON-GLib version, encoded as a string, useful for printing and
+concatenation.</doc>
+      <type name="utf8" c:type="gchar*"/>
+    </constant>
     <function name="boxed_can_deserialize"
               c:identifier="json_boxed_can_deserialize"
               version="0.10">
@@ -4595,18 +4612,6 @@ JSON tree, and then #JsonGenerator to stringify it.</doc>
           <type name="gsize" c:type="gsize*"/>
         </parameter>
       </parameters>
-    </function>
-    <function name="node_alloc"
-              c:identifier="json_node_alloc"
-              moved-to="Node.alloc"
-              version="0.16">
-      <doc xml:space="preserve">Allocates a new #JsonNode. Use json_node_init() and its variants
-to initialize the returned value.</doc>
-      <return-value transfer-ownership="full">
-        <doc xml:space="preserve">the newly allocated #JsonNode. Use
-  json_node_free() to free the resources allocated by this function</doc>
-        <type name="Node" c:type="JsonNode*"/>
-      </return-value>
     </function>
     <function name="serialize_gobject"
               c:identifier="json_serialize_gobject"
