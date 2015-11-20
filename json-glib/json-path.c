@@ -260,6 +260,8 @@ struct _PathNode
   } data;
 };
 
+G_DEFINE_QUARK (json-path-error-quark, json_path_error)
+
 G_DEFINE_TYPE (JsonPath, json_path, G_TYPE_OBJECT)
 
 static void
@@ -308,12 +310,6 @@ json_path_init (JsonPath *self)
 {
 }
 
-GQuark
-json_path_error_quark (void)
-{
-  return g_quark_from_static_string ("json-path-error");
-}
-
 /**
  * json_path_new:
  *
@@ -332,6 +328,71 @@ json_path_new (void)
 {
   return g_object_new (JSON_TYPE_PATH, NULL);
 }
+
+#ifdef JSON_ENABLE_DEBUG
+/* used as the function for a g_list_foreach() on a list of PathNode; needs
+ * a GString as the payload to build the output string
+ */
+static void
+json_path_foreach_print (gpointer data,
+                         gpointer user_data)
+{
+  PathNode *cur_node = data;
+  GString *buf = user_data;
+
+  switch (cur_node->node_type)
+    {
+    case JSON_PATH_NODE_ROOT:
+      g_string_append (buf, "<root");
+      break;
+
+    case JSON_PATH_NODE_CHILD_MEMBER:
+      g_string_append_printf (buf, "<member '%s'", cur_node->data.member_name);
+      break;
+
+    case JSON_PATH_NODE_CHILD_ELEMENT:
+      g_string_append_printf (buf, "<element '%d'", cur_node->data.element_index);
+      break;
+
+    case JSON_PATH_NODE_RECURSIVE_DESCENT:
+      g_string_append (buf, "<recursive descent");
+      break;
+
+    case JSON_PATH_NODE_WILDCARD_MEMBER:
+      g_string_append (buf, "<wildcard member");
+      break;
+
+    case JSON_PATH_NODE_WILDCARD_ELEMENT:
+      g_string_append (buf, "<wildcard element");
+      break;
+
+    case JSON_PATH_NODE_ELEMENT_SET:
+      {
+        int i;
+
+        g_string_append (buf, "<element set ");
+        for (i = 0; i < cur_node->data.set.n_indices - 1; i++)
+          g_string_append_printf (buf, "'%d', ", cur_node->data.set.indices[i]);
+
+        g_string_append_printf (buf, "'%d'", cur_node->data.set.indices[i]);
+      }
+      break;
+
+    case JSON_PATH_NODE_ELEMENT_SLICE:
+      g_string_append_printf (buf, "<slice start '%d', end '%d', step '%d'",
+                              cur_node->data.slice.start,
+                              cur_node->data.slice.end,
+                              cur_node->data.slice.step);
+      break;
+
+    default:
+      g_string_append (buf, "<unknown node");
+      break;
+    }
+
+  g_string_append (buf, ">");
+}
+#endif /* JSON_ENABLE_DEBUG */
 
 /**
  * json_path_compile:
@@ -356,7 +417,9 @@ json_path_compile (JsonPath    *path,
 {
   const char *p, *end_p;
   PathNode *root = NULL;
-  GList *nodes, *l;
+  GList *nodes = NULL;
+
+  g_return_val_if_fail (expression != NULL, FALSE);
 
   p = expression;
 
@@ -376,7 +439,7 @@ json_path_compile (JsonPath    *path,
                 return FALSE;
               }
 
-            if (!(*(p + 1) == '.' || *(p + 1) == '['))
+            if (!(*(p + 1) == '.' || *(p + 1) == '[' || *(p + 1) == '\0'))
               {
                 /* translators: the %c is the invalid character */
                 g_set_error (error, JSON_PATH_ERROR,
@@ -416,6 +479,14 @@ json_path_compile (JsonPath    *path,
                 end_p = p + 1;
                 while (!(*end_p == '.' || *end_p == '[' || *end_p == '\0'))
                   end_p += 1;
+
+                if (end_p == p + 1)
+                  {
+                    g_set_error_literal (error, JSON_PATH_ERROR,
+                                         JSON_PATH_ERROR_INVALID_QUERY,
+                                         _("Missing member name or wildcard after . character"));
+                    goto fail;
+                  }
 
                 node = g_new0 (PathNode, 1);
                 node->node_type = JSON_PATH_NODE_CHILD_MEMBER;
@@ -627,6 +698,14 @@ json_path_compile (JsonPath    *path,
           break;
 
         default:
+          if (nodes == NULL)
+            {
+              g_set_error(error, JSON_PATH_ERROR,
+                          JSON_PATH_ERROR_INVALID_QUERY,
+                          _("Invalid first character '%c'"),
+                          *p);
+              return FALSE;
+            }
           break;
         }
 
@@ -636,77 +715,18 @@ json_path_compile (JsonPath    *path,
   nodes = g_list_reverse (nodes);
 
 #ifdef JSON_ENABLE_DEBUG
-  if (_json_get_debug_flags () & JSON_DEBUG_PATH)
+  if (JSON_HAS_DEBUG (PATH))
     {
       GString *buf = g_string_new (NULL);
 
-      for (l = nodes; l != NULL; l = l->next)
-        {
-          PathNode *cur_node = l->data;
-
-          switch (cur_node->node_type)
-            {
-            case JSON_PATH_NODE_ROOT:
-              g_string_append (buf, "<root");
-              break;
-
-            case JSON_PATH_NODE_CHILD_MEMBER:
-              g_string_append_printf (buf, "<member '%s'", cur_node->data.member_name);
-              break;
-
-            case JSON_PATH_NODE_CHILD_ELEMENT:
-              g_string_append_printf (buf, "<element '%d'", cur_node->data.element_index);
-              break;
-
-            case JSON_PATH_NODE_RECURSIVE_DESCENT:
-              g_string_append (buf, "<recursive descent");
-              break;
-
-            case JSON_PATH_NODE_WILDCARD_MEMBER:
-              g_string_append (buf, "<wildcard member");
-              break;
-
-            case JSON_PATH_NODE_WILDCARD_ELEMENT:
-              g_string_append (buf, "<wildcard element");
-              break;
-
-            case JSON_PATH_NODE_ELEMENT_SET:
-              {
-                int i;
-
-                g_string_append (buf, "<element set ");
-                for (i = 0; i < cur_node->data.set.n_indices - 1; i++)
-                  g_string_append_printf (buf, "'%d', ", cur_node->data.set.indices[i]);
-
-                g_string_append_printf (buf, "'%d'", cur_node->data.set.indices[i]);
-              }
-              break;
-
-            case JSON_PATH_NODE_ELEMENT_SLICE:
-              g_string_append_printf (buf, "<slice start '%d', end '%d', step '%d'",
-                                      cur_node->data.slice.start,
-                                      cur_node->data.slice.end,
-                                      cur_node->data.slice.step);
-              break;
-
-            default:
-              g_string_append (buf, "<unknown node");
-              break;
-            }
-
-          if (l->next != NULL)
-            g_string_append (buf, ">, ");
-          else
-            g_string_append (buf, ">");
-        }
+      g_list_foreach (nodes, json_path_foreach_print, buf);
 
       g_message ("[PATH] " G_STRLOC ": expression '%s' => '%s'", expression, buf->str);
       g_string_free (buf, TRUE);
     }
 #endif /* JSON_ENABLE_DEBUG */
 
-  if (path->nodes != NULL)
-    g_list_free_full (path->nodes, path_node_free);
+  g_list_free_full (path->nodes, path_node_free);
 
   path->nodes = nodes;
   path->is_compiled = (path->nodes != NULL);
@@ -729,7 +749,10 @@ walk_path_node (GList      *path,
   switch (node->node_type)
     {
     case JSON_PATH_NODE_ROOT:
-      walk_path_node (path->next, root, results);
+      if (path->next != NULL)
+          walk_path_node (path->next, root, results);
+      else
+          json_array_add_element (results, json_node_copy (root));
       break;
 
     case JSON_PATH_NODE_CHILD_MEMBER:

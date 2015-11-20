@@ -26,10 +26,14 @@
       <sub name="Serializable Interface" link="json-glib-Serializable-Interface.html"/>
       <sub name="Boxed Types Serialization" link="json-glib-Boxed-Types-Serialization.html"/>
       <sub name="JSON GVariant Integration" link="json-glib-JSON-GVariant-Integration.html"/>
+      <sub name="Versioning information" link="json-glib-Versioning-information.html"/>
     </sub>
     <sub name="JSON-GLib Additional Reference" link="json-tools.html">
-      <sub name="Versioning information" link="json-glib-Versioning-information.html"/>
-      <sub name="Object Hierarchy" link="ch04.html"/>
+      <sub name="JSON-GLib Tools" link="tools.html">
+        <sub name="json-glib-format" link="json-format-tool.html"/>
+        <sub name="json-glib-validate" link="json-validate-tool.html"/>
+      </sub>
+      <sub name="Object Hierarchy" link="ch05.html"/>
     </sub>
     <sub name="Index" link="ix01.html"/>
     <sub name="Index of deprecated symbols" link="ix02.html"/>
@@ -278,6 +282,7 @@
     <keyword type="constant" name="JSON_PARSER_ERROR_MISSING_COLON" link="JsonParser.html#JSON-PARSER-ERROR-MISSING-COLON:CAPS"/>
     <keyword type="constant" name="JSON_PARSER_ERROR_INVALID_BAREWORD" link="JsonParser.html#JSON-PARSER-ERROR-INVALID-BAREWORD:CAPS"/>
     <keyword type="constant" name="JSON_PARSER_ERROR_EMPTY_MEMBER_NAME" link="JsonParser.html#JSON-PARSER-ERROR-EMPTY-MEMBER-NAME:CAPS"/>
+    <keyword type="constant" name="JSON_PARSER_ERROR_INVALID_DATA" link="JsonParser.html#JSON-PARSER-ERROR-INVALID-DATA:CAPS"/>
     <keyword type="constant" name="JSON_PARSER_ERROR_UNKNOWN" link="JsonParser.html#JSON-PARSER-ERROR-UNKNOWN:CAPS"/>
     <keyword type="constant" name="JSON_READER_ERROR_NO_ARRAY" link="JsonReader.html#JSON-READER-ERROR-NO-ARRAY:CAPS"/>
     <keyword type="constant" name="JSON_READER_ERROR_INVALID_INDEX" link="JsonReader.html#JSON-READER-ERROR-INVALID-INDEX:CAPS"/>

@@ -48,9 +48,6 @@
 
 #include "json-builder.h"
 
-#define JSON_BUILDER_GET_PRIVATE(obj) \
-        (G_TYPE_INSTANCE_GET_PRIVATE ((obj), JSON_TYPE_BUILDER, JsonBuilderPrivate))
-
 struct _JsonBuilderPrivate
 {
   GQueue *stack;
@@ -104,7 +101,7 @@ json_builder_state_free (JsonBuilderState *state)
     }
 }
 
-G_DEFINE_TYPE (JsonBuilder, json_builder, G_TYPE_OBJECT);
+G_DEFINE_TYPE_WITH_PRIVATE (JsonBuilder, json_builder, G_TYPE_OBJECT)
 
 static void
 json_builder_free_all_state (JsonBuilder *builder)
@@ -127,7 +124,7 @@ json_builder_free_all_state (JsonBuilder *builder)
 static void
 json_builder_finalize (GObject *gobject)
 {
-  JsonBuilderPrivate *priv = JSON_BUILDER_GET_PRIVATE (gobject);
+  JsonBuilderPrivate *priv = json_builder_get_instance_private ((JsonBuilder *) gobject);
 
   json_builder_free_all_state (JSON_BUILDER (gobject));
 
@@ -142,17 +139,15 @@ json_builder_class_init (JsonBuilderClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
-  g_type_class_add_private (klass, sizeof (JsonBuilderPrivate));
-
   gobject_class->finalize = json_builder_finalize;
 }
 
 static void
 json_builder_init (JsonBuilder *builder)
 {
-  JsonBuilderPrivate *priv;
+  JsonBuilderPrivate *priv = json_builder_get_instance_private (builder);
 
-  builder->priv = priv = JSON_BUILDER_GET_PRIVATE (builder);
+  builder->priv = priv;
 
   priv->stack = g_queue_new ();
   priv->root = NULL;

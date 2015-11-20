@@ -21,12 +21,12 @@
  *   Emmanuele Bassi  <ebassi@linux.intel.com>
  */
 
+#ifndef __JSON_PARSER_H__
+#define __JSON_PARSER_H__
+
 #if !defined(__JSON_GLIB_INSIDE__) && !defined(JSON_COMPILATION)
 #error "Only <json-glib/json-glib.h> can be included directly."
 #endif
-
-#ifndef __JSON_PARSER_H__
-#define __JSON_PARSER_H__
 
 #include <glib-object.h>
 #include <gio/gio.h>
@@ -55,6 +55,7 @@ typedef struct _JsonParserClass         JsonParserClass;
  * @JSON_PARSER_ERROR_MISSING_COLON: expected colon
  * @JSON_PARSER_ERROR_INVALID_BAREWORD: invalid bareword
  * @JSON_PARSER_ERROR_EMPTY_MEMBER_NAME: empty member name (Since: 0.16)
+ * @JSON_PARSER_ERROR_INVALID_DATA: invalid data (Since: 0.18)
  * @JSON_PARSER_ERROR_UNKNOWN: unknown error
  *
  * Error enumeration for #JsonParser
@@ -68,6 +69,7 @@ typedef enum {
   JSON_PARSER_ERROR_MISSING_COLON,
   JSON_PARSER_ERROR_INVALID_BAREWORD,
   JSON_PARSER_ERROR_EMPTY_MEMBER_NAME,
+  JSON_PARSER_ERROR_INVALID_DATA,
 
   JSON_PARSER_ERROR_UNKNOWN
 } JsonParserError;

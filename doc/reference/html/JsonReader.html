@@ -2,34 +2,31 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>JsonReader</title>
+<title>JSON-GLib Reference Manual: JsonReader</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="JSON-GLib Reference Manual">
 <link rel="up" href="ch02.html" title="Parser">
 <link rel="prev" href="JsonParser.html" title="JsonParser">
 <link rel="next" href="JsonPath.html" title="JsonPath">
-<meta name="generator" content="GTK-Doc V1.18.1 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.19.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
-<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
-<tr valign="middle">
-<td><a accesskey="p" href="JsonParser.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
-<td><a accesskey="u" href="ch02.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
-<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
-<th width="100%" align="center">JSON-GLib Reference Manual</th>
-<td><a accesskey="n" href="JsonPath.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
-</tr>
-<tr><td colspan="5" class="shortcuts">
-<a href="#JsonReader.synopsis" class="shortcut">Top</a>
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="10"><tr valign="middle">
+<td width="100%" align="left">
+<a href="#" class="shortcut">Top</a>
                    | 
                   <a href="#JsonReader.description" class="shortcut">Description</a>
                    | 
                   <a href="#JsonReader.object-hierarchy" class="shortcut">Object Hierarchy</a>
                    | 
                   <a href="#JsonReader.properties" class="shortcut">Properties</a>
-</td></tr>
-</table>
+</td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="16" height="16" border="0" alt="Home"></a></td>
+<td><a accesskey="u" href="ch02.html"><img src="up.png" width="16" height="16" border="0" alt="Up"></a></td>
+<td><a accesskey="p" href="JsonParser.html"><img src="left.png" width="16" height="16" border="0" alt="Prev"></a></td>
+<td><a accesskey="n" href="JsonPath.html"><img src="right.png" width="16" height="16" border="0" alt="Next"></a></td>
+</tr></table>
 <div class="refentry">
 <a name="JsonReader"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
@@ -474,11 +471,11 @@ reposition the cursor inside the <a class="link" href="JsonReader.html" title="J
 7</pre></td>
         <td class="listing_code"><pre class="programlisting"><span class="function"><a href="JsonReader.html#json-reader-read-member">json_reader_read_member</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">reader</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"author"</span><span class="symbol">);</span>
 <span class="normal">author </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="JsonReader.html#json-reader-get-string-value">json_reader_get_string_value</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">reader</span><span class="symbol">);</span>
-<span class="function"><a href="JsonReader.html#json-reader-end-element">json_reader_end_element</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">reader</span><span class="symbol">);</span>
+<span class="function"><a href="JsonReader.html#json-reader-end-member">json_reader_end_member</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">reader</span><span class="symbol">);</span>
 
-<span class="function"><a href="JsonReader.html#json-reader-read-element">json_reader_read_element</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">reader</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"title"</span><span class="symbol">);</span>
+<span class="function"><a href="JsonReader.html#json-reader-read-member">json_reader_read_member</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">reader</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"title"</span><span class="symbol">);</span>
 <span class="normal">title </span><span class="symbol">=</span><span class="normal"> </span><span class="function"><a href="JsonReader.html#json-reader-get-string-value">json_reader_get_string_value</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">reader</span><span class="symbol">);</span>
-<span class="function"><a href="JsonReader.html#json-reader-end-element">json_reader_end_element</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">reader</span><span class="symbol">);</span></pre></td>
+<span class="function"><a href="JsonReader.html#json-reader-end-member">json_reader_end_member</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">reader</span><span class="symbol">);</span></pre></td>
       </tr>
     </tbody>
   </table>
@@ -956,6 +953,6 @@ The root of the JSON tree that the <a class="link" href="JsonReader.html" title=
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18.1</div>
+          Generated by GTK-Doc V1.19.1</div>
 </body>
 </html>

@@ -655,10 +655,12 @@ test_stream_sync (void)
   GFileInputStream *stream;
   GError *error = NULL;
   JsonNode *root;
+  char *path;
 
   parser = json_parser_new ();
 
-  file = g_file_new_for_path (TESTS_DATA_DIR "/stream-load.json");
+  path = g_test_build_filename (G_TEST_DIST, "stream-load.json", NULL);
+  file = g_file_new_for_path (path);
   stream = g_file_read (file, NULL, &error);
   g_assert (error == NULL);
   g_assert (stream != NULL);
@@ -673,6 +675,7 @@ test_stream_sync (void)
   g_object_unref (stream);
   g_object_unref (file);
   g_object_unref (parser);
+  g_free (path);
 }
 
 static void
@@ -703,9 +706,13 @@ test_stream_async (void)
   GMainLoop *main_loop;
   GError *error = NULL;
   JsonParser *parser = json_parser_new ();
-  GFile *file = g_file_new_for_path (TESTS_DATA_DIR "/stream-load.json");
-  GFileInputStream *stream = g_file_read (file, NULL, &error);
+  GFile *file;
+  GFileInputStream *stream;
+  char *path;
 
+  path = g_test_build_filename (G_TEST_DIST, "stream-load.json", NULL);
+  file = g_file_new_for_path (path);
+  stream = g_file_read (file, NULL, &error);
   g_assert (error == NULL);
   g_assert (stream != NULL);
 
@@ -721,15 +728,13 @@ test_stream_async (void)
   g_object_unref (stream);
   g_object_unref (file);
   g_object_unref (parser);
+  g_free (path);
 }
 
 int
 main (int   argc,
       char *argv[])
 {
-#if !GLIB_CHECK_VERSION (2, 35, 1)
-  g_type_init ();
-#endif
   g_test_init (&argc, &argv, NULL);
 
   g_test_add_func ("/parser/empty-string", test_empty);

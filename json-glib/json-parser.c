@@ -45,14 +45,6 @@
 #include "json-parser.h"
 #include "json-scanner.h"
 
-GQuark
-json_parser_error_quark (void)
-{
-  return g_quark_from_static_string ("json-parser-error");
-}
-
-#define JSON_PARSER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), JSON_TYPE_PARSER, JsonParserPrivate))
-
 struct _JsonParserPrivate
 {
   JsonNode *root;
@@ -106,7 +98,9 @@ enum
 
 static guint parser_signals[LAST_SIGNAL] = { 0, };
 
-G_DEFINE_TYPE (JsonParser, json_parser, G_TYPE_OBJECT);
+G_DEFINE_QUARK (json-parser-error-quark, json_parser_error)
+
+G_DEFINE_TYPE_WITH_PRIVATE (JsonParser, json_parser, G_TYPE_OBJECT)
 
 static guint json_parse_array  (JsonParser   *parser,
                                 JsonScanner  *scanner,
@@ -159,8 +153,6 @@ static void
 json_parser_class_init (JsonParserClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
-
-  g_type_class_add_private (klass, sizeof (JsonParserPrivate));
 
   gobject_class->dispose = json_parser_dispose;
   gobject_class->finalize = json_parser_finalize;
@@ -321,9 +313,9 @@ json_parser_class_init (JsonParserClass *klass)
 static void
 json_parser_init (JsonParser *parser)
 {
-  JsonParserPrivate *priv;
+  JsonParserPrivate *priv = json_parser_get_instance_private (parser);
 
-  parser->priv = priv = JSON_PARSER_GET_PRIVATE (parser);
+  parser->priv = priv;
 
   priv->root = NULL;
   priv->current_node = NULL;
@@ -886,6 +878,15 @@ json_parser_load (JsonParser   *parser,
 
   json_parser_clear (parser);
 
+  if (!g_utf8_validate (data, -1, NULL))
+    {
+      g_set_error_literal (error, JSON_PARSER_ERROR,
+                           JSON_PARSER_ERROR_INVALID_DATA,
+                           _("JSON data must be UTF-8 encoded"));
+      g_signal_emit (parser, parser_signals[ERROR], 0, *error);
+      return FALSE;
+    }
+
   scanner = json_scanner_create (parser);
   json_scanner_input_text (scanner, data, length);
 
@@ -1207,6 +1208,7 @@ json_parser_load_from_stream (JsonParser    *parser,
   gsize pos;
   gssize res;
   gboolean retval = FALSE;
+  GError *internal_error;
 
   g_return_val_if_fail (JSON_IS_PARSER (parser), FALSE);
   g_return_val_if_fail (G_IS_INPUT_STREAM (stream), FALSE);
@@ -1237,7 +1239,11 @@ json_parser_load_from_stream (JsonParser    *parser,
   /* zero-terminate the content; we allocated an extra byte for this */
   content->data[pos] = 0;
 
-  retval = json_parser_load (parser, (const gchar *) content->data, content->len, error);
+  internal_error = NULL;
+  retval = json_parser_load (parser, (const gchar *) content->data, content->len, &internal_error);
+
+  if (internal_error != NULL)
+    g_propagate_error (error, internal_error);
 
 out:
   g_byte_array_free (content, TRUE);
@@ -1357,7 +1363,9 @@ json_parser_load_from_stream_finish (JsonParser    *parser,
                                      GError       **error)
 {
   GSimpleAsyncResult *simple;
+  GError *internal_error;
   LoadStreamData *data;
+  gboolean res;
 
   g_return_val_if_fail (JSON_IS_PARSER (parser), FALSE);
   g_return_val_if_fail (G_IS_SIMPLE_ASYNC_RESULT (result), FALSE);
@@ -1381,7 +1389,13 @@ json_parser_load_from_stream_finish (JsonParser    *parser,
   g_byte_array_set_size (data->content, data->pos + 1);
   data->content->data[data->pos] = 0;
 
-  return json_parser_load (parser, (const gchar *) data->content->data, data->content->len, error);
+  internal_error = NULL;
+  res = json_parser_load (parser, (const gchar *) data->content->data, data->content->len, &internal_error);
+
+  if (internal_error != NULL)
+    g_propagate_error (error, internal_error);
+
+  return res;
 }
 
 /**

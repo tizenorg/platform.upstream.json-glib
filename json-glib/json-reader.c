@@ -109,7 +109,9 @@ enum
 
 static GParamSpec *reader_properties[PROP_LAST] = { NULL, };
 
-G_DEFINE_TYPE (JsonReader, json_reader, G_TYPE_OBJECT);
+G_DEFINE_TYPE_WITH_PRIVATE (JsonReader, json_reader, G_TYPE_OBJECT)
+
+G_DEFINE_QUARK (json-reader-error-quark, json_reader_error)
 
 static void
 json_reader_finalize (GObject *gobject)
@@ -168,8 +170,6 @@ json_reader_class_init (JsonReaderClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
-  g_type_class_add_private (klass, sizeof (JsonReaderPrivate));
-
   /**
    * JsonReader:root:
    *
@@ -195,14 +195,7 @@ json_reader_class_init (JsonReaderClass *klass)
 static void
 json_reader_init (JsonReader *self)
 {
-  self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, JSON_TYPE_READER,
-                                            JsonReaderPrivate);
-}
-
-GQuark
-json_reader_error_quark (void)
-{
-  return g_quark_from_static_string ("json-reader-error");
+  self->priv = json_reader_get_instance_private (self);
 }
 
 /**
@@ -228,12 +221,18 @@ json_reader_new (JsonNode *node)
  * @reader: a #JsonReader
  *
  * Unsets the error state of @reader, if set
+ *
+ * Return value: TRUE if an error was set.
  */
-static inline void
+static inline gboolean
 json_reader_unset_error (JsonReader *reader)
 {
   if (reader->priv->error != NULL)
-    g_clear_error (&(reader->priv->error));
+    {
+      g_clear_error (&(reader->priv->error));
+      return TRUE;
+    }
+  return FALSE;
 }
 
 /**
@@ -534,7 +533,8 @@ json_reader_end_element (JsonReader *reader)
 
   g_return_if_fail (JSON_IS_READER (reader));
 
-  json_reader_unset_error (reader);
+  if (json_reader_unset_error (reader))
+    return;
 
   priv = reader->priv;
 
@@ -611,11 +611,11 @@ json_reader_count_elements (JsonReader *reader)
  * |[
  * json_reader_read_member (reader, "author");
  * author = json_reader_get_string_value (reader);
- * json_reader_end_element (reader);
+ * json_reader_end_member (reader);
  *
- * json_reader_read_element (reader, "title");
+ * json_reader_read_member (reader, "title");
  * title = json_reader_get_string_value (reader);
- * json_reader_end_element (reader);
+ * json_reader_end_member (reader);
  * ]|
  *
  * If @reader is not currently on an object, or if the @member_name is not
@@ -683,7 +683,8 @@ json_reader_end_member (JsonReader *reader)
 
   g_return_if_fail (JSON_IS_READER (reader));
 
-  json_reader_unset_error (reader);
+  if (json_reader_unset_error (reader))
+    return;
 
   priv = reader->priv;
 

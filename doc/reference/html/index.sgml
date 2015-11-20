@@ -128,6 +128,7 @@
 <ANCHOR id="JSON-PARSER-ERROR-MISSING-COLON:CAPS" href="json-glib/JsonParser.html#JSON-PARSER-ERROR-MISSING-COLON:CAPS">
 <ANCHOR id="JSON-PARSER-ERROR-INVALID-BAREWORD:CAPS" href="json-glib/JsonParser.html#JSON-PARSER-ERROR-INVALID-BAREWORD:CAPS">
 <ANCHOR id="JSON-PARSER-ERROR-EMPTY-MEMBER-NAME:CAPS" href="json-glib/JsonParser.html#JSON-PARSER-ERROR-EMPTY-MEMBER-NAME:CAPS">
+<ANCHOR id="JSON-PARSER-ERROR-INVALID-DATA:CAPS" href="json-glib/JsonParser.html#JSON-PARSER-ERROR-INVALID-DATA:CAPS">
 <ANCHOR id="JSON-PARSER-ERROR-UNKNOWN:CAPS" href="json-glib/JsonParser.html#JSON-PARSER-ERROR-UNKNOWN:CAPS">
 <ANCHOR id="JsonParser-struct" href="json-glib/JsonParser.html#JsonParser-struct">
 <ANCHOR id="JsonParserClass" href="json-glib/JsonParser.html#JsonParserClass">
@@ -306,13 +307,15 @@
 <ANCHOR id="JSON-VERSION-S:CAPS" href="json-glib/json-glib-Versioning-information.html#JSON-VERSION-S:CAPS">
 <ANCHOR id="JSON-VERSION-HEX:CAPS" href="json-glib/json-glib-Versioning-information.html#JSON-VERSION-HEX:CAPS">
 <ANCHOR id="JSON-CHECK-VERSION:CAPS" href="json-glib/json-glib-Versioning-information.html#JSON-CHECK-VERSION:CAPS">
+<ANCHOR id="json-format-tool" href="json-glib/json-format-tool.html">
+<ANCHOR id="json-validate-tool" href="json-glib/json-validate-tool.html">
+<ANCHOR id="annotation-glossterm-allow-none" href="json-glib/annotation-glossary.html#annotation-glossterm-allow-none">
+<ANCHOR id="annotation-glossterm-array" href="json-glib/annotation-glossary.html#annotation-glossterm-array">
+<ANCHOR id="annotation-glossterm-closure" href="json-glib/annotation-glossary.html#annotation-glossterm-closure">
+<ANCHOR id="annotation-glossterm-element-type" href="json-glib/annotation-glossary.html#annotation-glossterm-element-type">
 <ANCHOR id="annotation-glossterm-out" href="json-glib/annotation-glossary.html#annotation-glossterm-out">
 <ANCHOR id="annotation-glossterm-out caller-allocates" href="json-glib/annotation-glossary.html#annotation-glossterm-out caller-allocates">
-<ANCHOR id="annotation-glossterm-allow-none" href="json-glib/annotation-glossary.html#annotation-glossterm-allow-none">
-<ANCHOR id="annotation-glossterm-closure" href="json-glib/annotation-glossary.html#annotation-glossterm-closure">
-<ANCHOR id="annotation-glossterm-transfer none" href="json-glib/annotation-glossary.html#annotation-glossterm-transfer none">
-<ANCHOR id="annotation-glossterm-array" href="json-glib/annotation-glossary.html#annotation-glossterm-array">
-<ANCHOR id="annotation-glossterm-element-type" href="json-glib/annotation-glossary.html#annotation-glossterm-element-type">
+<ANCHOR id="annotation-glossterm-scope call" href="json-glib/annotation-glossary.html#annotation-glossterm-scope call">
 <ANCHOR id="annotation-glossterm-transfer container" href="json-glib/annotation-glossary.html#annotation-glossterm-transfer container">
 <ANCHOR id="annotation-glossterm-transfer full" href="json-glib/annotation-glossary.html#annotation-glossterm-transfer full">
-<ANCHOR id="annotation-glossterm-scope call" href="json-glib/annotation-glossary.html#annotation-glossterm-scope call">
+<ANCHOR id="annotation-glossterm-transfer none" href="json-glib/annotation-glossary.html#annotation-glossterm-transfer none">

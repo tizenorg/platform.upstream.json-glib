@@ -1,8 +1,8 @@
 # bump micro_version to the next even number for each point release
 # bump micro_version to the next odd number after each release
 m4_define([json_major_version], [0])
-m4_define([json_minor_version], [16])
-m4_define([json_micro_version], [0])
+m4_define([json_minor_version], [99])
+m4_define([json_micro_version], [2])
 
 m4_define([json_version], [json_major_version.json_minor_version.json_micro_version])
 
@@ -20,7 +20,7 @@ m4_define([lt_current], [m4_eval(100 * json_minor_version + json_micro_version -
 m4_define([lt_revision], [json_interface_age])
 m4_define([lt_age], [m4_eval(json_binary_age - json_interface_age)])
 
-m4_define([glib_req_version], [2.34.0])
+m4_define([glib_req_version], [2.37.6])
 
 AC_PREREQ([2.63])
 
@@ -93,6 +93,30 @@ AC_MSG_RESULT([$platform_win32])
 AM_CONDITIONAL(OS_LINUX, [test "$platform_linux" = "yes"])
 AM_CONDITIONAL(OS_WIN32, [test "$platform_win32" = "yes"])
 
+# Check for -Bsymbolic-functions to avoid intra-library PLT jumps
+AC_ARG_ENABLE([Bsymbolic],
+              [AS_HELP_STRING([--disable-Bsymbolic],
+                              [Avoid linking with -Bsymbolic])],
+              [],
+              [
+                saved_LDFLAGS="${LDFLAGS}"
+                AC_MSG_CHECKING([for -Bsymbolic-functions linker flag])
+                LDFLAGS=-Wl,-Bsymbolic-functions
+                AC_TRY_LINK([], [int main (void) { return 0; }],
+                            [
+                              AC_MSG_RESULT([yes])
+                              enable_Bsymbolic=yes
+                            ],
+                            [
+                              AC_MSG_RESULT([no])
+                              enable_Bsymbolic=no
+                            ])
+                LDFLAGS="${saved_LDFLAGS}"
+              ])
+
+AS_IF([test "x$enable_Bsymbolic" = "xyes"], [JSON_LINK_FLAGS=-Wl[,]-Bsymbolic-functions])
+JSON_LT_LDFLAGS="$JSON_LT_LDFLAGS $JSON_LINK_FLAGS"
+
 AC_SUBST(JSON_LT_LDFLAGS)
 
 dnl === Dependencies ==========================================================
@@ -101,8 +125,6 @@ GLIB_PREFIX="`$PKG_CONFIG --variable=prefix glib-2.0`"
 AC_SUBST(GLIB_PREFIX)
 
 PKG_CHECK_MODULES(JSON, [gobject-2.0 >= glib_req_version gio-2.0])
-
-AM_CONDITIONAL(ENABLE_GLIB_TEST, [test "x$enable_glibtest" = "xyes"])
 
 dnl === Enable debug level ====================================================
 
@@ -160,6 +182,10 @@ AS_IF([test "x$enable_maintainer_flags" = "xyes" && test "x$GCC" = "xyes"],
 MAINTAINER_CFLAGS="${MAINTAINER_CFLAGS#*  }"
 AC_SUBST([MAINTAINER_CFLAGS])
 
+dnl === Test suite ============================================================
+
+GLIB_TESTS
+
 dnl === Test coverage =========================================================
 
 AC_ARG_ENABLE([gcov],
@@ -182,7 +208,7 @@ AS_IF([test "x$use_gcov" = "xyes"],
           AC_MSG_ERROR([ccache must be disabled when --enable-gcov option is used. You can disable ccache by setting environment variable CCACHE_DISABLE=1.])
         fi
 
-        ltp_version_list="1.6 1.7 1.8 1.9"
+        ltp_version_list="1.6 1.7 1.8 1.9 1.10"
         AC_CHECK_PROG(LTP, lcov, lcov)
         AC_CHECK_PROG(LTP_GENHTML, genhtml, genhtml)
 
@@ -239,6 +265,55 @@ dnl === Documentation =========================================================
 
 GTK_DOC_CHECK([1.13], [--flavour no-tmpl])
 
+AC_ARG_ENABLE([man,],
+              [AS_HELP_STRING([--enable-man], [generate man pages @<:@default=auto@:>@])],
+              [],
+              [enable_man=maybe])
+
+AS_IF([test "$enable_man" != no], [
+  AC_PATH_PROG([XSLTPROC], [xsltproc])
+  AS_IF([test -z "$XSLTPROC"], [
+    AS_IF([test "$enable_man" = yes], [
+      AC_MSG_ERROR([xsltproc is required for --enable-man])
+    ])
+    enable_man=no
+  ])
+])
+
+AS_IF([ test "$enable_man" != no ], [
+  dnl check for DocBook DTD in the local catalog
+  JH_CHECK_XML_CATALOG([-//OASIS//DTD DocBook XML V4.1.2//EN],
+     [DocBook XML DTD V4.1.2], [have_docbook_dtd=yes], [have_docbook_dtd=no])
+  AS_IF([test "$have_docbook_dtd" != yes], [
+    AS_IF([test "$enable_man" = yes ], [
+      AC_MSG_ERROR([DocBook DTD is required for --enable-man])
+    ])
+    enable_man=no
+  ])
+])
+
+AS_IF([test "$enable_man" != no], [
+  dnl check for DocBook XSL stylesheets in the local catalog
+  JH_CHECK_XML_CATALOG([http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl],
+     [DocBook XSL Stylesheets], [have_docbook_style=yes],[have_docbook_style=no])
+  AS_IF([ test "$have_docbook_dtd" != yes ], [
+    AS_IF([ test "$enable_man" = yes ], [
+      AC_MSG_ERROR([DocBook XSL Stylesheets are required for --enable-man])
+    ])
+    enable_man=no
+  ])
+])
+
+AM_CONDITIONAL(ENABLE_MAN, test "$enable_man" != no)
+
+AC_MSG_CHECKING([whether to generate man pages])
+AS_IF([ test "$enable_man" != no ], [
+  enable_man=yes
+  AC_MSG_RESULT([yes])
+], [
+  AC_MSG_RESULT([no])
+])
+
 dnl === Introspection =========================================================
 
 GOBJECT_INTROSPECTION_CHECK([0.9.5])
@@ -271,6 +346,7 @@ AC_CONFIG_FILES([
         build/win32/vs10/Makefile
 
         json-glib/Makefile
+        json-glib/json-glib.pc
         json-glib/json-version.h
         json-glib/tests/Makefile
 
@@ -279,8 +355,6 @@ AC_CONFIG_FILES([
         doc/reference/version.xml
 
         po/Makefile.in
-
-        json-glib.pc
 ])
 
 AC_OUTPUT
@@ -296,8 +370,9 @@ echo " • Debug level: ${enable_debug}"
 echo " • Compiler flags: ${CFLAGS} ${MAINTAINER_CFLAGS}"
 echo ""
 echo " • API reference: ${enable_gtk_doc}"
+echo " • Manual pages: ${enable_man}"
 echo ""
-echo " • Enable test suite: ${enable_glibtest}"
+echo " • Install tests: ${ENABLE_INSTALLED_TESTS}"
 echo " • Build introspection data: ${enable_introspection}"
 echo " • Enable test coverage: ${use_gcov}"
 echo ""
