@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>JSON-GLib Reference Manual: JsonPath</title>
+<title>JsonPath: JSON-GLib Reference Manual</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="JSON-GLib Reference Manual">
 <link rel="up" href="ch02.html" title="Parser">
 <link rel="prev" href="JsonReader.html" title="JsonReader">
 <link rel="next" href="ch03.html" title="Generator">
-<meta name="generator" content="GTK-Doc V1.20.1 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.21.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -62,7 +62,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="returnvalue">JsonNode</span></a> *
+<a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="returnvalue">JsonNode</span></a> *
 </td>
 <td class="function_name">
 <a class="link" href="JsonPath.html#json-path-match" title="json_path_match ()">json_path_match</a> <span class="c_punctuation">()</span>
@@ -70,7 +70,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="returnvalue">JsonNode</span></a> *
+<a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="returnvalue">JsonNode</span></a> *
 </td>
 <td class="function_name">
 <a class="link" href="JsonPath.html#json-path-query" title="json_path_query ()">json_path_query</a> <span class="c_punctuation">()</span>
@@ -261,9 +261,9 @@ on a JSON tree. We use the following JSON description of a bookstore:</p>
 </div>
 
 <p></p>
-<p>The result <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> will contain an array with all values of the
+<p>The result <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> will contain an array with all values of the
 author member of the objects in the JSON tree. If we use a
-<a class="link" href="JsonGenerator.html" title="JsonGenerator"><span class="type">JsonGenerator</span></a> to convert the <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> to a string and print it:</p>
+<a class="link" href="JsonGenerator.html" title="JsonGenerator"><span class="type">JsonGenerator</span></a> to convert the <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> to a string and print it:</p>
 <div class="informalexample">
   <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
     <tbody>
@@ -373,14 +373,14 @@ enumeration, and <code class="literal">FALSE</code> will be returned</p>
 <hr>
 <div class="refsect2">
 <a name="json-path-match"></a><h3>json_path_match ()</h3>
-<pre class="programlisting"><a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="returnvalue">JsonNode</span></a> *
+<pre class="programlisting"><a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="returnvalue">JsonNode</span></a> *
 json_path_match (<em class="parameter"><code><a class="link" href="JsonPath.html" title="JsonPath"><span class="type">JsonPath</span></a> *path</code></em>,
-                 <em class="parameter"><code><a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> *root</code></em>);</pre>
+                 <em class="parameter"><code><a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> *root</code></em>);</pre>
 <p>Matches the JSON tree pointed by <em class="parameter"><code>root</code></em>
  using the expression compiled
 into the <a class="link" href="JsonPath.html" title="JsonPath"><span class="type">JsonPath</span></a>.</p>
-<p>The matching <a href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNodes</span></a> will be copied into a <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a> and
-returned wrapped in a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a>.</p>
+<p>The matching <a href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNodes</span></a> will be copied into a <a class="link" href="json-glib-JSON-Array.html#JsonArray"><span class="type">JsonArray</span></a> and
+returned wrapped in a <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a>.</p>
 <div class="refsect3">
 <a name="id-1.4.3.4.7.5.6"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
@@ -397,7 +397,7 @@ returned wrapped in a <a class="link" href="json-glib-JSON-Node.html#JsonNode" t
 </tr>
 <tr>
 <td class="parameter_name"><p>root</p></td>
-<td class="parameter_description"><p>a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a></p></td>
+<td class="parameter_description"><p>a <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 </tbody>
@@ -405,7 +405,7 @@ returned wrapped in a <a class="link" href="json-glib-JSON-Node.html#JsonNode" t
 </div>
 <div class="refsect3">
 <a name="id-1.4.3.4.7.5.7"></a><h4>Returns</h4>
-<p> a newly-created <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> of type
+<p> a newly-created <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> of type
 <a class="link" href="json-glib-JSON-Node.html#JSON-NODE-ARRAY:CAPS"><code class="literal">JSON_NODE_ARRAY</code></a> containing an array of matching <a href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNodes</span></a>.
 Use <a class="link" href="json-glib-JSON-Node.html#json-node-free" title="json_node_free ()"><code class="function">json_node_free()</code></a> when done. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
@@ -415,9 +415,9 @@ Use <a class="link" href="json-glib-JSON-Node.html#json-node-free" title="json_n
 <hr>
 <div class="refsect2">
 <a name="json-path-query"></a><h3>json_path_query ()</h3>
-<pre class="programlisting"><a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="returnvalue">JsonNode</span></a> *
+<pre class="programlisting"><a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="returnvalue">JsonNode</span></a> *
 json_path_query (<em class="parameter"><code>const <span class="type">char</span> *expression</code></em>,
-                 <em class="parameter"><code><a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> *root</code></em>,
+                 <em class="parameter"><code><a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> *root</code></em>,
                  <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
 <p>Queries a JSON tree using a JSONPath expression.</p>
 <p>This function is a simple wrapper around <a class="link" href="JsonPath.html#json-path-new" title="json_path_new ()"><code class="function">json_path_new()</code></a>,
@@ -455,7 +455,7 @@ matches it against the JSON tree pointed by <em class="parameter"><code>root</co
 </div>
 <div class="refsect3">
 <a name="id-1.4.3.4.7.6.7"></a><h4>Returns</h4>
-<p> a newly-created <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> of type
+<p> a newly-created <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> of type
 <a class="link" href="json-glib-JSON-Node.html#JSON-NODE-ARRAY:CAPS"><code class="literal">JSON_NODE_ARRAY</code></a> containing an array of matching <a href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNodes</span></a>.
 Use <a class="link" href="json-glib-JSON-Node.html#json-node-free" title="json_node_free ()"><code class="function">json_node_free()</code></a> when done. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
@@ -507,6 +507,6 @@ cannot be directly accessed.</p>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.20.1</div>
+          Generated by GTK-Doc V1.21.1</div>
 </body>
 </html>

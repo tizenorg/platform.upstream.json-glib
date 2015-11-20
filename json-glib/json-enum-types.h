@@ -13,22 +13,22 @@
 
 G_BEGIN_DECLS
 
-/* enumerations from "../json-glib/json-parser.h" */
+/* enumerations from "./json-parser.h" */
 JSON_AVAILABLE_IN_1_0
 GType json_parser_error_get_type (void) G_GNUC_CONST;
 #define JSON_TYPE_PARSER_ERROR (json_parser_error_get_type())
 
-/* enumerations from "../json-glib/json-path.h" */
+/* enumerations from "./json-path.h" */
 JSON_AVAILABLE_IN_1_0
 GType json_path_error_get_type (void) G_GNUC_CONST;
 #define JSON_TYPE_PATH_ERROR (json_path_error_get_type())
 
-/* enumerations from "../json-glib/json-reader.h" */
+/* enumerations from "./json-reader.h" */
 JSON_AVAILABLE_IN_1_0
 GType json_reader_error_get_type (void) G_GNUC_CONST;
 #define JSON_TYPE_READER_ERROR (json_reader_error_get_type())
 
-/* enumerations from "../json-glib/json-types.h" */
+/* enumerations from "./json-types.h" */
 JSON_AVAILABLE_IN_1_0
 GType json_node_type_get_type (void) G_GNUC_CONST;
 #define JSON_TYPE_NODE_TYPE (json_node_type_get_type())

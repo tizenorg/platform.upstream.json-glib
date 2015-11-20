@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Tajik Gnome\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=json-"
 "glib\n"
-"POT-Creation-Date: 2014-05-30 18:34+0100\n"
+"POT-Creation-Date: 2015-03-15 17:51+0000\n"
 "PO-Revision-Date: 2013-12-20 14:32+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: \n"
@@ -84,7 +84,7 @@ msgstr ""
 "Қимати json-glib-validate иттилооти JSON-ро дар суроғаи URI додашуда тафтиш "
 "мекунад."
 
-#: json-glib/json-gobject.c:915
+#: json-glib/json-gobject.c:943
 #, c-format
 msgid "Expecting a JSON object, but the root node is of type `%s'"
 msgstr ""
@@ -117,16 +117,16 @@ msgid ""
 msgstr ""
 "Вуруди луғати GVariant дар ҳоли мунтазири объекти JSON бо як рақам мебошад"
 
-#: json-glib/json-gvariant.c:1244
+#: json-glib/json-gvariant.c:1248
 #, c-format
 msgid "GVariant class '%c' not supported"
 msgstr "Синфи GVariant-и '%c' дастгирӣ намешавад"
 
-#: json-glib/json-gvariant.c:1292
+#: json-glib/json-gvariant.c:1296
 msgid "Invalid GVariant signature"
 msgstr "Имзои нодурусти GVariant"
 
-#: json-glib/json-gvariant.c:1340
+#: json-glib/json-gvariant.c:1344
 msgid "JSON data is empty"
 msgstr "Иттилооти JSON холӣ аст"
 
@@ -177,60 +177,60 @@ msgstr "Таърифи индекси қатори \"%*s\" беэътибор а
 msgid "Invalid first character '%c'"
 msgstr "Аломати аввалини нодуруст: '%c'"
 
-#: json-glib/json-reader.c:456
+#: json-glib/json-reader.c:459
 #, c-format
 msgid ""
 "The current node is of type '%s', but an array or an object was expected."
 msgstr "Гиреҳи ҷорӣ аз навъи '%s' аст, вале қатор ё объект пешбинӣ шуда буд."
 
-#: json-glib/json-reader.c:468
+#: json-glib/json-reader.c:471
 #, c-format
 msgid ""
 "The index '%d' is greater than the size of the array at the current position."
 msgstr "Индекси '%d' калонтар аз андозаи қатор дар вазъияти ҷорӣ мебошад."
 
-#: json-glib/json-reader.c:485
+#: json-glib/json-reader.c:488
 #, c-format
 msgid ""
 "The index '%d' is greater than the size of the object at the current "
 "position."
 msgstr "Индекси '%d' калонтар аз андозаи объект дар вазъияти ҷорӣ аст."
 
-#: json-glib/json-reader.c:570 json-glib/json-reader.c:724
-#: json-glib/json-reader.c:775 json-glib/json-reader.c:813
-#: json-glib/json-reader.c:851 json-glib/json-reader.c:889
-#: json-glib/json-reader.c:927 json-glib/json-reader.c:972
-#: json-glib/json-reader.c:1008 json-glib/json-reader.c:1034
+#: json-glib/json-reader.c:572 json-glib/json-reader.c:723
+#: json-glib/json-reader.c:774 json-glib/json-reader.c:812
+#: json-glib/json-reader.c:850 json-glib/json-reader.c:888
+#: json-glib/json-reader.c:926 json-glib/json-reader.c:971
+#: json-glib/json-reader.c:1007 json-glib/json-reader.c:1033
 msgid "No node available at the current position"
 msgstr "Ҳеҷ гуна гиреҳ дар вазъияти ҷорӣ дастрас нест"
 
-#: json-glib/json-reader.c:577
+#: json-glib/json-reader.c:579
 #, c-format
 msgid "The current position holds a '%s' and not an array"
 msgstr "Вазъияти ҷорӣ '%s'-ро нигаҳдорӣ мекунад, на қаторро"
 
-#: json-glib/json-reader.c:640
+#: json-glib/json-reader.c:642
 #, c-format
 msgid "The current node is of type '%s', but an object was expected."
 msgstr "Гиреҳи ҷорӣ аз навъи '%s' аст, вале объект пешбинӣ шудааст."
 
-#: json-glib/json-reader.c:647
+#: json-glib/json-reader.c:649
 #, c-format
 msgid "The member '%s' is not defined in the object at the current position."
 msgstr "Дар вазъияти ҷорӣ аъзои '%s' дар объект муайян нашудааст."
 
-#: json-glib/json-reader.c:731 json-glib/json-reader.c:782
+#: json-glib/json-reader.c:730 json-glib/json-reader.c:781
 #, c-format
 msgid "The current position holds a '%s' and not an object"
 msgstr "Вазъияти ҷорӣ '%s'-ро нигаҳдорӣ мекунад, на объектро"
 
-#: json-glib/json-reader.c:822 json-glib/json-reader.c:860
-#: json-glib/json-reader.c:898 json-glib/json-reader.c:936
-#: json-glib/json-reader.c:981
+#: json-glib/json-reader.c:821 json-glib/json-reader.c:859
+#: json-glib/json-reader.c:897 json-glib/json-reader.c:935
+#: json-glib/json-reader.c:980
 #, c-format
 msgid "The current position holds a '%s' and not a value"
 msgstr "Вазъияти ҷорӣ '%s'-ро нигаҳдорӣ мекунад, на қиматро"
 
-#: json-glib/json-reader.c:944
+#: json-glib/json-reader.c:943
 msgid "The current position does not hold a string type"
 msgstr "Ҷойгиршавии ҷорӣ ягон намуди сатрро дар бар намегирад"

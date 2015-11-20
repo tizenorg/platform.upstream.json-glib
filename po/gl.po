@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: json-glib master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=json-"
 "glib\n"
-"POT-Creation-Date: 2014-05-30 18:34+0100\n"
+"POT-Creation-Date: 2015-03-15 17:51+0000\n"
 "PO-Revision-Date: 2013-12-19 01:13+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: gnome-l10n-gl@gnome.org\n"
@@ -83,7 +83,7 @@ msgstr "Validar ficheiros JSON."
 msgid "json-glib-validate validates JSON data at the given URI."
 msgstr "json-glib-validate valida os datos JSON dunha URI fornecida."
 
-#: json-glib/json-gobject.c:915
+#: json-glib/json-gobject.c:943
 #, c-format
 msgid "Expecting a JSON object, but the root node is of type `%s'"
 msgstr "Agardábase un obxecto JSON, pero o nodo raíz é de tipo «%s»"
@@ -115,16 +115,16 @@ msgid ""
 msgstr ""
 "Unha entrada do dicionario e GVariant agarda un obxecto JSON con só un membro"
 
-#: json-glib/json-gvariant.c:1244
+#: json-glib/json-gvariant.c:1248
 #, c-format
 msgid "GVariant class '%c' not supported"
 msgstr "Clase «%c» de GVariant non admitida"
 
-#: json-glib/json-gvariant.c:1292
+#: json-glib/json-gvariant.c:1296
 msgid "Invalid GVariant signature"
 msgstr "Firma de GVariant non válida"
 
-#: json-glib/json-gvariant.c:1340
+#: json-glib/json-gvariant.c:1344
 msgid "JSON data is empty"
 msgstr "Datos de JSON baleiros"
 
@@ -175,61 +175,61 @@ msgstr "Definición de índice de vector non válida «%*s»"
 msgid "Invalid first character '%c'"
 msgstr "Primeiro caracter «%c» non válido"
 
-#: json-glib/json-reader.c:456
+#: json-glib/json-reader.c:459
 #, c-format
 msgid ""
 "The current node is of type '%s', but an array or an object was expected."
 msgstr "O nodo actual é de tipo «%s», pero agardábase un obxecto ou un vector."
 
-#: json-glib/json-reader.c:468
+#: json-glib/json-reader.c:471
 #, c-format
 msgid ""
 "The index '%d' is greater than the size of the array at the current position."
 msgstr "O índice «%d» é maior que o tamaño do vector na posición actual."
 
-#: json-glib/json-reader.c:485
+#: json-glib/json-reader.c:488
 #, c-format
 msgid ""
 "The index '%d' is greater than the size of the object at the current "
 "position."
 msgstr "O índice «%d» é maior que o tamaño do obxecto na posición actual."
 
-#: json-glib/json-reader.c:570 json-glib/json-reader.c:724
-#: json-glib/json-reader.c:775 json-glib/json-reader.c:813
-#: json-glib/json-reader.c:851 json-glib/json-reader.c:889
-#: json-glib/json-reader.c:927 json-glib/json-reader.c:972
-#: json-glib/json-reader.c:1008 json-glib/json-reader.c:1034
+#: json-glib/json-reader.c:572 json-glib/json-reader.c:723
+#: json-glib/json-reader.c:774 json-glib/json-reader.c:812
+#: json-glib/json-reader.c:850 json-glib/json-reader.c:888
+#: json-glib/json-reader.c:926 json-glib/json-reader.c:971
+#: json-glib/json-reader.c:1007 json-glib/json-reader.c:1033
 msgid "No node available at the current position"
 msgstr "Non hai ningún nodo dipoñíbel na posición actual"
 
-#: json-glib/json-reader.c:577
+#: json-glib/json-reader.c:579
 #, c-format
 msgid "The current position holds a '%s' and not an array"
 msgstr "A posición actual ten un «%s» e non un vector"
 
-#: json-glib/json-reader.c:640
+#: json-glib/json-reader.c:642
 #, c-format
 msgid "The current node is of type '%s', but an object was expected."
 msgstr "O nodo actual é de tipo «%s», pero agardábase un obxecto."
 
-#: json-glib/json-reader.c:647
+#: json-glib/json-reader.c:649
 #, c-format
 msgid "The member '%s' is not defined in the object at the current position."
 msgstr "O membro «%s» non está definido no obxecto na posición actual."
 
-#: json-glib/json-reader.c:731 json-glib/json-reader.c:782
+#: json-glib/json-reader.c:730 json-glib/json-reader.c:781
 #, c-format
 msgid "The current position holds a '%s' and not an object"
 msgstr "A posición actual ten un «%s» e non un obxecto"
 
-#: json-glib/json-reader.c:822 json-glib/json-reader.c:860
-#: json-glib/json-reader.c:898 json-glib/json-reader.c:936
-#: json-glib/json-reader.c:981
+#: json-glib/json-reader.c:821 json-glib/json-reader.c:859
+#: json-glib/json-reader.c:897 json-glib/json-reader.c:935
+#: json-glib/json-reader.c:980
 #, c-format
 msgid "The current position holds a '%s' and not a value"
 msgstr "A posición actual ten un «%s» e non un valor"
 
-#: json-glib/json-reader.c:944
+#: json-glib/json-reader.c:943
 msgid "The current position does not hold a string type"
 msgstr "A posición actual non ten un tipo de cadea"
 

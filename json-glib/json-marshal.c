@@ -56,12 +56,12 @@
 
 /* VOID:BOXED,STRING (./json-marshal.list:3) */
 void
-_json_marshal_VOID__BOXED_STRING (GClosure     *closure,
-                                  GValue       *return_value G_GNUC_UNUSED,
-                                  guint         n_param_values,
-                                  const GValue *param_values,
-                                  gpointer      invocation_hint G_GNUC_UNUSED,
-                                  gpointer      marshal_data)
+json_marshal_VOID__BOXED_STRING (GClosure     *closure,
+                                 GValue       *return_value G_GNUC_UNUSED,
+                                 guint         n_param_values,
+                                 const GValue *param_values,
+                                 gpointer      invocation_hint G_GNUC_UNUSED,
+                                 gpointer      marshal_data)
 {
   typedef void (*GMarshalFunc_VOID__BOXED_STRING) (gpointer     data1,
                                                    gpointer     arg_1,
@@ -93,12 +93,12 @@ _json_marshal_VOID__BOXED_STRING (GClosure     *closure,
 
 /* VOID:BOXED,INT (./json-marshal.list:4) */
 void
-_json_marshal_VOID__BOXED_INT (GClosure     *closure,
-                               GValue       *return_value G_GNUC_UNUSED,
-                               guint         n_param_values,
-                               const GValue *param_values,
-                               gpointer      invocation_hint G_GNUC_UNUSED,
-                               gpointer      marshal_data)
+json_marshal_VOID__BOXED_INT (GClosure     *closure,
+                              GValue       *return_value G_GNUC_UNUSED,
+                              guint         n_param_values,
+                              const GValue *param_values,
+                              gpointer      invocation_hint G_GNUC_UNUSED,
+                              gpointer      marshal_data)
 {
   typedef void (*GMarshalFunc_VOID__BOXED_INT) (gpointer     data1,
                                                 gpointer     arg_1,

@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>JSON-GLib Reference Manual: JSON GVariant Integration</title>
+<title>JSON GVariant Integration: JSON-GLib Reference Manual</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="JSON-GLib Reference Manual">
 <link rel="up" href="json-advanced.html" title="Part IV. JSON-GLib Advanced API">
 <link rel="prev" href="json-glib-Boxed-Types-Serialization.html" title="Boxed Types Serialization">
 <link rel="next" href="json-glib-Versioning-information.html" title="Versioning information">
-<meta name="generator" content="GTK-Doc V1.20.1 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.21.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -41,7 +41,7 @@
 <tbody>
 <tr>
 <td class="function_type">
-<a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="returnvalue">JsonNode</span></a> *
+<a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="returnvalue">JsonNode</span></a> *
 </td>
 <td class="function_name">
 <a class="link" href="json-glib-JSON-GVariant-Integration.html#json-gvariant-serialize" title="json_gvariant_serialize ()">json_gvariant_serialize</a> <span class="c_punctuation">()</span>
@@ -77,10 +77,10 @@
 <div class="refsect1">
 <a name="json-glib-JSON-GVariant-Integration.description"></a><h2>Description</h2>
 <p>Use <a class="link" href="json-glib-JSON-GVariant-Integration.html#json-gvariant-serialize" title="json_gvariant_serialize ()"><code class="function">json_gvariant_serialize()</code></a> and <a class="link" href="json-glib-JSON-GVariant-Integration.html#json-gvariant-serialize-data" title="json_gvariant_serialize_data ()"><code class="function">json_gvariant_serialize_data()</code></a> to
-convert from any <span class="type">GVariant</span> value to a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> tree or its string
+convert from any <span class="type">GVariant</span> value to a <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> tree or its string
 representation.</p>
 <p>Use <a class="link" href="json-glib-JSON-GVariant-Integration.html#json-gvariant-deserialize" title="json_gvariant_deserialize ()"><code class="function">json_gvariant_deserialize()</code></a> and <a class="link" href="json-glib-JSON-GVariant-Integration.html#json-gvariant-deserialize-data" title="json_gvariant_deserialize_data ()"><code class="function">json_gvariant_deserialize_data()</code></a> to
-obtain the <span class="type">GVariant</span> value from a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> tree or directly from a JSON
+obtain the <span class="type">GVariant</span> value from a <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> tree or directly from a JSON
 string.</p>
 <p>Since many <span class="type">GVariant</span> data types cannot be directly represented as
 JSON, a <span class="type">GVariant</span> type string (signature) should be provided to these
@@ -121,7 +121,7 @@ using the following rules:</p>
 <a name="json-glib-JSON-GVariant-Integration.functions_details"></a><h2>Functions</h2>
 <div class="refsect2">
 <a name="json-gvariant-serialize"></a><h3>json_gvariant_serialize ()</h3>
-<pre class="programlisting"><a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="returnvalue">JsonNode</span></a> *
+<pre class="programlisting"><a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="returnvalue">JsonNode</span></a> *
 json_gvariant_serialize (<em class="parameter"><code><span class="type">GVariant</span> *variant</code></em>);</pre>
 <p>Converts <em class="parameter"><code>variant</code></em>
  to a JSON tree.</p>
@@ -142,7 +142,7 @@ json_gvariant_serialize (<em class="parameter"><code><span class="type">GVariant
 </div>
 <div class="refsect3">
 <a name="id-1.5.5.5.2.6"></a><h4>Returns</h4>
-<p> A <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> representing the root of the
+<p> A <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> representing the root of the
 JSON data structure obtained from <em class="parameter"><code>variant</code></em>
 . </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
@@ -177,7 +177,7 @@ JSON tree, and then <a class="link" href="JsonGenerator.html" title="JsonGenerat
 <td class="parameter_name"><p>length</p></td>
 <td class="parameter_description"><p> Return location for the length of the returned
 string, or <code class="literal">NULL</code>. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
@@ -195,7 +195,7 @@ string, or <code class="literal">NULL</code>. </p></td>
 <div class="refsect2">
 <a name="json-gvariant-deserialize"></a><h3>json_gvariant_deserialize ()</h3>
 <pre class="programlisting"><span class="returnvalue">GVariant</span> *
-json_gvariant_deserialize (<em class="parameter"><code><a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> *json_node</code></em>,
+json_gvariant_deserialize (<em class="parameter"><code><a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> *json_node</code></em>,
                            <em class="parameter"><code>const <span class="type">gchar</span> *signature</code></em>,
                            <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
 <p>Converts a JSON data structure to a GVariant value using <em class="parameter"><code>signature</code></em>
@@ -225,13 +225,13 @@ by the caller code.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>json_node</p></td>
-<td class="parameter_description"><p>A <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> to convert</p></td>
+<td class="parameter_description"><p>A <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> to convert</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
 <td class="parameter_name"><p>signature</p></td>
 <td class="parameter_description"><p> A valid <span class="type">GVariant</span> type string, or <code class="literal">NULL</code>. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>error</p></td>
@@ -260,7 +260,7 @@ json_gvariant_deserialize_data (<em class="parameter"><code>const <span class="t
                                 <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
 <p>Converts a JSON string to a <span class="type">GVariant</span> value. This method works exactly
 like <a class="link" href="json-glib-JSON-GVariant-Integration.html#json-gvariant-deserialize" title="json_gvariant_deserialize ()"><code class="function">json_gvariant_deserialize()</code></a>, but takes a JSON encoded string instead.
-The string is first converted to a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> using <a class="link" href="JsonParser.html" title="JsonParser"><span class="type">JsonParser</span></a>, and then
+The string is first converted to a <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> using <a class="link" href="JsonParser.html" title="JsonParser"><span class="type">JsonParser</span></a>, and then
 <a class="link" href="json-glib-JSON-GVariant-Integration.html#json-gvariant-deserialize" title="json_gvariant_deserialize ()"><code class="function">json_gvariant_deserialize()</code></a> is called.</p>
 <p>The returned variant has a floating reference that will need to be sunk
 by the caller code.</p>
@@ -287,7 +287,7 @@ by the caller code.</p>
 <tr>
 <td class="parameter_name"><p>signature</p></td>
 <td class="parameter_description"><p> A valid <span class="type">GVariant</span> type string, or <code class="literal">NULL</code>. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>error</p></td>
@@ -313,6 +313,6 @@ with <em class="parameter"><code>signature</code></em>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.20.1</div>
+          Generated by GTK-Doc V1.21.1</div>
 </body>
 </html>

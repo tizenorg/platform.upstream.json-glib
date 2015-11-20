@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: json-glib master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=json-"
 "glib\n"
-"POT-Creation-Date: 2014-05-30 18:34+0100\n"
+"POT-Creation-Date: 2015-03-15 17:51+0000\n"
 "PO-Revision-Date: 2014-03-15 02:04+0900\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language-Team: Korean <gnome-kr@googlegroups.com>\n"
@@ -83,7 +83,7 @@ msgstr "JSON 파일을 검증합니다."
 msgid "json-glib-validate validates JSON data at the given URI."
 msgstr "json-glib-validate는 주어진 URI의 JSON 데이터를 검증합니다."
 
-#: json-glib/json-gobject.c:915
+#: json-glib/json-gobject.c:943
 #, c-format
 msgid "Expecting a JSON object, but the root node is of type `%s'"
 msgstr "JSON 객체를 예상했지만 최상위 노드는 `%s' 형식입니다"
@@ -115,16 +115,16 @@ msgid ""
 msgstr ""
 "GVariant 딕셔너리 항목은 정확히 하나의 요소를 가진 JSON 객체를 요구합니다"
 
-#: json-glib/json-gvariant.c:1244
+#: json-glib/json-gvariant.c:1248
 #, c-format
 msgid "GVariant class '%c' not supported"
 msgstr "GVariant '%c' 클래스를 지원하지 않습니다"
 
-#: json-glib/json-gvariant.c:1292
+#: json-glib/json-gvariant.c:1296
 msgid "Invalid GVariant signature"
 msgstr "잘못된 GVariant 서명입니다"
 
-#: json-glib/json-gvariant.c:1340
+#: json-glib/json-gvariant.c:1344
 msgid "JSON data is empty"
 msgstr "JSON 데이터가 비었습니다"
 
@@ -175,60 +175,60 @@ msgstr "잘못된 배열 인덱스 정의 '%*s'"
 msgid "Invalid first character '%c'"
 msgstr "잘못된 첫번째 문자 '%c'"
 
-#: json-glib/json-reader.c:456
+#: json-glib/json-reader.c:459
 #, c-format
 msgid ""
 "The current node is of type '%s', but an array or an object was expected."
 msgstr "현재 노드는 '%s' 형식 이지만, 배열 또는 객체를 요구합니다."
 
-#: json-glib/json-reader.c:468
+#: json-glib/json-reader.c:471
 #, c-format
 msgid ""
 "The index '%d' is greater than the size of the array at the current position."
 msgstr "현재 위치의 인덱스 '%d'번은 배열의 크기보다 큽니다."
 
-#: json-glib/json-reader.c:485
+#: json-glib/json-reader.c:488
 #, c-format
 msgid ""
 "The index '%d' is greater than the size of the object at the current "
 "position."
 msgstr "현재 위치의 '%d'번 인덱스는 객체의 크기보다 큽니다."
 
-#: json-glib/json-reader.c:570 json-glib/json-reader.c:724
-#: json-glib/json-reader.c:775 json-glib/json-reader.c:813
-#: json-glib/json-reader.c:851 json-glib/json-reader.c:889
-#: json-glib/json-reader.c:927 json-glib/json-reader.c:972
-#: json-glib/json-reader.c:1008 json-glib/json-reader.c:1034
+#: json-glib/json-reader.c:572 json-glib/json-reader.c:723
+#: json-glib/json-reader.c:774 json-glib/json-reader.c:812
+#: json-glib/json-reader.c:850 json-glib/json-reader.c:888
+#: json-glib/json-reader.c:926 json-glib/json-reader.c:971
+#: json-glib/json-reader.c:1007 json-glib/json-reader.c:1033
 msgid "No node available at the current position"
 msgstr "현재 위치에 노드가 없습니다"
 
-#: json-glib/json-reader.c:577
+#: json-glib/json-reader.c:579
 #, c-format
 msgid "The current position holds a '%s' and not an array"
 msgstr "현재 위치에 배열이 아닌 '%s'이(가) 있습니다"
 
-#: json-glib/json-reader.c:640
+#: json-glib/json-reader.c:642
 #, c-format
 msgid "The current node is of type '%s', but an object was expected."
 msgstr "현재 노드는 '%s' 형식이지만 객체를 요구합니다."
 
-#: json-glib/json-reader.c:647
+#: json-glib/json-reader.c:649
 #, c-format
 msgid "The member '%s' is not defined in the object at the current position."
 msgstr "현재 위치 객체에 '%s' 구성원을 정의하지 않았습니다."
 
-#: json-glib/json-reader.c:731 json-glib/json-reader.c:782
+#: json-glib/json-reader.c:730 json-glib/json-reader.c:781
 #, c-format
 msgid "The current position holds a '%s' and not an object"
 msgstr "현재 위치에 객체가 아닌 '%s'이(가) 있습니다"
 
-#: json-glib/json-reader.c:822 json-glib/json-reader.c:860
-#: json-glib/json-reader.c:898 json-glib/json-reader.c:936
-#: json-glib/json-reader.c:981
+#: json-glib/json-reader.c:821 json-glib/json-reader.c:859
+#: json-glib/json-reader.c:897 json-glib/json-reader.c:935
+#: json-glib/json-reader.c:980
 #, c-format
 msgid "The current position holds a '%s' and not a value"
 msgstr "현재 위치에 값이 아닌 '%s'이(가) 있습니다"
 
-#: json-glib/json-reader.c:944
+#: json-glib/json-reader.c:943
 msgid "The current position does not hold a string type"
 msgstr "현재 위치에 문자열 값이 없습니다"

@@ -43,6 +43,8 @@
     <sub name="Index of new symbols in 0.10" link="ix06.html"/>
     <sub name="Index of new symbols in 0.12" link="ix07.html"/>
     <sub name="Index of new symbols in 0.14" link="ix08.html"/>
+    <sub name="Index of new symbols in 0.16" link="ix09.html"/>
+    <sub name="Index of new symbols in 1.0" link="ix10.html"/>
     <sub name="Annotation Glossary" link="annotation-glossary.html"/>
     <sub name="License" link="license.html"/>
   </chapters>
@@ -91,7 +93,7 @@
     <keyword type="function" name="json_node_get_node_type ()" link="json-glib-JSON-Node.html#json-node-get-node-type" since="0.8"/>
     <keyword type="function" name="json_node_is_null ()" link="json-glib-JSON-Node.html#json-node-is-null" since="0.8"/>
     <keyword type="enum" name="enum JsonNodeType" link="json-glib-JSON-Node.html#JsonNodeType"/>
-    <keyword type="struct" name="JsonNode" link="json-glib-JSON-Node.html#JsonNode"/>
+    <keyword type="struct" name="JsonNode" link="json-glib-JSON-Node.html#JsonNode-struct"/>
     <keyword type="function" name="json_array_new ()" link="json-glib-JSON-Array.html#json-array-new"/>
     <keyword type="function" name="json_array_sized_new ()" link="json-glib-JSON-Array.html#json-array-sized-new"/>
     <keyword type="function" name="json_array_ref ()" link="json-glib-JSON-Array.html#json-array-ref"/>
@@ -118,7 +120,7 @@
     <keyword type="function" name="json_array_get_object_element ()" link="json-glib-JSON-Array.html#json-array-get-object-element" since="0.8"/>
     <keyword type="function" name="json_array_add_string_element ()" link="json-glib-JSON-Array.html#json-array-add-string-element" since="0.8"/>
     <keyword type="function" name="json_array_get_string_element ()" link="json-glib-JSON-Array.html#json-array-get-string-element" since="0.8"/>
-    <keyword type="struct" name="JsonArray" link="json-glib-JSON-Array.html#JsonArray"/>
+    <keyword type="struct" name="JsonArray" link="json-glib-JSON-Array.html#JsonArray-struct"/>
     <keyword type="function" name="json_object_new ()" link="json-glib-JSON-Object.html#json-object-new"/>
     <keyword type="function" name="json_object_ref ()" link="json-glib-JSON-Object.html#json-object-ref"/>
     <keyword type="function" name="json_object_unref ()" link="json-glib-JSON-Object.html#json-object-unref"/>
@@ -147,7 +149,7 @@
     <keyword type="function" name="json_object_get_object_member ()" link="json-glib-JSON-Object.html#json-object-get-object-member" since="0.8"/>
     <keyword type="function" name="json_object_set_string_member ()" link="json-glib-JSON-Object.html#json-object-set-string-member" since="0.8"/>
     <keyword type="function" name="json_object_get_string_member ()" link="json-glib-JSON-Object.html#json-object-get-string-member" since="0.8"/>
-    <keyword type="struct" name="JsonObject" link="json-glib-JSON-Object.html#JsonObject"/>
+    <keyword type="struct" name="JsonObject" link="json-glib-JSON-Object.html#JsonObject-struct"/>
     <keyword type="function" name="json_parser_new ()" link="JsonParser.html#json-parser-new"/>
     <keyword type="function" name="json_parser_load_from_file ()" link="JsonParser.html#json-parser-load-from-file"/>
     <keyword type="function" name="json_parser_load_from_data ()" link="JsonParser.html#json-parser-load-from-data"/>
@@ -246,9 +248,9 @@
     <keyword type="function" name="json_serializable_serialize_property ()" link="json-glib-Serializable-Interface.html#json-serializable-serialize-property"/>
     <keyword type="function" name="json_serializable_deserialize_property ()" link="json-glib-Serializable-Interface.html#json-serializable-deserialize-property"/>
     <keyword type="function" name="json_serializable_find_property ()" link="json-glib-Serializable-Interface.html#json-serializable-find-property" since="0.14"/>
-    <keyword type="function" name="json_serializable_get_property ()" link="json-glib-Serializable-Interface.html#json-serializable-get-property"/>
+    <keyword type="function" name="json_serializable_get_property ()" link="json-glib-Serializable-Interface.html#json-serializable-get-property" since="0.14"/>
     <keyword type="function" name="json_serializable_list_properties ()" link="json-glib-Serializable-Interface.html#json-serializable-list-properties" since="0.14"/>
-    <keyword type="function" name="json_serializable_set_property ()" link="json-glib-Serializable-Interface.html#json-serializable-set-property"/>
+    <keyword type="function" name="json_serializable_set_property ()" link="json-glib-Serializable-Interface.html#json-serializable-set-property" since="0.14"/>
     <keyword type="function" name="json_serializable_default_serialize_property ()" link="json-glib-Serializable-Interface.html#json-serializable-default-serialize-property" since="0.10"/>
     <keyword type="function" name="json_serializable_default_deserialize_property ()" link="json-glib-Serializable-Interface.html#json-serializable-default-deserialize-property" since="0.10"/>
     <keyword type="struct" name="struct JsonSerializableIface" link="json-glib-Serializable-Interface.html#JsonSerializableIface"/>
@@ -273,5 +275,25 @@
     <keyword type="macro" name="JSON_VERSION_MAX_ALLOWED" link="json-glib-Versioning-information.html#JSON-VERSION-MAX-ALLOWED:CAPS" since="1.0"/>
     <keyword type="macro" name="JSON_VERSION_S" link="json-glib-Versioning-information.html#JSON-VERSION-S:CAPS"/>
     <keyword type="macro" name="JSON_VERSION_HEX" link="json-glib-Versioning-information.html#JSON-VERSION-HEX:CAPS"/>
+    <keyword type="constant" name="JSON_NODE_OBJECT" link="json-glib-JSON-Node.html#JSON-NODE-OBJECT:CAPS"/>
+    <keyword type="constant" name="JSON_NODE_ARRAY" link="json-glib-JSON-Node.html#JSON-NODE-ARRAY:CAPS"/>
+    <keyword type="constant" name="JSON_NODE_VALUE" link="json-glib-JSON-Node.html#JSON-NODE-VALUE:CAPS"/>
+    <keyword type="constant" name="JSON_NODE_NULL" link="json-glib-JSON-Node.html#JSON-NODE-NULL:CAPS"/>
+    <keyword type="constant" name="JSON_PARSER_ERROR_PARSE" link="JsonParser.html#JSON-PARSER-ERROR-PARSE:CAPS"/>
+    <keyword type="constant" name="JSON_PARSER_ERROR_TRAILING_COMMA" link="JsonParser.html#JSON-PARSER-ERROR-TRAILING-COMMA:CAPS"/>
+    <keyword type="constant" name="JSON_PARSER_ERROR_MISSING_COMMA" link="JsonParser.html#JSON-PARSER-ERROR-MISSING-COMMA:CAPS"/>
+    <keyword type="constant" name="JSON_PARSER_ERROR_MISSING_COLON" link="JsonParser.html#JSON-PARSER-ERROR-MISSING-COLON:CAPS"/>
+    <keyword type="constant" name="JSON_PARSER_ERROR_INVALID_BAREWORD" link="JsonParser.html#JSON-PARSER-ERROR-INVALID-BAREWORD:CAPS"/>
+    <keyword type="constant" name="JSON_PARSER_ERROR_EMPTY_MEMBER_NAME" link="JsonParser.html#JSON-PARSER-ERROR-EMPTY-MEMBER-NAME:CAPS"/>
+    <keyword type="constant" name="JSON_PARSER_ERROR_INVALID_DATA" link="JsonParser.html#JSON-PARSER-ERROR-INVALID-DATA:CAPS"/>
+    <keyword type="constant" name="JSON_PARSER_ERROR_UNKNOWN" link="JsonParser.html#JSON-PARSER-ERROR-UNKNOWN:CAPS"/>
+    <keyword type="constant" name="JSON_READER_ERROR_NO_ARRAY" link="JsonReader.html#JSON-READER-ERROR-NO-ARRAY:CAPS"/>
+    <keyword type="constant" name="JSON_READER_ERROR_INVALID_INDEX" link="JsonReader.html#JSON-READER-ERROR-INVALID-INDEX:CAPS"/>
+    <keyword type="constant" name="JSON_READER_ERROR_NO_OBJECT" link="JsonReader.html#JSON-READER-ERROR-NO-OBJECT:CAPS"/>
+    <keyword type="constant" name="JSON_READER_ERROR_INVALID_MEMBER" link="JsonReader.html#JSON-READER-ERROR-INVALID-MEMBER:CAPS"/>
+    <keyword type="constant" name="JSON_READER_ERROR_INVALID_NODE" link="JsonReader.html#JSON-READER-ERROR-INVALID-NODE:CAPS"/>
+    <keyword type="constant" name="JSON_READER_ERROR_NO_VALUE" link="JsonReader.html#JSON-READER-ERROR-NO-VALUE:CAPS"/>
+    <keyword type="constant" name="JSON_READER_ERROR_INVALID_TYPE" link="JsonReader.html#JSON-READER-ERROR-INVALID-TYPE:CAPS"/>
+    <keyword type="constant" name="JSON_PATH_ERROR_INVALID_QUERY" link="JsonPath.html#JSON-PATH-ERROR-INVALID-QUERY:CAPS"/>
   </functions>
 </book>

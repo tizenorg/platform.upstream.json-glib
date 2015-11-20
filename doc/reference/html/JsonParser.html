@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>JSON-GLib Reference Manual: JsonParser</title>
+<title>JsonParser: JSON-GLib Reference Manual</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="JSON-GLib Reference Manual">
 <link rel="up" href="ch02.html" title="Parser">
 <link rel="prev" href="ch02.html" title="Parser">
 <link rel="next" href="JsonReader.html" title="JsonReader">
-<meta name="generator" content="GTK-Doc V1.20.1 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.21.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -91,7 +91,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="returnvalue">JsonNode</span></a> *
+<a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="returnvalue">JsonNode</span></a> *
 </td>
 <td class="function_name">
 <a class="link" href="JsonParser.html#json-parser-get-root" title="json_parser_get_root ()">json_parser_get_root</a> <span class="c_punctuation">()</span>
@@ -365,7 +365,7 @@ on the passed <em class="parameter"><code>error</code></em>
 <tr>
 <td class="parameter_name"><p>cancellable</p></td>
 <td class="parameter_description"><p> a <span class="type">GCancellable</span>, or <code class="literal">NULL</code>. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>error</p></td>
@@ -422,7 +422,7 @@ of the operation.</p>
 <tr>
 <td class="parameter_name"><p>cancellable</p></td>
 <td class="parameter_description"><p> a <span class="type">GCancellable</span>, or <code class="literal">NULL</code>. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>callback</p></td>
@@ -488,7 +488,7 @@ filled accordingly.</p>
 <hr>
 <div class="refsect2">
 <a name="json-parser-get-root"></a><h3>json_parser_get_root ()</h3>
-<pre class="programlisting"><a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="returnvalue">JsonNode</span></a> *
+<pre class="programlisting"><a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="returnvalue">JsonNode</span></a> *
 json_parser_get_root (<em class="parameter"><code><a class="link" href="JsonParser.html" title="JsonParser"><span class="type">JsonParser</span></a> *parser</code></em>);</pre>
 <p>Retrieves the top level node from the parsed JSON stream.</p>
 <div class="refsect3">
@@ -508,7 +508,7 @@ json_parser_get_root (<em class="parameter"><code><a class="link" href="JsonPars
 </div>
 <div class="refsect3">
 <a name="id-1.4.3.2.8.8.6"></a><h4>Returns</h4>
-<p> the root <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> . The returned
+<p> the root <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> . The returned
 node is owned by the <a class="link" href="JsonParser.html" title="JsonParser"><span class="type">JsonParser</span></a> and should never be modified
 or freed. </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
@@ -617,7 +617,7 @@ used.</p>
 <td class="parameter_name"><p>variable_name</p></td>
 <td class="parameter_description"><p> Return location for the variable
 name, or <code class="literal">NULL</code>. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym>][<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
@@ -808,11 +808,11 @@ private and should only be accessed via the provided API.</p>
 <a name="JsonParser-array-element"></a><h3>The <code class="literal">“array-element”</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
 user_function (<a class="link" href="JsonParser.html" title="JsonParser"><span class="type">JsonParser</span></a> *parser,
-               <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a>  *array,
+               <a class="link" href="json-glib-JSON-Array.html#JsonArray"><span class="type">JsonArray</span></a>  *array,
                <span class="type">gint</span>        index_,
                <span class="type">gpointer</span>    user_data)</pre>
 <p>The ::array-element signal is emitted each time the <a class="link" href="JsonParser.html" title="JsonParser"><span class="type">JsonParser</span></a>
-has successfully parsed a single element of a <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a>. The
+has successfully parsed a single element of a <a class="link" href="json-glib-JSON-Array.html#JsonArray"><span class="type">JsonArray</span></a>. The
 array and element index are passed to the signal handlers.</p>
 <div class="refsect3">
 <a name="id-1.4.3.2.10.2.5"></a><h4>Parameters</h4>
@@ -830,7 +830,7 @@ array and element index are passed to the signal handlers.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>array</p></td>
-<td class="parameter_description"><p>a <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a></p></td>
+<td class="parameter_description"><p>a <a class="link" href="json-glib-JSON-Array.html#JsonArray"><span class="type">JsonArray</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -853,10 +853,10 @@ array and element index are passed to the signal handlers.</p>
 <a name="JsonParser-array-end"></a><h3>The <code class="literal">“array-end”</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
 user_function (<a class="link" href="JsonParser.html" title="JsonParser"><span class="type">JsonParser</span></a> *parser,
-               <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a>  *array,
+               <a class="link" href="json-glib-JSON-Array.html#JsonArray"><span class="type">JsonArray</span></a>  *array,
                <span class="type">gpointer</span>    user_data)</pre>
 <p>The ::array-end signal is emitted each time the <a class="link" href="JsonParser.html" title="JsonParser"><span class="type">JsonParser</span></a>
-has successfully parsed an entire <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a></p>
+has successfully parsed an entire <a class="link" href="json-glib-JSON-Array.html#JsonArray"><span class="type">JsonArray</span></a></p>
 <div class="refsect3">
 <a name="id-1.4.3.2.10.3.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
@@ -873,7 +873,7 @@ has successfully parsed an entire <a class="link" href="json-glib-JSON-Array.htm
 </tr>
 <tr>
 <td class="parameter_name"><p>array</p></td>
-<td class="parameter_description"><p>the parsed <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a></p></td>
+<td class="parameter_description"><p>the parsed <a class="link" href="json-glib-JSON-Array.html#JsonArray"><span class="type">JsonArray</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -893,7 +893,7 @@ has successfully parsed an entire <a class="link" href="json-glib-JSON-Array.htm
 user_function (<a class="link" href="JsonParser.html" title="JsonParser"><span class="type">JsonParser</span></a> *parser,
                <span class="type">gpointer</span>    user_data)</pre>
 <p>The ::array-start signal is emitted each time the <a class="link" href="JsonParser.html" title="JsonParser"><span class="type">JsonParser</span></a>
-starts parsing a <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a></p>
+starts parsing a <a class="link" href="json-glib-JSON-Array.html#JsonArray"><span class="type">JsonArray</span></a></p>
 <div class="refsect3">
 <a name="id-1.4.3.2.10.4.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
@@ -961,10 +961,10 @@ an error in a JSON stream.</p>
 <a name="JsonParser-object-end"></a><h3>The <code class="literal">“object-end”</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
 user_function (<a class="link" href="JsonParser.html" title="JsonParser"><span class="type">JsonParser</span></a> *parser,
-               <a class="link" href="json-glib-JSON-Object.html#JsonObject" title="JsonObject"><span class="type">JsonObject</span></a> *object,
+               <a class="link" href="json-glib-JSON-Object.html#JsonObject"><span class="type">JsonObject</span></a> *object,
                <span class="type">gpointer</span>    user_data)</pre>
 <p>The ::object-end signal is emitted each time the <a class="link" href="JsonParser.html" title="JsonParser"><span class="type">JsonParser</span></a>
-has successfully parsed an entire <a class="link" href="json-glib-JSON-Object.html#JsonObject" title="JsonObject"><span class="type">JsonObject</span></a>.</p>
+has successfully parsed an entire <a class="link" href="json-glib-JSON-Object.html#JsonObject"><span class="type">JsonObject</span></a>.</p>
 <div class="refsect3">
 <a name="id-1.4.3.2.10.6.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
@@ -981,7 +981,7 @@ has successfully parsed an entire <a class="link" href="json-glib-JSON-Object.ht
 </tr>
 <tr>
 <td class="parameter_name"><p>object</p></td>
-<td class="parameter_description"><p>the parsed <a class="link" href="json-glib-JSON-Object.html#JsonObject" title="JsonObject"><span class="type">JsonObject</span></a></p></td>
+<td class="parameter_description"><p>the parsed <a class="link" href="json-glib-JSON-Object.html#JsonObject"><span class="type">JsonObject</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -999,11 +999,11 @@ has successfully parsed an entire <a class="link" href="json-glib-JSON-Object.ht
 <a name="JsonParser-object-member"></a><h3>The <code class="literal">“object-member”</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
 user_function (<a class="link" href="JsonParser.html" title="JsonParser"><span class="type">JsonParser</span></a> *parser,
-               <a class="link" href="json-glib-JSON-Object.html#JsonObject" title="JsonObject"><span class="type">JsonObject</span></a> *object,
+               <a class="link" href="json-glib-JSON-Object.html#JsonObject"><span class="type">JsonObject</span></a> *object,
                <span class="type">gchar</span>      *member_name,
                <span class="type">gpointer</span>    user_data)</pre>
 <p>The ::object-member signal is emitted each time the <a class="link" href="JsonParser.html" title="JsonParser"><span class="type">JsonParser</span></a>
-has successfully parsed a single member of a <a class="link" href="json-glib-JSON-Object.html#JsonObject" title="JsonObject"><span class="type">JsonObject</span></a>. The
+has successfully parsed a single member of a <a class="link" href="json-glib-JSON-Object.html#JsonObject"><span class="type">JsonObject</span></a>. The
 object and member are passed to the signal handlers.</p>
 <div class="refsect3">
 <a name="id-1.4.3.2.10.7.5"></a><h4>Parameters</h4>
@@ -1021,7 +1021,7 @@ object and member are passed to the signal handlers.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>object</p></td>
-<td class="parameter_description"><p>a <a class="link" href="json-glib-JSON-Object.html#JsonObject" title="JsonObject"><span class="type">JsonObject</span></a></p></td>
+<td class="parameter_description"><p>a <a class="link" href="json-glib-JSON-Object.html#JsonObject"><span class="type">JsonObject</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -1046,7 +1046,7 @@ object and member are passed to the signal handlers.</p>
 user_function (<a class="link" href="JsonParser.html" title="JsonParser"><span class="type">JsonParser</span></a> *parser,
                <span class="type">gpointer</span>    user_data)</pre>
 <p>The ::object-start signal is emitted each time the <a class="link" href="JsonParser.html" title="JsonParser"><span class="type">JsonParser</span></a>
-starts parsing a <a class="link" href="json-glib-JSON-Object.html#JsonObject" title="JsonObject"><span class="type">JsonObject</span></a>.</p>
+starts parsing a <a class="link" href="json-glib-JSON-Object.html#JsonObject"><span class="type">JsonObject</span></a>.</p>
 <div class="refsect3">
 <a name="id-1.4.3.2.10.8.5"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
@@ -1139,6 +1139,6 @@ a JSON data stream.</p>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.20.1</div>
+          Generated by GTK-Doc V1.21.1</div>
 </body>
 </html>

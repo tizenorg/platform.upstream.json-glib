@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>JSON-GLib Reference Manual: JsonReader</title>
+<title>JsonReader: JSON-GLib Reference Manual</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="JSON-GLib Reference Manual">
 <link rel="up" href="ch02.html" title="Parser">
 <link rel="prev" href="JsonParser.html" title="JsonParser">
 <link rel="next" href="JsonPath.html" title="JsonPath">
-<meta name="generator" content="GTK-Doc V1.20.1 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.21.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -146,7 +146,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="returnvalue">JsonNode</span></a> *
+<a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="returnvalue">JsonNode</span></a> *
 </td>
 <td class="function_name">
 <a class="link" href="JsonReader.html#json-reader-get-value" title="json_reader_get_value ()">json_reader_get_value</a> <span class="c_punctuation">()</span>
@@ -215,7 +215,7 @@
 </colgroup>
 <tbody><tr>
 <td class="property_type">
-<a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> *</td>
+<a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> *</td>
 <td class="property_name"><a class="link" href="JsonReader.html#JsonReader--root" title="The “root” property">root</a></td>
 <td class="property_flags">Read / Write / Construct</td>
 </tr></tbody>
@@ -320,7 +320,7 @@ called, e.g.:</p>
 <div class="refsect2">
 <a name="json-reader-new"></a><h3>json_reader_new ()</h3>
 <pre class="programlisting"><a class="link" href="JsonReader.html" title="JsonReader"><span class="returnvalue">JsonReader</span></a> *
-json_reader_new (<em class="parameter"><code><a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> *node</code></em>);</pre>
+json_reader_new (<em class="parameter"><code><a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> *node</code></em>);</pre>
 <p>Creates a new <a class="link" href="JsonReader.html" title="JsonReader"><span class="type">JsonReader</span></a>. You can use this object to read the contents of
 the JSON tree starting from <em class="parameter"><code>node</code></em>
 </p>
@@ -334,8 +334,8 @@ the JSON tree starting from <em class="parameter"><code>node</code></em>
 </colgroup>
 <tbody><tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p> a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a>, or <code class="literal">NULL</code>. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+<td class="parameter_description"><p> a <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a>, or <code class="literal">NULL</code>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr></tbody>
 </table></div>
 </div>
@@ -352,13 +352,13 @@ release the allocated resources when done</p>
 <a name="json-reader-set-root"></a><h3>json_reader_set_root ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
 json_reader_set_root (<em class="parameter"><code><a class="link" href="JsonReader.html" title="JsonReader"><span class="type">JsonReader</span></a> *reader</code></em>,
-                      <em class="parameter"><code><a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> *root</code></em>);</pre>
-<p>Sets the root <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> to be read by <em class="parameter"><code>reader</code></em>
+                      <em class="parameter"><code><a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> *root</code></em>);</pre>
+<p>Sets the root <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> to be read by <em class="parameter"><code>reader</code></em>
 . The <em class="parameter"><code>reader</code></em>
  will take
 a copy of <em class="parameter"><code>root</code></em>
 </p>
-<p>If another <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> is currently set as root, it will be replaced.</p>
+<p>If another <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> is currently set as root, it will be replaced.</p>
 <div class="refsect3">
 <a name="id-1.4.3.3.8.3.6"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
@@ -375,8 +375,8 @@ a copy of <em class="parameter"><code>root</code></em>
 </tr>
 <tr>
 <td class="parameter_name"><p>root</p></td>
-<td class="parameter_description"><p> a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a>. </p></td>
-<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
+<td class="parameter_description"><p> a <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a>. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
@@ -822,9 +822,9 @@ otherwise</p>
 <hr>
 <div class="refsect2">
 <a name="json-reader-get-value"></a><h3>json_reader_get_value ()</h3>
-<pre class="programlisting"><a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="returnvalue">JsonNode</span></a> *
+<pre class="programlisting"><a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="returnvalue">JsonNode</span></a> *
 json_reader_get_value (<em class="parameter"><code><a class="link" href="JsonReader.html" title="JsonReader"><span class="type">JsonReader</span></a> *reader</code></em>);</pre>
-<p>Retrieves the <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> of the current position of <em class="parameter"><code>reader</code></em>
+<p>Retrieves the <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> of the current position of <em class="parameter"><code>reader</code></em>
 </p>
 <div class="refsect3">
 <a name="id-1.4.3.3.8.15.5"></a><h4>Parameters</h4>
@@ -843,7 +843,7 @@ json_reader_get_value (<em class="parameter"><code><a class="link" href="JsonRea
 </div>
 <div class="refsect3">
 <a name="id-1.4.3.3.8.15.6"></a><h4>Returns</h4>
-<p> a <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a>, or <code class="literal">NULL</code>. The returned node
+<p> a <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a>, or <code class="literal">NULL</code>. The returned node
 is owned by the <a class="link" href="JsonReader.html" title="JsonReader"><span class="type">JsonReader</span></a> and it should not be modified or freed
 directly. </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
@@ -1126,7 +1126,7 @@ be accessed using the provided API</p>
 <a name="JsonReader.property-details"></a><h2>Property Details</h2>
 <div class="refsect2">
 <a name="JsonReader--root"></a><h3>The <code class="literal">“root”</code> property</h3>
-<pre class="programlisting">  “root”                     <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> *</pre>
+<pre class="programlisting">  “root”                     <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> *</pre>
 <p>The root of the JSON tree that the <a class="link" href="JsonReader.html" title="JsonReader"><span class="type">JsonReader</span></a> should read.</p>
 <p>Flags: Read / Write / Construct</p>
 <p class="since">Since 0.12</p>
@@ -1135,6 +1135,6 @@ be accessed using the provided API</p>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.20.1</div>
+          Generated by GTK-Doc V1.21.1</div>
 </body>
 </html>

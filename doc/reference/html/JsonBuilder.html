@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>JSON-GLib Reference Manual: JsonBuilder</title>
+<title>JsonBuilder: JSON-GLib Reference Manual</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="JSON-GLib Reference Manual">
 <link rel="up" href="ch03.html" title="Generator">
 <link rel="prev" href="JsonGenerator.html" title="JsonGenerator">
 <link rel="next" href="json-advanced.html" title="Part IV. JSON-GLib Advanced API">
-<meta name="generator" content="GTK-Doc V1.20.1 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.21.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -50,7 +50,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="returnvalue">JsonNode</span></a> *
+<a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="returnvalue">JsonNode</span></a> *
 </td>
 <td class="function_name">
 <a class="link" href="JsonBuilder.html#json-builder-get-root" title="json_builder_get_root ()">json_builder_get_root</a> <span class="c_punctuation">()</span>
@@ -184,7 +184,7 @@
 <a name="JsonBuilder.description"></a><h2>Description</h2>
 <p><a class="link" href="JsonBuilder.html" title="JsonBuilder"><span class="type">JsonBuilder</span></a> provides an object for generating a JSON tree.
 You can generate only one tree with one <a class="link" href="JsonBuilder.html" title="JsonBuilder"><span class="type">JsonBuilder</span></a> instance.</p>
-<p>The root of the JSON tree can be either a <a class="link" href="json-glib-JSON-Object.html#JsonObject" title="JsonObject"><span class="type">JsonObject</span></a> or a <a class="link" href="json-glib-JSON-Array.html#JsonArray" title="JsonArray"><span class="type">JsonArray</span></a>.
+<p>The root of the JSON tree can be either a <a class="link" href="json-glib-JSON-Object.html#JsonObject"><span class="type">JsonObject</span></a> or a <a class="link" href="json-glib-JSON-Array.html#JsonArray"><span class="type">JsonArray</span></a>.
 Thus the first call must necessarily be either
 <a class="link" href="JsonBuilder.html#json-builder-begin-object" title="json_builder_begin_object ()"><code class="function">json_builder_begin_object()</code></a> or <a class="link" href="JsonBuilder.html#json-builder-begin-array" title="json_builder_begin_array ()"><code class="function">json_builder_begin_array()</code></a>.</p>
 <p>For convenience to language bindings, <a class="link" href="JsonBuilder.html" title="JsonBuilder"><span class="type">JsonBuilder</span></a> returns itself from
@@ -197,7 +197,7 @@ most of functions, making it easy to chain function calls.</p>
 <pre class="programlisting"><a class="link" href="JsonBuilder.html" title="JsonBuilder"><span class="returnvalue">JsonBuilder</span></a> *
 json_builder_new (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>Creates a new <a class="link" href="JsonBuilder.html" title="JsonBuilder"><span class="type">JsonBuilder</span></a>. You can use this object to generate a
-JSON tree and obtain the root <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a>.</p>
+JSON tree and obtain the root <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a>.</p>
 <div class="refsect3">
 <a name="id-1.4.4.3.7.2.5"></a><h4>Returns</h4>
 <p> the newly created <a class="link" href="JsonBuilder.html" title="JsonBuilder"><span class="type">JsonBuilder</span></a> instance</p>
@@ -207,7 +207,7 @@ JSON tree and obtain the root <a class="link" href="json-glib-JSON-Node.html#Jso
 <hr>
 <div class="refsect2">
 <a name="json-builder-get-root"></a><h3>json_builder_get_root ()</h3>
-<pre class="programlisting"><a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="returnvalue">JsonNode</span></a> *
+<pre class="programlisting"><a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="returnvalue">JsonNode</span></a> *
 json_builder_get_root (<em class="parameter"><code><a class="link" href="JsonBuilder.html" title="JsonBuilder"><span class="type">JsonBuilder</span></a> *builder</code></em>);</pre>
 <p>Returns the root of the current constructed tree, if the build is complete
 (ie: all opened objects, object members and arrays are being closed).</p>
@@ -228,7 +228,7 @@ json_builder_get_root (<em class="parameter"><code><a class="link" href="JsonBui
 </div>
 <div class="refsect3">
 <a name="id-1.4.4.3.7.3.6"></a><h4>Returns</h4>
-<p> the <a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a>, or <code class="literal">NULL</code> if the build is not complete.
+<p> the <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a>, or <code class="literal">NULL</code> if the build is not complete.
 Free the returned value with <a class="link" href="json-glib-JSON-Node.html#json-node-free" title="json_node_free ()"><code class="function">json_node_free()</code></a>. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -420,14 +420,15 @@ recent call to <a class="link" href="JsonBuilder.html#json-builder-begin-object"
 <a name="json-builder-add-value"></a><h3>json_builder_add_value ()</h3>
 <pre class="programlisting"><a class="link" href="JsonBuilder.html" title="JsonBuilder"><span class="returnvalue">JsonBuilder</span></a> *
 json_builder_add_value (<em class="parameter"><code><a class="link" href="JsonBuilder.html" title="JsonBuilder"><span class="type">JsonBuilder</span></a> *builder</code></em>,
-                        <em class="parameter"><code><a class="link" href="json-glib-JSON-Node.html#JsonNode" title="JsonNode"><span class="type">JsonNode</span></a> *node</code></em>);</pre>
+                        <em class="parameter"><code><a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a> *node</code></em>);</pre>
 <p>If called after <a class="link" href="JsonBuilder.html#json-builder-set-member-name" title="json_builder_set_member_name ()"><code class="function">json_builder_set_member_name()</code></a>, sets <em class="parameter"><code>node</code></em>
  as member of the
 most recent opened object, otherwise <em class="parameter"><code>node</code></em>
  is added as element of the most
 recent opened array.</p>
+<p>The builder will take ownership of the <a class="link" href="json-glib-JSON-Node.html#JsonNode"><span class="type">JsonNode</span></a>.</p>
 <div class="refsect3">
-<a name="id-1.4.4.3.7.10.5"></a><h4>Parameters</h4>
+<a name="id-1.4.4.3.7.10.6"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -442,14 +443,14 @@ recent opened array.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>node</p></td>
-<td class="parameter_description"><p>the value of the member or element</p></td>
-<td class="parameter_annotations"> </td>
+<td class="parameter_description"><p> the value of the member or element. </p></td>
+<td class="parameter_annotations"><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.4.4.3.7.10.6"></a><h4>Returns</h4>
+<a name="id-1.4.4.3.7.10.7"></a><h4>Returns</h4>
 <p> the <a class="link" href="JsonBuilder.html" title="JsonBuilder"><span class="type">JsonBuilder</span></a>, or <code class="literal">NULL</code> if the call was inconsistent. </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
@@ -671,6 +672,6 @@ accessed using the provided API</p>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.20.1</div>
+          Generated by GTK-Doc V1.21.1</div>
 </body>
 </html>
