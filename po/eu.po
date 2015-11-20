@@ -1,86 +1,88 @@
+# Basque translation of jon-glib.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2013.
+# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2013, 2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: json-glib master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=json-"
 "glib\n"
-"POT-Creation-Date: 2014-03-25 11:50+0000\n"
-"PO-Revision-Date: 2013-03-03 20:43+0100\n"
+"POT-Creation-Date: 2014-05-30 18:34+0100\n"
+"PO-Revision-Date: 2014-04-03 17:38+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
-"Language-Team: Basque <itzulpena@euskalgnu.org>\n"
+"Language-Team: Basque <librezale@librezale.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.0\n"
+"X-Generator: Lokalize 1.4\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: json-glib/json-glib-format.c:50
 msgid "Prettify output"
-msgstr ""
+msgstr "Koskatu irteera"
 
 #: json-glib/json-glib-format.c:51
 msgid "Indentation spaces"
-msgstr ""
+msgstr "Koskaren zuriuneak"
 
 #: json-glib/json-glib-format.c:77 json-glib/json-glib-validate.c:63
 #, c-format
 msgid "%s: %s: error opening file: %s\n"
-msgstr ""
+msgstr "%s: %s: errorea fitxategia irekitzean: %s\n"
 
 #: json-glib/json-glib-format.c:89 json-glib/json-glib-validate.c:75
 #, c-format
 msgid "%s: %s: error parsing file: %s\n"
-msgstr ""
+msgstr "%s: %s: errorea fitxategia analizatzean: %s\n"
 
 #: json-glib/json-glib-format.c:108
 #, c-format
 msgid "%s: %s: error writing to stdout"
-msgstr ""
+msgstr "%s: %s: errorea irteera estandarrean idaztean"
 
 #: json-glib/json-glib-format.c:128 json-glib/json-glib-validate.c:87
 #, c-format
 msgid "%s: %s: error closing: %s\n"
-msgstr ""
+msgstr "%s: %s: errorea ixtean: %s\n"
 
 #: json-glib/json-glib-format.c:157 json-glib/json-glib-validate.c:115
 msgid "FILE"
-msgstr ""
+msgstr "FITXATEGIA"
 
 #: json-glib/json-glib-format.c:160
 msgid "Format JSON files."
-msgstr ""
+msgstr "JSON fitxategien formatua."
 
 #: json-glib/json-glib-format.c:161
 msgid "json-glib-format formats JSON resources."
-msgstr ""
+msgstr "'json-glib-format'-ek  JSON baliabideei formatu ematen die."
 
 #: json-glib/json-glib-format.c:178 json-glib/json-glib-validate.c:136
 #, c-format
 msgid "Error parsing commandline options: %s\n"
-msgstr ""
+msgstr "Errorea komando-lerroaren aukerak analizatzean: %s\n"
 
 #: json-glib/json-glib-format.c:180 json-glib/json-glib-format.c:194
 #: json-glib/json-glib-validate.c:138 json-glib/json-glib-validate.c:152
 #, c-format
 msgid "Try \"%s --help\" for more information."
-msgstr ""
+msgstr "Saiatu '%s --help' erabiltzen informazio gehiagorako."
 
 #: json-glib/json-glib-format.c:192 json-glib/json-glib-validate.c:150
 #, c-format
 msgid "%s: missing files"
-msgstr ""
+msgstr "%s: fitxategiak falta dira"
 
 #: json-glib/json-glib-validate.c:118
 msgid "Validate JSON files."
-msgstr ""
+msgstr "JSON fitxategien balidazioa."
 
 #: json-glib/json-glib-validate.c:119
 msgid "json-glib-validate validates JSON data at the given URI."
 msgstr ""
+"'json-glib-validate'-ek JSON datuen balidazioa egiten du emandako URIan."
 
 #: json-glib/json-gobject.c:915
 #, c-format
@@ -135,7 +137,7 @@ msgstr "%s:%d:%d: analisi-errorea: %s"
 
 #: json-glib/json-parser.c:883
 msgid "JSON data must be UTF-8 encoded"
-msgstr ""
+msgstr "JSON datuak UTF-8 kodeketan egon behar dute"
 
 #: json-glib/json-path.c:388
 msgid "Only one root node is allowed in a JSONPath expression"
@@ -149,7 +151,7 @@ msgstr "Erroko nodoaren ondoren baliogabeko '%c' karakterea dago"
 
 #: json-glib/json-path.c:437
 msgid "Missing member name or wildcard after . character"
-msgstr ""
+msgstr "Kidearen izena edo '.' karakterearen ondorengo izartxoa falta da"
 
 #: json-glib/json-path.c:511
 #, c-format
@@ -174,7 +176,7 @@ msgstr "Baliogabeko '%*s' matrizearen indizearen definizioa"
 #: json-glib/json-path.c:655
 #, c-format
 msgid "Invalid first character '%c'"
-msgstr ""
+msgstr "Aurreneko '%c' karakterea baliogabea"
 
 #: json-glib/json-reader.c:456
 #, c-format

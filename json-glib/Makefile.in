@@ -630,10 +630,17 @@ json_glib_format_CFLAGS = $(JSON_CFLAGS) $(MAINTAINER_CFLAGS)
 json_glib_format_SOURCES = json-glib-format.c
 json_glib_format_LDADD = $(JSON_LIBS) libjson-glib-1.0.la
 @HAVE_INTROSPECTION_TRUE@INTROSPECTION_GIRS = Json-1.0.gir
+@HAVE_INTROSPECTION_TRUE@introspection_source = \
+@HAVE_INTROSPECTION_TRUE@	$(source_c) \
+@HAVE_INTROSPECTION_TRUE@	$(source_h) \
+@HAVE_INTROSPECTION_TRUE@	$(top_builddir)/json-glib/json-enum-types.h \
+@HAVE_INTROSPECTION_TRUE@	$(top_builddir)/json-glib/json-enum-types.c \
+@HAVE_INTROSPECTION_TRUE@	$(top_builddir)/json-glib/json-version.h
+
 @HAVE_INTROSPECTION_TRUE@Json_1_0_gir_NAMESPACE = Json
 @HAVE_INTROSPECTION_TRUE@Json_1_0_gir_VERSION = 1.0
 @HAVE_INTROSPECTION_TRUE@Json_1_0_gir_LIBS = libjson-glib-1.0.la
-@HAVE_INTROSPECTION_TRUE@Json_1_0_gir_FILES = $(source_h) $(source_c) $(top_builddir)/json-glib/json-version.h
+@HAVE_INTROSPECTION_TRUE@Json_1_0_gir_FILES = $(introspection_source)
 @HAVE_INTROSPECTION_TRUE@Json_1_0_gir_CFLAGS = -DJSON_COMPILATION=1 -I$(top_srcdir) -I$(top_builddir) $(JSON_CFLAGS)
 @HAVE_INTROSPECTION_TRUE@Json_1_0_gir_INCLUDES = GObject-2.0 Gio-2.0
 @HAVE_INTROSPECTION_TRUE@Json_1_0_gir_SCANNERFLAGS = --warn-all --pkg-export json-glib-1.0 --c-include "json-glib/json-glib.h"

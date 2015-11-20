@@ -9,80 +9,80 @@ msgstr ""
 "Project-Id-Version: json-glib master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=json-"
 "glib\n"
-"POT-Creation-Date: 2014-03-25 11:50+0000\n"
-"PO-Revision-Date: 2012-10-26 08:19+0200\n"
-"Last-Translator: Wolfgang Stoeggl <c72578@yahoo.de>\n"
+"POT-Creation-Date: 2014-05-30 18:34+0100\n"
+"PO-Revision-Date: 2014-04-27 20:32+0100\n"
+"Last-Translator: Benjamin Steinwender <b@stbe.at>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.5\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #: json-glib/json-glib-format.c:50
 msgid "Prettify output"
-msgstr ""
+msgstr "Ausgabe hübsch gestalten"
 
 #: json-glib/json-glib-format.c:51
 msgid "Indentation spaces"
-msgstr ""
+msgstr "Einrückungsleerzeichen"
 
 #: json-glib/json-glib-format.c:77 json-glib/json-glib-validate.c:63
 #, c-format
 msgid "%s: %s: error opening file: %s\n"
-msgstr ""
+msgstr "%s: %s: Fehler beim Öffnen der Datei: %s\n"
 
 #: json-glib/json-glib-format.c:89 json-glib/json-glib-validate.c:75
 #, c-format
 msgid "%s: %s: error parsing file: %s\n"
-msgstr ""
+msgstr "%s: %s: Fehler beim Verarbeiten der Datei: %s\n"
 
 #: json-glib/json-glib-format.c:108
 #, c-format
 msgid "%s: %s: error writing to stdout"
-msgstr ""
+msgstr "%s: %s: Fehler beim Schreiben auf die Standardausgabe"
 
 #: json-glib/json-glib-format.c:128 json-glib/json-glib-validate.c:87
 #, c-format
 msgid "%s: %s: error closing: %s\n"
-msgstr ""
+msgstr "%s: %s: Fehler beim Schließen: %s\n"
 
 #: json-glib/json-glib-format.c:157 json-glib/json-glib-validate.c:115
 msgid "FILE"
-msgstr ""
+msgstr "DATEI"
 
 #: json-glib/json-glib-format.c:160
 msgid "Format JSON files."
-msgstr ""
+msgstr "JSON-Datei formatieren."
 
 #: json-glib/json-glib-format.c:161
 msgid "json-glib-format formats JSON resources."
-msgstr ""
+msgstr "json-glib-format formatiert JSON-Ressourcen."
 
 #: json-glib/json-glib-format.c:178 json-glib/json-glib-validate.c:136
 #, c-format
 msgid "Error parsing commandline options: %s\n"
-msgstr ""
+msgstr "Fehler beim Verarbeiten der Befehlszeilenoptionen: %s\n"
 
 #: json-glib/json-glib-format.c:180 json-glib/json-glib-format.c:194
 #: json-glib/json-glib-validate.c:138 json-glib/json-glib-validate.c:152
 #, c-format
 msgid "Try \"%s --help\" for more information."
-msgstr ""
+msgstr "Versuchen Sie »%s --help« für mehr Informationen."
 
 #: json-glib/json-glib-format.c:192 json-glib/json-glib-validate.c:150
 #, c-format
 msgid "%s: missing files"
-msgstr ""
+msgstr "%s: Fehlende Dateien"
 
 #: json-glib/json-glib-validate.c:118
 msgid "Validate JSON files."
-msgstr ""
+msgstr "JSON-Datei auf Gültigkeit prüfen."
 
 #: json-glib/json-glib-validate.c:119
 msgid "json-glib-validate validates JSON data at the given URI."
-msgstr ""
+msgstr "json-glib-validate prüft JSON-Daten der angegebenen Adresse."
 
 #: json-glib/json-gobject.c:915
 #, c-format
@@ -137,7 +137,7 @@ msgstr "%s:%d:%d: Verarbeitungsfehler: %s"
 
 #: json-glib/json-parser.c:883
 msgid "JSON data must be UTF-8 encoded"
-msgstr ""
+msgstr "JSON-Daten müssen in UTF-8 kodiert sein"
 
 #: json-glib/json-path.c:388
 msgid "Only one root node is allowed in a JSONPath expression"
@@ -175,7 +175,7 @@ msgstr "Ungültige Array-Index-Definition »%*s«"
 #: json-glib/json-path.c:655
 #, c-format
 msgid "Invalid first character '%c'"
-msgstr ""
+msgstr "Ungültiges erstes Zeichen »%c«"
 
 #: json-glib/json-reader.c:456
 #, c-format

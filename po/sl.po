@@ -1,17 +1,16 @@
-# Slovenian translations for nemiver.
 # Slovenian translation for json-glib.
 # Copyright (C) 2011 json-glib's COPYRIGHT HOLDER
 # This file is distributed under the same license as the json-glib package.
 #
-# Matej Urbančič <mateju@svn.gnome.org>, 2011.
+# Matej Urbančič <mateju@svn.gnome.org>, 2011-2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: json-glib master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=json-"
 "glib\n"
-"POT-Creation-Date: 2014-03-25 11:50+0000\n"
-"PO-Revision-Date: 2012-10-25 19:20+0100\n"
+"POT-Creation-Date: 2014-05-30 18:34+0100\n"
+"PO-Revision-Date: 2014-04-03 20:37+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -20,73 +19,72 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
-"X-Poedit-Country: SLOVENIA\n"
-"X-Poedit-Language: Slovenian\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: json-glib/json-glib-format.c:50
 msgid "Prettify output"
-msgstr ""
+msgstr "Olepšaj odvod"
 
 #: json-glib/json-glib-format.c:51
 msgid "Indentation spaces"
-msgstr ""
+msgstr "Presledki zamika"
 
 #: json-glib/json-glib-format.c:77 json-glib/json-glib-validate.c:63
 #, c-format
 msgid "%s: %s: error opening file: %s\n"
-msgstr ""
+msgstr "%s: %s: napaka odpiranja datoteke: %s\n"
 
 #: json-glib/json-glib-format.c:89 json-glib/json-glib-validate.c:75
 #, c-format
 msgid "%s: %s: error parsing file: %s\n"
-msgstr ""
+msgstr "%s: %s: napaka razčlenjevanja datoteke: %s\n"
 
 #: json-glib/json-glib-format.c:108
 #, c-format
 msgid "%s: %s: error writing to stdout"
-msgstr ""
+msgstr "%s: %s: napaka pisanja na standardni odvod"
 
 #: json-glib/json-glib-format.c:128 json-glib/json-glib-validate.c:87
 #, c-format
 msgid "%s: %s: error closing: %s\n"
-msgstr ""
+msgstr "%s: %s: napaka zapiranja: %s\n"
 
 #: json-glib/json-glib-format.c:157 json-glib/json-glib-validate.c:115
 msgid "FILE"
-msgstr ""
+msgstr "DATOTEKA"
 
 #: json-glib/json-glib-format.c:160
 msgid "Format JSON files."
-msgstr ""
+msgstr "Oblikuj datoteke JSON."
 
 #: json-glib/json-glib-format.c:161
 msgid "json-glib-format formats JSON resources."
-msgstr ""
+msgstr "Možnost json-glib-format oblikuje zapis virov JSON."
 
 #: json-glib/json-glib-format.c:178 json-glib/json-glib-validate.c:136
 #, c-format
 msgid "Error parsing commandline options: %s\n"
-msgstr ""
+msgstr "Napaka med razčlenjevanjem možnosti ukazne vrstice: %s\n"
 
 #: json-glib/json-glib-format.c:180 json-glib/json-glib-format.c:194
 #: json-glib/json-glib-validate.c:138 json-glib/json-glib-validate.c:152
 #, c-format
 msgid "Try \"%s --help\" for more information."
-msgstr ""
+msgstr "Poskusite \"%s --help\" za več podrobnosti."
 
 #: json-glib/json-glib-format.c:192 json-glib/json-glib-validate.c:150
 #, c-format
 msgid "%s: missing files"
-msgstr ""
+msgstr "%s: manjkajoče datoteke"
 
 #: json-glib/json-glib-validate.c:118
 msgid "Validate JSON files."
-msgstr ""
+msgstr "Overi datoteke JSON."
 
 #: json-glib/json-glib-validate.c:119
 msgid "json-glib-validate validates JSON data at the given URI."
-msgstr ""
+msgstr "Možnost json-glib-validate overi podatke JSON za podani naslov URI."
 
 #: json-glib/json-gobject.c:915
 #, c-format
@@ -139,7 +137,7 @@ msgstr "%s:%d:%d: napaka razčlenjevanje: %s"
 
 #: json-glib/json-parser.c:883
 msgid "JSON data must be UTF-8 encoded"
-msgstr ""
+msgstr "Podatki JSON morajo biti kodirani v naboru UTF-8"
 
 #: json-glib/json-path.c:388
 msgid "Only one root node is allowed in a JSONPath expression"
@@ -152,7 +150,7 @@ msgstr "Korensko vozlišče se konča z neveljavnim znakom '%c'"
 
 #: json-glib/json-path.c:437
 msgid "Missing member name or wildcard after . character"
-msgstr ""
+msgstr "Manjka ime člana ali pa nadomestni znak po znaku . (pika)"
 
 #: json-glib/json-path.c:511
 #, c-format
@@ -177,7 +175,7 @@ msgstr "Neveljavno določilo kazala polja '%*s'"
 #: json-glib/json-path.c:655
 #, c-format
 msgid "Invalid first character '%c'"
-msgstr ""
+msgstr "Neveljaven prvi znak '%c'"
 
 #: json-glib/json-reader.c:456
 #, c-format

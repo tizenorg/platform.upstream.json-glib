@@ -1,3 +1,176 @@
+commit 82d10baa19383f22b3b8022b01be4ae1b08c968a
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu May 29 10:04:39 2014 +0100
+
+    Release JSON-GLib 1.0.2
+
+ configure.ac | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit bdb27fb70a831e14d569aaff9d7c452978da2236
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu May 29 09:52:03 2014 +0100
+
+    build: Include enum-types.[ch] in the introspection sources
+    
+    Otherwise g-ir-scanner won't pick the types up, and will not notice that
+    the error enumerations have an associated error domain.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=730917
+
+ json-glib/Makefile.am | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+commit 8bbc873dccb0426ce7e2ad0974b1397506454674
+Author: Stef Walter <stefw@redhat.com>
+Date:   Wed May 21 12:14:57 2014 +0200
+
+    generator: Add tests for updated string escaping routine
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=730425
+
+ json-glib/tests/generator.c | 47 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
+
+commit f2ee9a7e205abe5050fba37fa65aceceeb243898
+Author: Stef Walter <stefw@redhat.com>
+Date:   Tue May 20 10:49:02 2014 +0200
+
+    generator: Escape the control characters correctly
+    
+    Escaping these as octals is out of the JSON spec completely,
+    so roll our own string encoder.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=730425
+
+ json-glib/json-generator.c | 73 +++++++++++++++++++++++++++++-----------------
+ 1 file changed, 47 insertions(+), 26 deletions(-)
+
+commit 8f4816a2e05d0d3672d7723df2feaf466632c498
+Author: Stef Walter <stefw@redhat.com>
+Date:   Tue May 20 10:43:29 2014 +0200
+
+    generator: Escape Object key names correctly
+    
+    Also fix empty keys, which are now encoded properly.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=727593
+
+ json-glib/json-generator.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
+
+commit 0898b9c335a21a82d92621e16be1b1038ccc6991
+Author: Christian Kirbach <Christian.Kirbach@gmail.com>
+Date:   Mon Apr 28 17:27:32 2014 +0000
+
+    Updated German translation
+
+ po/de.po | 175 +++++++++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 138 insertions(+), 37 deletions(-)
+
+commit 62d9456c3d78286b662e7f96477617fd78358a18
+Author: Daniel Korostil <ted.korostiled@gmail.com>
+Date:   Mon Apr 21 12:20:32 2014 +0300
+
+    Updated Ukrainian translation
+
+ po/uk.po | 225 +++++++++++++++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 168 insertions(+), 57 deletions(-)
+
+commit 13397eb080fee132a3d227a6b98b73e75364b4f5
+Author: djcb <djcb@djcbsoftware.nl>
+Date:   Mon Apr 7 17:13:47 2014 +0300
+
+    json-parser: use length parameter when validating utf-8
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=727755
+
+ json-glib/json-parser.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit c9de87387f3b2494e4e770fd1d2ffca9ebfdbfe5
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Apr 17 15:30:32 2014 +0100
+
+    tests: Add more checks to the parser stream unit
+
+ json-glib/tests/parser.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
+
+commit e31683d2804916da23d1e48b80b124b37df1c8e6
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Apr 17 15:28:15 2014 +0100
+
+    parser: Use the right length for parsing the stream contents
+    
+    The ByteArray we use to buffer the contents of a stream in order to
+    pass them to the parser may have a bigger length. We should use the
+    cursor position that we use to put a '\0' in the buffer instead. We
+    could also use -1, but this saves us a strlen() later on.
+
+ json-glib/json-parser.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 289e75bd35c5ee268269f09c9e2db90602994fc1
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Mon Apr 7 15:05:40 2014 +0800
+
+    Visual Studio Builds: Fix Installation of Headers
+    
+    json-version-macros.h needs to be installed as well, so fix that.
+
+ build/win32/vs10/json-glib-install.props  | 2 ++
+ build/win32/vs9/json-glib-install.vsprops | 1 +
+ 2 files changed, 3 insertions(+)
+
+commit e645b5a383230ec5233cb0bd389e53e226a4bdd3
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Sun Apr 6 17:46:40 2014 +0200
+
+    doap: update URLs
+
+ json-glib.doap | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit b3e105fa890d4c63708b9cb9d372d9db16a636ff
+Author: Matej Urbančič <mateju@svn.gnome.org>
+Date:   Thu Apr 3 20:37:41 2014 +0200
+
+    Updated Slovenian translation
+
+ po/sl.po | 203 ++++++++++++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 150 insertions(+), 53 deletions(-)
+
+commit 82389b02f8b82eb5b3c37e38498975ebd15697ac
+Author: Inaki Larranaga Murgoitio <dooteo@zundan.com>
+Date:   Thu Apr 3 17:39:19 2014 +0200
+
+    Updated Basque language
+
+ po/eu.po | 184 +++++++++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 144 insertions(+), 40 deletions(-)
+
+commit 18c76eff151fd29213401477c2c4a022eec9c698
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Tue Apr 1 19:40:12 2014 +0800
+
+    Fix MSVC Introspection Build
+    
+    Also substitute $(top_builddir), as it is used for json-version.h during
+    the scanning of the headers and sources.
+
+ build/win32/gen-file-list-jsonglib.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit e0aef7ca7ba0c9d94ffa6e814caee956c139ad23
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 25 11:53:25 2014 +0000
+
+    Post-release version bump to 1.0.1
+
+ configure.ac | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
 commit cb7212b5ee71f18f4023e928884fd55ef54b9327
 Author: Emmanuele Bassi <ebassi@gnome.org>
 Date:   Tue Mar 25 11:50:36 2014 +0000

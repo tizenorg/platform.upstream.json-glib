@@ -2,14 +2,15 @@
 # Copyright (C) 2012 json-glib's COPYRIGHT HOLDER
 # This file is distributed under the same license as the json-glib package.
 # Daniel <ted.korostiled@gmail.com>, 2012.
+# Mykola Tkach <Stuartlittle1970@gmail.com>, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: json-glib master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=json-"
 "glib\n"
-"POT-Creation-Date: 2014-03-25 11:50+0000\n"
-"PO-Revision-Date: 2012-08-16 09:51-0700\n"
-"Last-Translator: Daniel <ted.korostiled@gmail.com>\n"
+"POT-Creation-Date: 2014-05-30 18:34+0100\n"
+"PO-Revision-Date: 2014-03-30 13:22+0300\n"
+"Last-Translator: Mykola Tkach <Stuartlittle1970@gmail.com>\n"
 "Language-Team: translation@linux.org.ua\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -22,72 +23,72 @@ msgstr ""
 
 #: json-glib/json-glib-format.c:50
 msgid "Prettify output"
-msgstr ""
+msgstr "Виводити у зручночитаній формі"
 
 #: json-glib/json-glib-format.c:51
 msgid "Indentation spaces"
-msgstr ""
+msgstr "Відступи"
 
 #: json-glib/json-glib-format.c:77 json-glib/json-glib-validate.c:63
 #, c-format
 msgid "%s: %s: error opening file: %s\n"
-msgstr ""
+msgstr "%s: %s: не вдалося відкрити файл: %s\n"
 
 #: json-glib/json-glib-format.c:89 json-glib/json-glib-validate.c:75
 #, c-format
 msgid "%s: %s: error parsing file: %s\n"
-msgstr ""
+msgstr "%s: %s: не вдалося розібрати файл: %s\n"
 
 #: json-glib/json-glib-format.c:108
 #, c-format
 msgid "%s: %s: error writing to stdout"
-msgstr ""
+msgstr "%s: %s: не вдалося записати у стандартний вивід"
 
 #: json-glib/json-glib-format.c:128 json-glib/json-glib-validate.c:87
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %s: error closing: %s\n"
-msgstr "%s:%d: Помилка розбирання: %s"
+msgstr "%s: %s: не вдалося закрити: %s\n"
 
 #: json-glib/json-glib-format.c:157 json-glib/json-glib-validate.c:115
 msgid "FILE"
-msgstr ""
+msgstr "ФАЙЛ"
 
 #: json-glib/json-glib-format.c:160
 msgid "Format JSON files."
-msgstr ""
+msgstr "Форматування файлів JSON."
 
 #: json-glib/json-glib-format.c:161
 msgid "json-glib-format formats JSON resources."
-msgstr ""
+msgstr "json-glib-format форматує ресурси JSON."
 
 #: json-glib/json-glib-format.c:178 json-glib/json-glib-validate.c:136
 #, c-format
 msgid "Error parsing commandline options: %s\n"
-msgstr ""
+msgstr "Не вдалося розібрати параметри командного рядка: %s\n"
 
 #: json-glib/json-glib-format.c:180 json-glib/json-glib-format.c:194
 #: json-glib/json-glib-validate.c:138 json-glib/json-glib-validate.c:152
 #, c-format
 msgid "Try \"%s --help\" for more information."
-msgstr ""
+msgstr "Використовуйте «%s --help» для отримання детальної інформації."
 
 #: json-glib/json-glib-format.c:192 json-glib/json-glib-validate.c:150
 #, c-format
 msgid "%s: missing files"
-msgstr ""
+msgstr "%s: відсутні файли"
 
 #: json-glib/json-glib-validate.c:118
 msgid "Validate JSON files."
-msgstr ""
+msgstr "Перевірка коректності файлів JSON."
 
 #: json-glib/json-glib-validate.c:119
 msgid "json-glib-validate validates JSON data at the given URI."
-msgstr ""
+msgstr "json-glib-validate перевіряє коректність даних JSON за вказаним URI."
 
 #: json-glib/json-gobject.c:915
 #, c-format
 msgid "Expecting a JSON object, but the root node is of type `%s'"
-msgstr "Очікування об'єкта JSON, але кореневий вузол є типом «%s»"
+msgstr "Очікування об'єкту JSON, але кореневий вузол є типом «%s»"
 
 #: json-glib/json-gvariant.c:523
 #, c-format
@@ -113,7 +114,7 @@ msgstr "Неправильне перетворення значення ряд�
 #: json-glib/json-gvariant.c:964
 msgid ""
 "A GVariant dictionary entry expects a JSON object with exactly one member"
-msgstr "Запис словника GVariant очікує об'єкт JSON з тільки однією частиною"
+msgstr "Запис словника GVariant очікує об'єкт JSON з лише однією частиною"
 
 #: json-glib/json-gvariant.c:1244
 #, c-format
@@ -129,13 +130,13 @@ msgid "JSON data is empty"
 msgstr "Дані JSON порожні"
 
 #: json-glib/json-parser.c:815
-#, fuzzy, c-format
+#, c-format
 msgid "%s:%d:%d: Parse error: %s"
-msgstr "%s:%d: Помилка розбирання: %s"
+msgstr "%s:%d:%d: помилка розбору: %s"
 
 #: json-glib/json-parser.c:883
 msgid "JSON data must be UTF-8 encoded"
-msgstr ""
+msgstr "Дані JSON повинні бути у кодуванні UTF-8"
 
 #: json-glib/json-path.c:388
 msgid "Only one root node is allowed in a JSONPath expression"
@@ -148,7 +149,7 @@ msgstr "Кореневий вузол супроводжується непра�
 
 #: json-glib/json-path.c:437
 msgid "Missing member name or wildcard after . character"
-msgstr ""
+msgstr "Відсутнє ім’я члена або шаблон після символу «.»"
 
 #: json-glib/json-path.c:511
 #, c-format
@@ -173,7 +174,7 @@ msgstr "Неправильне визначення покажчика маси�
 #: json-glib/json-path.c:655
 #, c-format
 msgid "Invalid first character '%c'"
-msgstr ""
+msgstr "Неправильний перший символ «%c»"
 
 #: json-glib/json-reader.c:456
 #, c-format
@@ -193,7 +194,7 @@ msgstr "Покажчик «%d» більший за розмір масиву н
 msgid ""
 "The index '%d' is greater than the size of the object at the current "
 "position."
-msgstr "Покажчик «%d» більший за розмір об'єкта на поточній позиції."
+msgstr "Покажчик «%d» більший за розмір об'єкту на поточній позиції."
 
 #: json-glib/json-reader.c:570 json-glib/json-reader.c:724
 #: json-glib/json-reader.c:775 json-glib/json-reader.c:813
