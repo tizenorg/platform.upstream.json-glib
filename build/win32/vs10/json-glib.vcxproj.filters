@@ -33,4 +33,7 @@
     <ClCompile Include="..\..\..\json-glib\json-enum-types.c"><Filter>Sources</Filter></ClCompile>
     <ClCompile Include="..\..\..\json-glib\json-marshal.c"><Filter>Sources</Filter></ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\config.h.win32"><Filter>Resource Files</Filter></CustomBuild>
+  </ItemGroup>
 </Project>

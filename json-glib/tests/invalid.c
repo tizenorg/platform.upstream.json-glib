@@ -1,6 +1,4 @@
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -221,9 +219,6 @@ main (int   argc,
 {
   int i;
 
-#if !GLIB_CHECK_VERSION (2, 35, 1)
-  g_type_init ();
-#endif
   g_test_init (&argc, &argv, NULL);
 
   for (i = 0; i < n_test_invalid; i++)
