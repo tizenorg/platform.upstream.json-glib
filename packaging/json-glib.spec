@@ -1,7 +1,13 @@
 %bcond_with introspection
 
+%define run_tests 0
+%if %{run_tests}
+    # check is defined off at .rpmmacros file.
+    %undefine check
+%endif
+
 Name:           json-glib
-Version:        1.0.0
+Version:        1.1.1
 Release:        0
 License:        LGPL-2.1+
 Summary:        Library for JavaScript Object Notation format
@@ -103,6 +109,11 @@ NOCONFIGURE=1
 %autogen
 %reconfigure --disable-man 
 make %{?_smp_mflags}
+
+%check
+%if %{run_tests}
+    %__make check || exit 0
+%endif
 
 %install
 %make_install
