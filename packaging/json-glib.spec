@@ -3,7 +3,7 @@
 Name:           json-glib
 Version:        1.0.0
 Release:        0
-License:        LGPL-2.1+
+License:        LGPL-2.1
 Summary:        Library for JavaScript Object Notation format
 Url:            http://live.gnome.org/JsonGlib
 Group:          System/Libraries
@@ -101,7 +101,7 @@ cp %{SOURCE1001} .
 %build
 NOCONFIGURE=1
 %autogen
-%reconfigure --disable-man 
+%reconfigure --disable-man
 make %{?_smp_mflags}
 
 %install
