@@ -1,13 +1,15 @@
 
 /* Generated data (by glib-mkenums) */
 
+#include "config.h"
 #include "json-enum-types.h"
 
-/* enumerations from "../json-glib/json-parser.h" */
-#include "../json-glib/json-parser.h"
+/* enumerations from "./json-parser.h" */
+#include "./json-parser.h"
 
 GType
-json_parser_error_get_type(void) {
+json_parser_error_get_type (void)
+{
   static volatile gsize g_enum_type_id__volatile = 0;
 
   if (g_once_init_enter (&g_enum_type_id__volatile))
@@ -19,12 +21,12 @@ json_parser_error_get_type(void) {
         { JSON_PARSER_ERROR_MISSING_COLON, "JSON_PARSER_ERROR_MISSING_COLON", "missing-colon" },
         { JSON_PARSER_ERROR_INVALID_BAREWORD, "JSON_PARSER_ERROR_INVALID_BAREWORD", "invalid-bareword" },
         { JSON_PARSER_ERROR_EMPTY_MEMBER_NAME, "JSON_PARSER_ERROR_EMPTY_MEMBER_NAME", "empty-member-name" },
+        { JSON_PARSER_ERROR_INVALID_DATA, "JSON_PARSER_ERROR_INVALID_DATA", "invalid-data" },
         { JSON_PARSER_ERROR_UNKNOWN, "JSON_PARSER_ERROR_UNKNOWN", "unknown" },
         { 0, NULL, NULL }
       };
-      GType g_enum_type_id;
 
-      g_enum_type_id =
+      GType g_enum_type_id =
         g_enum_register_static (g_intern_static_string ("JsonParserError"), values);
 
       g_once_init_leave (&g_enum_type_id__volatile, g_enum_type_id);
@@ -33,11 +35,12 @@ json_parser_error_get_type(void) {
   return g_enum_type_id__volatile;
 }
 
-/* enumerations from "../json-glib/json-path.h" */
-#include "../json-glib/json-path.h"
+/* enumerations from "./json-path.h" */
+#include "./json-path.h"
 
 GType
-json_path_error_get_type(void) {
+json_path_error_get_type (void)
+{
   static volatile gsize g_enum_type_id__volatile = 0;
 
   if (g_once_init_enter (&g_enum_type_id__volatile))
@@ -46,9 +49,8 @@ json_path_error_get_type(void) {
         { JSON_PATH_ERROR_INVALID_QUERY, "JSON_PATH_ERROR_INVALID_QUERY", "query" },
         { 0, NULL, NULL }
       };
-      GType g_enum_type_id;
 
-      g_enum_type_id =
+      GType g_enum_type_id =
         g_enum_register_static (g_intern_static_string ("JsonPathError"), values);
 
       g_once_init_leave (&g_enum_type_id__volatile, g_enum_type_id);
@@ -57,11 +59,12 @@ json_path_error_get_type(void) {
   return g_enum_type_id__volatile;
 }
 
-/* enumerations from "../json-glib/json-reader.h" */
-#include "../json-glib/json-reader.h"
+/* enumerations from "./json-reader.h" */
+#include "./json-reader.h"
 
 GType
-json_reader_error_get_type(void) {
+json_reader_error_get_type (void)
+{
   static volatile gsize g_enum_type_id__volatile = 0;
 
   if (g_once_init_enter (&g_enum_type_id__volatile))
@@ -76,9 +79,8 @@ json_reader_error_get_type(void) {
         { JSON_READER_ERROR_INVALID_TYPE, "JSON_READER_ERROR_INVALID_TYPE", "invalid-type" },
         { 0, NULL, NULL }
       };
-      GType g_enum_type_id;
 
-      g_enum_type_id =
+      GType g_enum_type_id =
         g_enum_register_static (g_intern_static_string ("JsonReaderError"), values);
 
       g_once_init_leave (&g_enum_type_id__volatile, g_enum_type_id);
@@ -87,11 +89,12 @@ json_reader_error_get_type(void) {
   return g_enum_type_id__volatile;
 }
 
-/* enumerations from "../json-glib/json-types.h" */
-#include "../json-glib/json-types.h"
+/* enumerations from "./json-types.h" */
+#include "./json-types.h"
 
 GType
-json_node_type_get_type(void) {
+json_node_type_get_type (void)
+{
   static volatile gsize g_enum_type_id__volatile = 0;
 
   if (g_once_init_enter (&g_enum_type_id__volatile))
@@ -103,9 +106,8 @@ json_node_type_get_type(void) {
         { JSON_NODE_NULL, "JSON_NODE_NULL", "null" },
         { 0, NULL, NULL }
       };
-      GType g_enum_type_id;
 
-      g_enum_type_id =
+      GType g_enum_type_id =
         g_enum_register_static (g_intern_static_string ("JsonNodeType"), values);
 
       g_once_init_leave (&g_enum_type_id__volatile, g_enum_type_id);

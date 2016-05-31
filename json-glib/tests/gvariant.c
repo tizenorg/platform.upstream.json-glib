@@ -12,7 +12,7 @@ typedef struct
 
 /* each entry in this list spawns to a GVariant-to-JSON and
    JSON-to-GVariant test */
-const TestCase test_cases[] =
+static const TestCase two_way_test_cases[] =
   {
     /* boolean */
     { "/boolean", "(b)", "(true,)", "[true]" },
@@ -43,6 +43,9 @@ const TestCase test_cases[] =
 
     /* double */
     { "/double", "(d)", "(1.23,)", "[1.23]" },
+
+    /* double */
+    { "/double-whole", "(d)", "(123.0,)", "[123]" },
 
     /* string */
     { "/string", "(s)", "('hello world!',)", "[\"hello world!\"]" },
@@ -145,6 +148,19 @@ const TestCase test_cases[] =
       "[{\"true\":1,\"false\":0},[\"do\",null,\"did\"],[],null,{\"10000\":[\"yes\",\"august\"],\"0\":null}]" },
   };
 
+static const TestCase json_to_gvariant_test_cases[] =
+  {
+    { "/string-to-boolean", "(b)", "(true,)", "[\"true\"]" },
+    { "/string-to-byte", "(y)", "(byte 0xff,)", "[\"255\"]" },
+    { "/string-to-int16", "(n)", "(int16 -12345,)", "[\"-12345\"]" },
+    { "/string-to-uint16", "(q)", "(uint16 40001,)", "[\"40001\"]" },
+    { "/string-to-int32", "(i)", "(-7654321,)", "[\"-7654321\"]" },
+    { "/string-to-int64", "(x)", "(int64 -666999666999,)", "[\"-666999666999\"]" },
+    { "/string-to-uint64", "(t)", "(uint64 1999999999999999,)", "[\"1999999999999999\"]" },
+    { "/string-to-double", "(d)", "(1.23,)", "[\"1.23\"]" },
+    { "/string-to-double-whole", "(d)", "(123.0,)", "[\"123\"]" },
+  };
+
 static void
 test_gvariant_to_json (gconstpointer test_data)
 {
@@ -204,29 +220,37 @@ main (gint argc, gchar *argv[])
   TestCase test_case;
   gchar *test_name;
 
-#if !GLIB_CHECK_VERSION (2, 35, 1)
-  g_type_init ();
-#endif
   g_test_init (&argc, &argv, NULL);
 
   /* GVariant to JSON */
-  for (i = 0; i < sizeof (test_cases) / sizeof (TestCase); i++)
+  for (i = 0; i < G_N_ELEMENTS (two_way_test_cases); i++)
     {
-      test_case = test_cases[i];
+      test_case = two_way_test_cases[i];
       test_name = g_strdup_printf ("/gvariant/to-json/%s", test_case.test_name);
 
-      g_test_add_data_func (test_name, &test_cases[i], test_gvariant_to_json);
+      g_test_add_data_func (test_name, &two_way_test_cases[i], test_gvariant_to_json);
 
       g_free (test_name);
     }
 
   /* JSON to GVariant */
-  for (i = 0; i < sizeof (test_cases) / sizeof (TestCase); i++)
+  for (i = 0; i < G_N_ELEMENTS (two_way_test_cases); i++)
     {
-      test_case = test_cases[i];
+      test_case = two_way_test_cases[i];
       test_name = g_strdup_printf ("/gvariant/from-json/%s", test_case.test_name);
 
-      g_test_add_data_func (test_name, &test_cases[i], test_json_to_gvariant);
+      g_test_add_data_func (test_name, &two_way_test_cases[i], test_json_to_gvariant);
+
+      g_free (test_name);
+    }
+
+  /* JSON to GVariant one way tests */
+  for (i = 0; i < G_N_ELEMENTS (json_to_gvariant_test_cases); i++)
+    {
+      test_case = json_to_gvariant_test_cases[i];
+      test_name = g_strdup_printf ("/gvariant/from-json/%s", test_case.test_name);
+
+      g_test_add_data_func (test_name, &json_to_gvariant_test_cases[i], test_json_to_gvariant);
 
       g_free (test_name);
     }

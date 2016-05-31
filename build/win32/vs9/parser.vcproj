@@ -22,7 +22,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets=".\json-glib.vsprops"
+			InheritedPropertySheets=".\json-glib-build-defines.vsprops"
 			CharacterSet="2"
 			>
 			<Tool
@@ -32,7 +32,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="_DEBUG;TESTS_DATA_DIR=&quot;\&quot;./\&quot;&quot;"
+				PreprocessorDefinitions="_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -60,14 +60,14 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
-			InheritedPropertySheets=".\json-glib.vsprops"
+			InheritedPropertySheets=".\json-glib-build-defines.vsprops"
 			ConfigurationType="1"
 			CharacterSet="2"
 			>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="_DEBUG;TESTS_DATA_DIR=&quot;\&quot;./\&quot;&quot;"
+				PreprocessorDefinitions="_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -87,7 +87,7 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets=".\json-glib.vsprops"
+			InheritedPropertySheets=".\json-glib-build-defines.vsprops"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
@@ -100,7 +100,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="TESTS_DATA_DIR=&quot;\&quot;./\&quot;&quot;"
+				PreprocessorDefinitions=""
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -121,14 +121,14 @@
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			InheritedPropertySheets=".\json-glib.vsprops"
+			InheritedPropertySheets=".\json-glib-build-defines.vsprops"
 			ConfigurationType="1"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="TESTS_DATA_DIR=&quot;\&quot;./\&quot;&quot;"
+				PreprocessorDefinitions=""
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"

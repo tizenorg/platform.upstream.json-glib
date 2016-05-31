@@ -21,8 +21,8 @@
  * SECTION:json-gobject
  * @short_description: Serialize and deserialize GObjects
  *
- * JSON-GLib provides API for serializing and deserializing #GObject<!-- -->s
- * to and from JSON data streams.
+ * JSON-GLib provides API for serializing and deserializing #GObject
+ * instances to and from JSON data streams.
  *
  * Simple #GObject classes can be (de)serialized into JSON objects, if the
  * properties have compatible types with the native JSON types (integers,
@@ -32,9 +32,7 @@
  * and its virtual functions.
  */
 
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
 #include <string.h>
 #include <stdlib.h>
@@ -534,11 +532,7 @@ json_deserialize_pspec (GValue     *value,
         case G_TYPE_CHAR:
 	  if (G_VALUE_HOLDS (&node_value, G_TYPE_INT64))
 	    {
-#if GLIB_CHECK_VERSION (2, 31, 0)
 	      g_value_set_schar (value, (gchar) g_value_get_int64 (&node_value));
-#else
-              g_value_set_char (value, (gchar) g_value_get_int64 (&node_value));
-#endif
 	      retval = TRUE;
 	    }
           break;
@@ -555,6 +549,30 @@ json_deserialize_pspec (GValue     *value,
 	  if (G_VALUE_HOLDS (&node_value, G_TYPE_INT64))
 	    {
 	      g_value_set_uchar (value, (guchar) g_value_get_int64 (&node_value));
+	      retval = TRUE;
+	    }
+          break;
+
+        case G_TYPE_LONG:
+	  if (G_VALUE_HOLDS (&node_value, G_TYPE_INT64))
+	    {
+	      g_value_set_long (value, (glong) g_value_get_int64 (&node_value));
+	      retval = TRUE;
+	    }
+          break;
+
+        case G_TYPE_ULONG:
+	  if (G_VALUE_HOLDS (&node_value, G_TYPE_INT64))
+	    {
+	      g_value_set_ulong (value, (gulong) g_value_get_int64 (&node_value));
+	      retval = TRUE;
+	    }
+          break;
+
+        case G_TYPE_UINT64:
+	  if (G_VALUE_HOLDS (&node_value, G_TYPE_INT64))
+	    {
+	      g_value_set_uint64 (value, (guint64) g_value_get_int64 (&node_value));
 	      retval = TRUE;
 	    }
           break;
@@ -701,17 +719,17 @@ json_serialize_pspec (const GValue *real_value,
       retval = json_node_init_int (json_node_alloc (), g_value_get_ulong (real_value));
       break;
 
+    case G_TYPE_UINT64:
+      retval = json_node_init_int (json_node_alloc (), g_value_get_uint64 (real_value));
+      break;
+
     case G_TYPE_FLOAT:
       retval = json_node_init_double (json_node_alloc (), g_value_get_float (real_value));
       break;
 
     case G_TYPE_CHAR:
       retval = json_node_alloc ();
-#if GLIB_CHECK_VERSION (2, 31, 0)
       json_node_init_int (retval, g_value_get_schar (real_value));
-#else
-      json_node_init_int (retval, g_value_get_char (real_value));
-#endif
       break;
 
     case G_TYPE_UCHAR:
@@ -821,7 +839,7 @@ json_gobject_deserialize (GType     gtype,
  * map to a property of the #GObject
  *
  * Return value: (transfer full): the newly created #JsonNode
- *   of type %JSON_NODE_OBJECT. Use json_node_free() to free
+ *   of type %JSON_NODE_OBJECT. Use json_node_unref() to free
  *   the resources allocated by this function
  *
  * Since: 0.10
@@ -994,7 +1012,7 @@ json_gobject_to_data (GObject *gobject,
   data = json_generator_to_data (gen, length);
   g_object_unref (gen);
 
-  json_node_free (root);
+  json_node_unref (root);
 
   return data;
 }

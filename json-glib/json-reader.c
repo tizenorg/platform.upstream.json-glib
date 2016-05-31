@@ -33,27 +33,24 @@
  * called, e.g.:
  *
  * |[
- * /&ast; ask for the 7th element; if the element does not exist, the
- *  &ast; reader will be put in an error state
- *  &ast;/
+ * // ask for the 7th element; if the element does not exist, the
+ * // reader will be put in an error state
  * json_reader_read_element (reader, 6);
  *
- * /&ast; in case of error, this will return NULL, otherwise it will
- *  &ast; return the value of the element
- *  &ast;/
+ * // in case of error, this will return NULL, otherwise it will
+ * // return the value of the element
  * str = json_reader_get_string_value (value);
  *
- * /&ast; this function resets the error state if any was set &ast;/
+ * // this function resets the error state if any was set
  * json_reader_end_element (reader);
  * ]|
  *
  * If you want to detect the error state as soon as possible, you can use
  * json_reader_get_error():
  *
- * |[
- * /&ast; like the example above, but in this case we print out the
- *  &ast; error immediately
- *  &ast;/
+ * |[<!-- language="C" -->
+ * // like the example above, but in this case we print out the
+ * // error immediately
  * if (!json_reader_read_element (reader, 6))
  *   {
  *     const GError *error = json_reader_get_error (reader);
@@ -64,18 +61,14 @@
  * #JsonReader is available since JSON-GLib 0.12.
  */
 
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
 #include <string.h>
 
 #include <glib/gi18n-lib.h>
 
 #include "json-reader.h"
-
 #include "json-types-private.h"
-
 #include "json-debug.h"
 
 #define json_reader_return_if_error_set(r)      G_STMT_START {  \
@@ -93,7 +86,8 @@ struct _JsonReaderPrivate
   JsonNode *current_node;
   JsonNode *previous_node;
 
-  gchar *current_member;
+  /* Stack of member names. */
+  GPtrArray *members;
 
   GError *error;
 };
@@ -109,7 +103,9 @@ enum
 
 static GParamSpec *reader_properties[PROP_LAST] = { NULL, };
 
-G_DEFINE_TYPE (JsonReader, json_reader, G_TYPE_OBJECT);
+G_DEFINE_TYPE_WITH_PRIVATE (JsonReader, json_reader, G_TYPE_OBJECT)
+
+G_DEFINE_QUARK (json-reader-error-quark, json_reader_error)
 
 static void
 json_reader_finalize (GObject *gobject)
@@ -117,12 +113,13 @@ json_reader_finalize (GObject *gobject)
   JsonReaderPrivate *priv = JSON_READER (gobject)->priv;
 
   if (priv->root != NULL)
-    json_node_free (priv->root);
+    json_node_unref (priv->root);
 
   if (priv->error != NULL)
     g_clear_error (&priv->error);
 
-  g_free (priv->current_member);
+  if (priv->members != NULL)
+    g_ptr_array_unref (priv->members);
 
   G_OBJECT_CLASS (json_reader_parent_class)->finalize (gobject);
 }
@@ -168,8 +165,6 @@ json_reader_class_init (JsonReaderClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
-  g_type_class_add_private (klass, sizeof (JsonReaderPrivate));
-
   /**
    * JsonReader:root:
    *
@@ -195,14 +190,8 @@ json_reader_class_init (JsonReaderClass *klass)
 static void
 json_reader_init (JsonReader *self)
 {
-  self->priv = G_TYPE_INSTANCE_GET_PRIVATE (self, JSON_TYPE_READER,
-                                            JsonReaderPrivate);
-}
-
-GQuark
-json_reader_error_quark (void)
-{
-  return g_quark_from_static_string ("json-reader-error");
+  self->priv = json_reader_get_instance_private (self);
+  self->priv->members = g_ptr_array_new_with_free_func (g_free);
 }
 
 /**
@@ -228,12 +217,18 @@ json_reader_new (JsonNode *node)
  * @reader: a #JsonReader
  *
  * Unsets the error state of @reader, if set
+ *
+ * Return value: TRUE if an error was set.
  */
-static inline void
+static inline gboolean
 json_reader_unset_error (JsonReader *reader)
 {
   if (reader->priv->error != NULL)
-    g_clear_error (&(reader->priv->error));
+    {
+      g_clear_error (&(reader->priv->error));
+      return TRUE;
+    }
+  return FALSE;
 }
 
 /**
@@ -263,7 +258,7 @@ json_reader_set_root (JsonReader *reader,
 
   if (priv->root != NULL)
     {
-      json_node_free (priv->root);
+      json_node_unref (priv->root);
       priv->root = NULL;
       priv->current_node = NULL;
       priv->previous_node = NULL;
@@ -332,7 +327,7 @@ json_reader_set_error (JsonReader      *reader,
 const GError *
 json_reader_get_error (JsonReader *reader)
 {
-  g_return_val_if_fail (JSON_IS_READER (reader), FALSE);
+  g_return_val_if_fail (JSON_IS_READER (reader), NULL);
 
   return reader->priv->error;
 }
@@ -438,7 +433,21 @@ json_reader_is_value (JsonReader *reader)
  *
  * If @reader is not currently on an array or an object, or if the @index_ is
  * bigger than the size of the array or the object, the #JsonReader will be
- * put in an error state until json_reader_end_element() is called.
+ * put in an error state until json_reader_end_element() is called. This means
+ * that if used conditionally, json_reader_end_element() must be called on both
+ * code paths:
+ *
+ * |[
+ * if (!json_reader_read_element (reader, 1))
+ *   {
+ *     json_reader_end_element (reader);
+ *     g_set_error (error, …);
+ *     return FALSE;
+ *   }
+ *
+ * str_value = json_reader_get_string_value (reader);
+ * json_reader_end_element (reader);
+ * ]|
  *
  * Return value: %TRUE on success, and %FALSE otherwise
  *
@@ -495,13 +504,12 @@ json_reader_read_element (JsonReader *reader,
                                         index_);
 
         priv->previous_node = priv->current_node;
-        g_free (priv->current_member);
 
         members = json_object_get_members (object);
         name = g_list_nth_data (members, index_);
 
         priv->current_node = json_object_get_member (object, name);
-        priv->current_member = g_strdup (name);
+        g_ptr_array_add (priv->members, g_strdup (name));
 
         g_list_free (members);
       }
@@ -534,7 +542,8 @@ json_reader_end_element (JsonReader *reader)
 
   g_return_if_fail (JSON_IS_READER (reader));
 
-  json_reader_unset_error (reader);
+  if (json_reader_unset_error (reader))
+    return;
 
   priv = reader->priv;
 
@@ -543,8 +552,8 @@ json_reader_end_element (JsonReader *reader)
   else
     tmp = NULL;
 
-  g_free (priv->current_member);
-  priv->current_member = NULL;
+  if (json_node_get_node_type (priv->previous_node) == JSON_NODE_OBJECT)
+    g_ptr_array_remove_index (priv->members, priv->members->len - 1);
 
   priv->current_node = priv->previous_node;
   priv->previous_node = tmp;
@@ -611,16 +620,29 @@ json_reader_count_elements (JsonReader *reader)
  * |[
  * json_reader_read_member (reader, "author");
  * author = json_reader_get_string_value (reader);
- * json_reader_end_element (reader);
+ * json_reader_end_member (reader);
  *
- * json_reader_read_element (reader, "title");
+ * json_reader_read_member (reader, "title");
  * title = json_reader_get_string_value (reader);
- * json_reader_end_element (reader);
+ * json_reader_end_member (reader);
  * ]|
  *
  * If @reader is not currently on an object, or if the @member_name is not
  * defined in the object, the #JsonReader will be put in an error state until
- * json_reader_end_member() is called.
+ * json_reader_end_member() is called. This means that if used conditionally,
+ * json_reader_end_member() must be called on both code paths:
+ *
+ * |[
+ * if (!json_reader_read_member (reader, "title"))
+ *   {
+ *     json_reader_end_member (reader);
+ *     g_set_error (error, …);
+ *     return FALSE;
+ *   }
+ *
+ * str_value = json_reader_get_string_value (reader);
+ * json_reader_end_member (reader);
+ * ]|
  *
  * Return value: %TRUE on success, and %FALSE otherwise
  *
@@ -655,11 +677,9 @@ json_reader_read_member (JsonReader  *reader,
                                     "object at the current position."),
                                   member_name);
 
-  g_free (priv->current_member);
-
   priv->previous_node = priv->current_node;
   priv->current_node = json_object_get_member (object, member_name);
-  priv->current_member = g_strdup (member_name);
+  g_ptr_array_add (priv->members, g_strdup (member_name));
 
   return TRUE;
 }
@@ -683,7 +703,8 @@ json_reader_end_member (JsonReader *reader)
 
   g_return_if_fail (JSON_IS_READER (reader));
 
-  json_reader_unset_error (reader);
+  if (json_reader_unset_error (reader))
+    return;
 
   priv = reader->priv;
 
@@ -692,8 +713,7 @@ json_reader_end_member (JsonReader *reader)
   else
     tmp = NULL;
 
-  g_free (priv->current_member);
-  priv->current_member = NULL;
+  g_ptr_array_remove_index (priv->members, priv->members->len - 1);
 
   priv->current_node = priv->previous_node;
   priv->previous_node = tmp;
@@ -1038,8 +1058,12 @@ json_reader_get_member_name (JsonReader *reader)
     {
       json_reader_set_error (reader, JSON_READER_ERROR_INVALID_NODE,
                              _("No node available at the current position"));
-      return FALSE;
+      return NULL;
     }
 
-  return reader->priv->current_member;
+  if (reader->priv->members->len == 0)
+    return NULL;
+
+  return g_ptr_array_index (reader->priv->members,
+                            reader->priv->members->len - 1);
 }

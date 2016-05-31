@@ -1,3 +1,2625 @@
+commit 19f5626b70e72a81dae7ee11b4c3a4d75779a7be
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 22 16:14:19 2016 +0000
+
+    Release JSON-GLib 1.2.0 (stable)
+
+ configure.ac | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit ae32d238ee2479002d07d7b5b19a482dc31e7ffd
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 22 16:01:46 2016 +0000
+
+    node: Turn a g_debug() call into a JSON_NOTE
+    
+    This allows conditional compilation, and it makes the debugging code
+    consistent.
+
+ json-glib/json-node.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+commit b659345f0fbf08053ae7087c7c2eb25905e61cf3
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 22 16:01:25 2016 +0000
+
+    debug: Add flag for debugging nodes
+
+ json-glib/json-debug.c | 3 ++-
+ json-glib/json-debug.h | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit 14fa35ca93b1e553c2f50df5527bb17fb84d69d1
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 1 18:59:31 2016 +0000
+
+    Post-release version bump to 1.1.3
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 83965c9474dcd35da6bffaa00f0e715986e70d74
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 1 16:16:05 2016 +0000
+
+    Release JSON-GLib 1.1.2 (snapshot)
+
+ NEWS         | 15 +++++++++++++++
+ configure.ac |  2 +-
+ 2 files changed, 16 insertions(+), 1 deletion(-)
+
+commit f0dfe4f84c924953585db3d53c568cfe7813226a
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 1 16:18:24 2016 +0000
+
+    build: Update gitignore generation rule
+
+ build/autotools/Makefile.am.gitignore | 29 +++++++++++++----------------
+ 1 file changed, 13 insertions(+), 16 deletions(-)
+
+commit 5e186395aecb256a67a9d06c1749393be681ae38
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 1 16:02:28 2016 +0000
+
+    fixup! docs: Fix the Since tags
+
+ json-glib/json-types.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 438ca10a27f2732173b345a0ca359d1b8f59c2f6
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 1 15:05:13 2016 +0000
+
+    parser: Rename `immutable` bit field
+
+ json-glib/json-parser.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+commit a43a9451b0cf9ebc03c651b5688f0fad56e3bacb
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 1 15:02:19 2016 +0000
+
+    docs: Fix the Since tags
+    
+    The newly added API is available since 1.2.
+
+ json-glib/json-array.c   |  8 ++++----
+ json-glib/json-builder.c |  4 ++--
+ json-glib/json-node.c    | 20 ++++++++++----------
+ json-glib/json-object.c  | 12 ++++++------
+ json-glib/json-parser.c  |  4 ++--
+ json-glib/json-value.c   |  2 +-
+ 6 files changed, 25 insertions(+), 25 deletions(-)
+
+commit 6ddbc94c9888e5ddcd1cbb15845d2f1b5524b3ed
+Author: Philip Withnall <philip.withnall@collabora.co.uk>
+Date:   Tue Mar 1 15:01:07 2016 +0000
+
+    core: Add JSON node, object, array hashes
+    
+    Now that these objects can be marked as immutable, it is possible to
+    calculate and cache hash values for each of them. This allows efficient
+    hash-based deduplication of large numbers of JSON nodes, as needed by
+    Walbottle for JSON test vector generation.
+    
+    To complement the new hash functions, each of JsonNode, JsonValue,
+    JsonObject and JsonArray also now have an equal() comparison method.
+    This compares them structurally and recursively, using the definition of
+    equality from the JSON Schema specification, which seems as good as any
+    other.
+    
+    http://json-schema.org/latest/json-schema-core.html#anchor9
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=756121
+    
+    Signed-off-by: Emmanuele Bassi <ebassi@gnome.org>
+
+ doc/reference/json-glib-sections.txt |  11 ++
+ json-glib/json-array.c               | 104 ++++++++++++++-
+ json-glib/json-node.c                | 245 +++++++++++++++++++++++++++++++++++
+ json-glib/json-object.c              |  99 +++++++++++++-
+ json-glib/json-parser.c              |   8 +-
+ json-glib/json-types-private.h       |   5 +
+ json-glib/json-types.h               |  27 ++++
+ json-glib/json-value.c               |  45 +++++++
+ 8 files changed, 530 insertions(+), 14 deletions(-)
+
+commit 1de237a502ceee96df7091c2df4492b8bc08b2c5
+Author: Philip Withnall <philip.withnall@collabora.co.uk>
+Date:   Sat Nov 7 17:38:22 2015 +0100
+
+    node: Add json_node_ref() and json_node_unref()
+    
+    Add reference counting semantics to JsonNode, in addition to the
+    existing init/unset and alloc/free semantics.
+    
+    json_node_free() must only be used with nodes allocated using
+    json_node_alloc(). json_node_unref() may be used with all nodes (if
+    correctly paired; it may be paired with json_node_alloc()).
+    
+    It is not valid to call json_node_free() on a node whose reference count
+    is not 1.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=756121
+
+ doc/reference/json-glib-sections.txt |   2 +
+ json-glib/json-array.c               |   6 +-
+ json-glib/json-builder.c             |   4 +-
+ json-glib/json-generator.c           |   4 +-
+ json-glib/json-gobject.c             |   4 +-
+ json-glib/json-gvariant.c            |   2 +-
+ json-glib/json-node.c                | 129 ++++++++++++++++++++++++++---------
+ json-glib/json-object.c              |   4 +-
+ json-glib/json-parser.c              |  24 +++----
+ json-glib/json-path.c                |   4 +-
+ json-glib/json-reader.c              |   4 +-
+ json-glib/json-types-private.h       |  13 +++-
+ json-glib/json-types.h               |   5 ++
+ 13 files changed, 141 insertions(+), 64 deletions(-)
+
+commit 58f479b60eb2db4c73605d469d68a8ffd8679327
+Author: Philip Withnall <philip.withnall@collabora.co.uk>
+Date:   Sat Nov 7 14:17:31 2015 +0100
+
+    core: Add immutability support to core objects
+    
+    Add an immutable mode to JsonNode, JsonObject, JsonArray and JsonValue.
+    This is an optional mode which objects enter by calling json_*_seal().
+    It is a one-way transition, which means that we can build and manipulate
+    objects as much as desired, before sealing them and enjoying the
+    benefits of immutable objects: no need to take copies when handling
+    them, persistent hash values (still to be implemented).
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=756121
+
+ doc/reference/json-glib-sections.txt |   8 +
+ json-glib/json-array.c               |  48 ++++++
+ json-glib/json-builder.c             | 106 ++++++++++++
+ json-glib/json-builder.h             |   2 +
+ json-glib/json-node.c                | 127 +++++++++++++-
+ json-glib/json-object.c              |  51 ++++++
+ json-glib/json-parser.c              | 108 ++++++++++++
+ json-glib/json-parser.h              |   2 +
+ json-glib/json-types-private.h       |   7 +
+ json-glib/json-types.h               |  13 ++
+ json-glib/json-value.c               |  23 +++
+ json-glib/tests/node.c               | 320 +++++++++++++++++++++++++++++++++++
+ 12 files changed, 810 insertions(+), 5 deletions(-)
+
+commit a82b93ba60dd0f54660990df86ba0cf7fc74c9a8
+Author: Cédric Valmary <cvalmary@yahoo.fr>
+Date:   Mon Feb 29 19:41:32 2016 +0000
+
+    Updated Occitan translation
+
+ po/oc.po | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 8ff4ca0a807e8bb04081bcf47e7a9951edd70ac9
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon Feb 29 00:31:57 2016 +0000
+
+    format: Silence a compiler warning
+
+ json-glib/json-glib-format.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 130190ed1ca0387b4bc22b15b0e1a910e961c667
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon Feb 29 00:27:59 2016 +0000
+
+    Add autoptr macros
+    
+    GLib can take advantage of the "cleanup" attribute by using a bunch of
+    macro magic. This has been slowly been used across various libraries in
+    the G* stack, so JSON-GLib should provide symbols for the automatic
+    memory management of its types.
+
+ json-glib/json-builder.h   | 4 ++++
+ json-glib/json-generator.h | 4 ++++
+ json-glib/json-parser.h    | 4 ++++
+ json-glib/json-path.h      | 4 ++++
+ json-glib/json-reader.h    | 4 ++++
+ json-glib/json-types.h     | 6 ++++++
+ 6 files changed, 26 insertions(+)
+
+commit a1490d9b6a3a21774d68f085f805d5f7a68b305e
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Feb 25 09:42:54 2016 +0000
+
+    parser: Detect missing commas in arrays
+    
+    Just like we detect trailing commas, we should also detect missing ones
+    to avoid parsing invalid JSON successfully.
+
+ json-glib/json-parser.c   | 15 ++++++++++++++-
+ json-glib/tests/invalid.c | 31 +++++++++++++++++++++++++++++++
+ 2 files changed, 45 insertions(+), 1 deletion(-)
+
+commit c34b3541f9d2cb388bc20fecc9cf412d6ab0716d
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Feb 25 09:41:38 2016 +0000
+
+    parser: Correctly increment the array index counter
+    
+    We pass the counter to the JsonParser::array-element signal, but we
+    never really increment it.
+
+ json-glib/json-parser.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 28c7347150d24383114f06457c3a8d5f5d8eab00
+Author: Philip Withnall <philip.withnall@collabora.co.uk>
+Date:   Sat Nov 7 18:01:54 2015 +0100
+
+    core: Remove atomic operations for reference counting
+    
+    They are not needed — json-glib is not at all thread safe.
+
+ json-glib/json-array.c  | 4 ++--
+ json-glib/json-object.c | 4 ++--
+ json-glib/json-value.c  | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+commit d8720da7ec351e5f15f6ce7baf96434ea42bb111
+Author: Philip Withnall <philip.withnall@collabora.co.uk>
+Date:   Sat Nov 7 15:20:28 2015 +0100
+
+    array: Ensure JsonArray is zero-initialised
+
+ json-glib/json-array.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit db7c76dcdc56ccaaa06051ccde5db808783bef22
+Author: Robert Ancell <robert.ancell@canonical.com>
+Date:   Tue Nov 24 21:15:38 2015 +1300
+
+    Fix code returning FALSE when it should be NULL
+
+ json-glib/json-reader.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit e5c11ba342122981a1e3081eb7f82217a0ebb431
+Author: Philip Withnall <philip.withnall@collabora.co.uk>
+Date:   Thu Nov 19 17:49:47 2015 +0000
+
+    docs: Fix section title
+
+ doc/reference/json-glib-docs.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 1843dd381ebbe6ea62c2d8b91588eb4dab7c5bab
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Fri Nov 13 13:40:13 2015 +0000
+
+    docs: Fix URL of the project page
+
+ README.md | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 3e0985cbb3399af8bece24a2933b9045edcc7a74
+Author: Philip Withnall <philip.withnall@collabora.co.uk>
+Date:   Fri Nov 6 11:23:45 2015 +0100
+
+    types: Tweak dummy padding in JsonObjectIter
+    
+    Use padding which resembles the ABI structure of GHashTableIter so that
+    our struct size is the same as GHashTableIter on all platforms, rather
+    than just on x86_64. This fixes the static assertion failure on i386 and
+    armhf.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=757675
+
+ json-glib/json-types.h | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+commit c0607bee11fae7963d64de6556d2dea84310ca63
+Author: Cédric Valmary <cvalmary@yahoo.fr>
+Date:   Sat Oct 31 09:10:45 2015 +0000
+
+    Updated Occitan translation
+
+ po/oc.po | 201 +++++++++++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 117 insertions(+), 84 deletions(-)
+
+commit d720ff7b5447817933f1af38a7f03d0f7ac0b302
+Author: Daniel Șerbănescu <daniel@serbanescu.dk>
+Date:   Sat Oct 24 19:37:07 2015 +0000
+
+    Added Romanian translation
+
+ po/ro.po | 265 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 265 insertions(+)
+
+commit d231976e240f2244c60df26a1a6600ecb325506a
+Author: Philip Withnall <philip.withnall@collabora.co.uk>
+Date:   Thu Sep 24 11:06:34 2015 +0100
+
+    object: Add JsonObjectIter to ease iteration over JsonObject members
+    
+    This is a stack-allocated iterator object similar to GHashTableIter
+    which allows allocation-free iteration over the members in a JsonObject.
+    
+    It differs from json_object_foreach_member() in the order in which it
+    iterates — for JsonObjectIter the order is undefined.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=755509
+
+ doc/reference/json-glib-sections.txt |  3 ++
+ json-glib/json-object.c              | 71 ++++++++++++++++++++++++++++++++++++
+ json-glib/json-types-private.h       |  9 +++++
+ json-glib/json-types.h               | 26 +++++++++++++
+ json-glib/tests/object.c             | 28 ++++++++++++++
+ 5 files changed, 137 insertions(+)
+
+commit 5185a8f8a58e5b455116eaa8c99c4b4c38a45929
+Author: Iain Lane <iain@orangesquash.org.uk>
+Date:   Fri Oct 2 11:28:38 2015 +0100
+
+    tests/builder: Don't duplicate test names
+    
+    GLib 2.46.0 forbids this and so the testsuite fails.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=755977
+
+ json-glib/tests/builder.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit bfbc0b48e9256473491755766c079f73bee80724
+Author: Philip Withnall <philip.withnall@collabora.co.uk>
+Date:   Tue Sep 1 10:05:23 2015 +0100
+
+    lib: Trivial documentation clarifications
+    
+    Clarify the documentation for json_node_set_object() and
+    json_object_get_array_member().
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=754384
+
+ json-glib/json-node.c   | 4 +++-
+ json-glib/json-object.c | 6 ++++--
+ 2 files changed, 7 insertions(+), 3 deletions(-)
+
+commit 54fedc974f0c0548951454125cd2b2f35528fa67
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Wed Aug 26 19:43:15 2015 +0200
+
+    Updated Polish translation
+
+ po/pl.po | 118 +++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 59 insertions(+), 59 deletions(-)
+
+commit 8fd3660b4bc7e764cc57d11bbba8ef3a0ab2ee7d
+Author: Philip Withnall <philip.withnall@collabora.co.uk>
+Date:   Fri Feb 6 15:10:35 2015 +0000
+
+    reader: Clarify use of json_reader_end_[element|member]() with errors
+    
+    Include an example showing that the end function must be called on both
+    code paths (success and failure) if the reader object is to be used
+    afterwards.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=744100
+
+ json-glib/json-reader.c | 31 +++++++++++++++++++++++++++++--
+ 1 file changed, 29 insertions(+), 2 deletions(-)
+
+commit f7eb50b5b03ee5870e476135bd989cb49d8d44c2
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Aug 18 14:04:05 2015 +0100
+
+    array: Do not create a null node for empty strings
+    
+    The two are fairly different, and JsonObject does not behave this way.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=730803
+
+ json-glib/json-array.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 4c1485acaa0f7267c87a37477f43808924e5aece
+Author: Anders Jonsson <anders.jonsson@norsjovallen.se>
+Date:   Sun Aug 9 21:42:03 2015 +0000
+
+    Updated Swedish translation
+
+ po/sv.po | 89 ++++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 45 insertions(+), 44 deletions(-)
+
+commit 157820c544291512cfde3e224e6b0af0ab2997cb
+Author: Pedro Albuquerque <palbuquerque73@gmail.com>
+Date:   Wed Jul 1 22:01:02 2015 +0000
+
+    Updated Portuguese translation
+
+ po/pt.po | 102 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 53 insertions(+), 49 deletions(-)
+
+commit 3ae9c9e82dc2423b8f6af23ae2b5d08d30f6b575
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Jun 9 12:56:13 2015 +0100
+
+    parser: Port to GTask
+    
+    GSimpleAsyncResult is deprecated in GLib 2.46, so we should drop its
+    use, and simplify the code in the process.
+
+ json-glib/json-parser.c | 180 +++++++++++++++++-------------------------------
+ 1 file changed, 62 insertions(+), 118 deletions(-)
+
+commit 155991af58d451cf8c4ccfaed432a959f1687b1c
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Jun 9 12:29:06 2015 +0100
+
+    docs: Add 1.2 symbols index
+
+ doc/reference/json-glib-docs.xml | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+commit fd443041b5243dbb5748ce132c5c14b1c52f23fa
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Jun 9 12:28:57 2015 +0100
+
+    docs: Add missing symbols
+
+ doc/reference/json-glib-sections.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+commit b6546a62362bafcb0aa2d97175a15c4218cc6023
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Jun 9 12:23:12 2015 +0100
+
+    Add simple JSON/string utilities
+    
+    Wrap JsonParser and JsonGenerator in simple, easy to call functions that
+    manage the objects for you.
+
+ doc/reference/json-glib-docs.xml     |   5 ++
+ doc/reference/json-glib-sections.txt |   6 ++
+ json-glib/Makefile.am                |   2 +
+ json-glib/json-glib.h                |   1 +
+ json-glib/json-utils.c               | 103 +++++++++++++++++++++++++++++++++++
+ json-glib/json-utils.h               |  40 ++++++++++++++
+ json-glib/json-version-macros.h      |  16 ++++++
+ 7 files changed, 173 insertions(+)
+
+commit 445a787757eb08afeee61a6c5fdbd6622c43d0af
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Jun 9 12:24:15 2015 +0100
+
+    Bump up version to 1.1.1
+    
+    New development cycle, for new API.
+
+ configure.ac | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit b3b996bbdf704bb7488493a8262aff3dc282d496
+Author: Cédric Valmary <cvalmary@yahoo.fr>
+Date:   Thu May 21 17:12:58 2015 +0000
+
+    Added Occitan translation
+
+ po/oc.po | 235 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 235 insertions(+)
+
+commit a7b081b736e632405b36e34bbd01040bde115f92
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sun Mar 15 17:52:28 2015 +0000
+
+    Post-release version bump to 1.0.5
+
+ configure.ac | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit c7bbaf2a3f3e07d9d4e48591e765f388541ecd7f
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sun Mar 15 17:45:44 2015 +0000
+
+    Release JSON-GLib 1.0.4
+
+ configure.ac | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 52cf02caa0db2eee99c3a1145319eea5806b2977
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sun Mar 15 17:42:58 2015 +0000
+
+    build: Enable subdir-objects
+    
+    We need to remove the path specification inside the sources listing, and
+    modify the enumeration type and marshallers generation rules to cope
+    with it (by adding the $(srcdir) when needed). This is similar to the
+    changes there were made to Clutter.
+
+ .gitignore                          |  1 +
+ build/autotools/Makefile.am.enums   | 29 +++++++++------
+ build/autotools/Makefile.am.marshal | 17 ++++++---
+ configure.ac                        |  2 +-
+ json-glib/Makefile.am               | 70 ++++++++++++++++++-------------------
+ 5 files changed, 68 insertions(+), 51 deletions(-)
+
+commit efecd1214580eb2835f99b8d231b126ee6cafa21
+Author: Samir Ribic <samir.ribic@etf.unsa.ba>
+Date:   Fri Mar 13 21:01:51 2015 +0000
+
+    Added Bosnian translation
+
+ po/bs.po | 252 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 252 insertions(+)
+
+commit 0f4a21d03a16ddd4cf052b9b2230ec004d05d430
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Fri Mar 13 13:43:59 2015 +0000
+
+    build: Enable gtkdoc-check
+    
+    We can verify that the documentation is correct and up to date every
+    time we distcheck by turning on the gtk-doc check tool.
+
+ .gitignore                |  3 +++
+ doc/reference/Makefile.am | 24 ++++++++++--------------
+ 2 files changed, 13 insertions(+), 14 deletions(-)
+
+commit 81174fcdd31f3c1d1601b5d9000c154391f14006
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Fri Mar 13 13:41:36 2015 +0000
+
+    build: Clean up gtk-doc stanzas
+    
+    We need to ensure that gtk-doc looks into both the srcdir and the
+    builddir in order to find all annotations.
+    
+    We also don't need to have the .types file under revision control:
+    gtk-doc is perfectly capable of rebuilding it by itself.
+
+ doc/reference/Makefile.am     | 35 ++---------------------------------
+ doc/reference/json-glib.types |  7 -------
+ 2 files changed, 2 insertions(+), 40 deletions(-)
+
+commit c5183b4546ebaceaf77183f259d354488fea5469
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Fri Mar 13 13:40:41 2015 +0000
+
+    docs: Add missing symbol indices
+
+ doc/reference/json-glib-docs.xml | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+commit cd0fee83bfde8ccdf4602094e9f14bcd749a12b0
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Fri Mar 13 13:40:27 2015 +0000
+
+    docs: Add missing annotations
+
+ json-glib/json-serializable.c | 28 ++++++++++++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
+
+commit d82de8274ac1aa03138078f40f99ea1cc8ef3cd0
+Author: Patrick Welche <prlw1@cam.ac.uk>
+Date:   Fri Mar 13 11:07:54 2015 +0000
+
+    configure: test(1) uses = to test for string equality
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=711600
+    https://bugzilla.gnome.org/show_bug.cgi?id=746143
+
+ build/autotools/glibtests.m4 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 5d62e7a6bd5e494f9f80b9ad5f14191e4986c467
+Author: Dušan Kazik <prescott66@gmail.com>
+Date:   Mon Mar 9 17:35:36 2015 +0000
+
+    Updated Slovak translation
+
+ po/sk.po | 174 ++++++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 138 insertions(+), 36 deletions(-)
+
+commit 88178ad0c2befc61e8771875f1f7fc2807c075ce
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Mar 6 16:23:53 2015 +0800
+
+    MSVC Builds: Rename "Install" Projects
+    
+    Rename the install projects as json-glib-install, so that it would be
+    easier for one to integrate the project set in a grand solution that can be
+    used to build the entire stack, such as for Clutter.
+
+ build/win32/vs10/Makefile.am               |   2 +-
+ build/win32/vs10/install.vcxproj           | 110 -----------------------------
+ build/win32/vs10/json-glib-install.vcxproj | 110 +++++++++++++++++++++++++++++
+ build/win32/vs10/json-glib.sln             |   2 +-
+ build/win32/vs9/Makefile.am                |   2 +-
+ build/win32/vs9/install.vcproj             |  77 --------------------
+ build/win32/vs9/json-glib-install.vcproj   |  77 ++++++++++++++++++++
+ build/win32/vs9/json-glib.sln              |   2 +-
+ 8 files changed, 191 insertions(+), 191 deletions(-)
+
+commit 5332e0e3ad2ee0d03787569ddcf5cadb608ece23
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Mar 6 16:15:25 2015 +0800
+
+    MSVC Builds: "Install" the .pdb Files
+    
+    "Install" the .pdb files for the json-glib DLL and the tools to ease
+    debugging people developing or using json-glib, as the .pdb files are
+    already generated for all builds.
+
+ build/win32/vs10/json-glib-install.props  | 5 +++--
+ build/win32/vs9/json-glib-install.vsprops | 5 +++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
+
+commit ed05b1c8f0352b22e4a726526d4155f2dc6ac7f6
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Mar 6 16:12:51 2015 +0800
+
+    MSVC 2010 Projects: Clean Up "Installation"
+    
+    The empty lines in the property sheets are not really needed, so remove
+    them.
+
+ build/win32/vs10/json-glib-install.props | 21 ---------------------
+ 1 file changed, 21 deletions(-)
+
+commit c642f6644f82b555b348d3c364efd9961155528d
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Mar 6 16:11:44 2015 +0800
+
+    MSVC Builds: Speed Up Release Builds
+    
+    Use the multiprocessor compilation (/MP) option, which can cut down release
+    build times by quite a bit.  This will emit a brief warning on debug
+    builds, but otherwise the build will proceed as normal.
+    
+    Also use the /d2Zi+ option for MSVC 2010 (and later) builds so that more
+    useful information can be logged to the .pdb files for the release builds.
+
+ build/win32/vs10/json-glib-build-defines.props  | 2 ++
+ build/win32/vs9/json-glib-build-defines.vsprops | 1 +
+ 2 files changed, 3 insertions(+)
+
+commit 80e44db76dd179e4c12d1a11b24f27c7548dc382
+Author: Stef Walter <stefw@redhat.com>
+Date:   Thu Feb 13 22:21:18 2014 +0100
+
+    json-gvariant: Parse json doubles that are whole numbers
+    
+    The json gvariant serializer encodes whole number doubles without
+    a dot. The deserializer needs to be able to parse these as well.
+    
+    Fix problem, and add test cases.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=724319
+
+ json-glib/json-gvariant.c  | 6 +++++-
+ json-glib/tests/gvariant.c | 4 ++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
+
+commit aee569b0bc2542aa8f1d13d66ddadacbda1035ac
+Author: Philip Withnall <philip.withnall@collabora.co.uk>
+Date:   Sun Jan 25 11:47:23 2015 +0000
+
+    builder: Add missing (transfer) annotation to json_builder_add_value()
+    
+    Document and annotate the fact that json_builder_add_value() takes
+    ownership of the JsonNode passed in to it.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=743475
+
+ json-glib/json-builder.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit 1f6668a9534c01523361075dad290c0dc49d7623
+Author: Philip Withnall <philip@tecnocode.co.uk>
+Date:   Sat Dec 20 23:22:09 2014 +0000
+
+    reader: Maintain a stack of member names
+    
+    This fixes the case where, with nested objects, we call:
+        json_reader_read_member (reader, "outer");
+        // json_reader_get_member_name (reader) == "outer"
+    
+        json_reader_read_member (reader, "inner");
+        // json_reader_get_member_name (reader) == "inner"
+        // do something useful
+        json_reader_end_member (reader);
+    but at the end, the following assertion no longer holds:
+        // json_reader_get_member_name (reader) == "outer"
+    even though the JsonReader state should have been reset after ending the
+    inner node.
+    
+    Fix it by maintaining a stack of member names. This works with both
+    json_reader_read_member() and json_reader_read_element(). Updates to the
+    unit tests are included.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=741824
+
+ json-glib/json-reader.c  | 29 ++++++++++++++++-------------
+ json-glib/tests/reader.c | 13 +++++++++++++
+ 2 files changed, 29 insertions(+), 13 deletions(-)
+
+commit 23e69e79484d41c722ab8bcab78fe850b960316e
+Author: Tristan Van Berkom <tristan@upstairslabs.com>
+Date:   Sun Mar 9 17:59:02 2014 +0900
+
+    Handle serialization/deserialization of glong gulong and guint64
+    
+    Long and unsigned long was properly serialized but not deserialized, guint64
+    handling is not ideal as the type is cast into a gint64, however this is
+    better than not handling the fundamental type at all.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=725972
+
+ json-glib/json-gobject.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+commit c183513e82e20e7f77821e6a667bf12dfa0b8b20
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Fri Jul 25 10:05:21 2014 +0100
+
+    Drop unnecessary '_' prefix from json_marshal
+    
+    It's not public API anyway, and we use annotations instead of the '_'
+    prefix.
+
+ json-glib/Makefile.am   |  2 +-
+ json-glib/json-parser.c | 18 +++++++++---------
+ 2 files changed, 10 insertions(+), 10 deletions(-)
+
+commit 2779d537492f1902d71cf648631238110b62b311
+Author: Yaşar Şentürk <yasarix@gmail.com>
+Date:   Thu Dec 4 21:37:26 2014 +0000
+
+    Updated Turkish translation
+
+ po/tr.po | 205 ++++++++++++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 152 insertions(+), 53 deletions(-)
+
+commit 4ccb9ab6119b81dde81b04208b98c89fc3a7884c
+Author: Sebastian Rasmussen <sebras@gmail.com>
+Date:   Thu Sep 18 20:13:42 2014 +0000
+
+    Updated Swedish translation
+
+ po/sv.po | 261 +++++++++++++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 177 insertions(+), 84 deletions(-)
+
+commit 88a3adda5238177084998b734cc0d2f3f8237f38
+Author: ngoswami <ngoswami@redhat.com>
+Date:   Wed Aug 20 07:49:49 2014 +0000
+
+    Updated Assamese translation
+
+ po/as.po | 180 +++++++++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 140 insertions(+), 40 deletions(-)
+
+commit 5b8fa1bcd8c16e638369db78783feca5fb9fe188
+Author: Wolfgang Stöggl <c72578@yahoo.de>
+Date:   Thu Aug 14 22:20:11 2014 +0000
+
+    Updated German translation
+
+ po/de.po | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+commit 47816385fa7e1f35580b50268e8de38fa22e44d6
+Author: Olav Vitters <olav@vitters.nl>
+Date:   Wed Jul 30 20:24:44 2014 +0200
+
+    doap category core
+
+ json-glib.doap | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit cfc576eb1a22c7ab213e26bba7716534109884fe
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Fri Jul 25 09:12:00 2014 +0100
+
+    Clean up the enumeration type template
+
+ json-glib/json-enum-types.c.in | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 415c75677544df6aa4929c851f44a412ea39b7b4
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Fri Jul 25 09:10:52 2014 +0100
+
+    Include "config.h" in the enum types template
+    
+    Expands the symbol annotation correctly.
+
+ json-glib/json-enum-types.c.in | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 2eab41a368620c28bb3c4f9fd0e1a20b2cfdce95
+Author: Tom Tryfonidis <tomtryf@gmail.com>
+Date:   Wed Jul 9 23:21:14 2014 +0000
+
+    Updated Greek translation
+
+ po/el.po | 80 ++++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 40 insertions(+), 40 deletions(-)
+
+commit e1141c9ea04a9f11b60d5278693edb819bcac7d9
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Mon Jun 9 18:29:01 2014 +0800
+
+    MSVC 2010+ Projects: Update "Installation" Process
+    
+    Currently, due to the way that Visual Studio 2010+ projects are handled,
+    the "install" project does not re-build upon changes to the sources, as it
+    does not believe that its dependencies have changed, although the changed
+    sources are automatically recompiled.  This means that if a part or more
+    of the solution does not build, or if the sources need some other fixes
+    or enhancements, the up-to-date build is not copied automatically, which
+    can be misleading.
+    
+    Improve on the situation by forcing the "install" project to trigger its
+    rebuild, so that the updated binaries can be copied.  This does trigger an
+    MSBuild warning, but having that warning is way better than not having an
+    up-to-date build, especially during testing and development.
+
+ build/win32/vs10/install.vcxproj         | 28 ++++++++++++++++------------
+ build/win32/vs10/json-glib-install.props | 20 ++++++++++++++++----
+ 2 files changed, 32 insertions(+), 16 deletions(-)
+
+commit a86c22b452afd1dc14916508b9303b7dcce71eff
+Author: Gil Forcada <gforcada@gnome.org>
+Date:   Tue Jun 3 00:49:01 2014 +0200
+
+    [l10n] Update Catalan translation
+
+ po/ca.po | 176 +++++++++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 139 insertions(+), 37 deletions(-)
+
+commit 298a6f389d376b37f231966affad544b06a06be2
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu May 29 10:06:13 2014 +0100
+
+    Post-release version bump to 1.0.3
+
+ configure.ac | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 82d10baa19383f22b3b8022b01be4ae1b08c968a
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu May 29 10:04:39 2014 +0100
+
+    Release JSON-GLib 1.0.2
+
+ configure.ac | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit bdb27fb70a831e14d569aaff9d7c452978da2236
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu May 29 09:52:03 2014 +0100
+
+    build: Include enum-types.[ch] in the introspection sources
+    
+    Otherwise g-ir-scanner won't pick the types up, and will not notice that
+    the error enumerations have an associated error domain.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=730917
+
+ json-glib/Makefile.am | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+commit 8bbc873dccb0426ce7e2ad0974b1397506454674
+Author: Stef Walter <stefw@redhat.com>
+Date:   Wed May 21 12:14:57 2014 +0200
+
+    generator: Add tests for updated string escaping routine
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=730425
+
+ json-glib/tests/generator.c | 47 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
+
+commit f2ee9a7e205abe5050fba37fa65aceceeb243898
+Author: Stef Walter <stefw@redhat.com>
+Date:   Tue May 20 10:49:02 2014 +0200
+
+    generator: Escape the control characters correctly
+    
+    Escaping these as octals is out of the JSON spec completely,
+    so roll our own string encoder.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=730425
+
+ json-glib/json-generator.c | 73 +++++++++++++++++++++++++++++-----------------
+ 1 file changed, 47 insertions(+), 26 deletions(-)
+
+commit 8f4816a2e05d0d3672d7723df2feaf466632c498
+Author: Stef Walter <stefw@redhat.com>
+Date:   Tue May 20 10:43:29 2014 +0200
+
+    generator: Escape Object key names correctly
+    
+    Also fix empty keys, which are now encoded properly.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=727593
+
+ json-glib/json-generator.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
+
+commit 0898b9c335a21a82d92621e16be1b1038ccc6991
+Author: Christian Kirbach <Christian.Kirbach@gmail.com>
+Date:   Mon Apr 28 17:27:32 2014 +0000
+
+    Updated German translation
+
+ po/de.po | 175 +++++++++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 138 insertions(+), 37 deletions(-)
+
+commit 62d9456c3d78286b662e7f96477617fd78358a18
+Author: Daniel Korostil <ted.korostiled@gmail.com>
+Date:   Mon Apr 21 12:20:32 2014 +0300
+
+    Updated Ukrainian translation
+
+ po/uk.po | 225 +++++++++++++++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 168 insertions(+), 57 deletions(-)
+
+commit 13397eb080fee132a3d227a6b98b73e75364b4f5
+Author: djcb <djcb@djcbsoftware.nl>
+Date:   Mon Apr 7 17:13:47 2014 +0300
+
+    json-parser: use length parameter when validating utf-8
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=727755
+
+ json-glib/json-parser.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit c9de87387f3b2494e4e770fd1d2ffca9ebfdbfe5
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Apr 17 15:30:32 2014 +0100
+
+    tests: Add more checks to the parser stream unit
+
+ json-glib/tests/parser.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
+
+commit e31683d2804916da23d1e48b80b124b37df1c8e6
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Apr 17 15:28:15 2014 +0100
+
+    parser: Use the right length for parsing the stream contents
+    
+    The ByteArray we use to buffer the contents of a stream in order to
+    pass them to the parser may have a bigger length. We should use the
+    cursor position that we use to put a '\0' in the buffer instead. We
+    could also use -1, but this saves us a strlen() later on.
+
+ json-glib/json-parser.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 289e75bd35c5ee268269f09c9e2db90602994fc1
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Mon Apr 7 15:05:40 2014 +0800
+
+    Visual Studio Builds: Fix Installation of Headers
+    
+    json-version-macros.h needs to be installed as well, so fix that.
+
+ build/win32/vs10/json-glib-install.props  | 2 ++
+ build/win32/vs9/json-glib-install.vsprops | 1 +
+ 2 files changed, 3 insertions(+)
+
+commit e645b5a383230ec5233cb0bd389e53e226a4bdd3
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Sun Apr 6 17:46:40 2014 +0200
+
+    doap: update URLs
+
+ json-glib.doap | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit b3e105fa890d4c63708b9cb9d372d9db16a636ff
+Author: Matej Urbančič <mateju@svn.gnome.org>
+Date:   Thu Apr 3 20:37:41 2014 +0200
+
+    Updated Slovenian translation
+
+ po/sl.po | 203 ++++++++++++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 150 insertions(+), 53 deletions(-)
+
+commit 82389b02f8b82eb5b3c37e38498975ebd15697ac
+Author: Inaki Larranaga Murgoitio <dooteo@zundan.com>
+Date:   Thu Apr 3 17:39:19 2014 +0200
+
+    Updated Basque language
+
+ po/eu.po | 184 +++++++++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 144 insertions(+), 40 deletions(-)
+
+commit 18c76eff151fd29213401477c2c4a022eec9c698
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Tue Apr 1 19:40:12 2014 +0800
+
+    Fix MSVC Introspection Build
+    
+    Also substitute $(top_builddir), as it is used for json-version.h during
+    the scanning of the headers and sources.
+
+ build/win32/gen-file-list-jsonglib.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit e0aef7ca7ba0c9d94ffa6e814caee956c139ad23
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 25 11:53:25 2014 +0000
+
+    Post-release version bump to 1.0.1
+
+ configure.ac | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit cb7212b5ee71f18f4023e928884fd55ef54b9327
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 25 11:50:36 2014 +0000
+
+    Release JSON-GLib 1.0.0
+
+ configure.ac | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 19981d54171acff70f8a8987e0731fe1d8dd5d89
+Author: Gábor Kelemen <kelemeng@gnome.hu>
+Date:   Fri Mar 21 17:09:53 2014 +0000
+
+    Updated Hungarian translation
+
+ po/hu.po | 181 +++++++++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 141 insertions(+), 40 deletions(-)
+
+commit bf5295a8b72954bfff5ba89c389f8ace0d913082
+Author: Мирослав Николић <miroslavnikolic@rocketmail.com>
+Date:   Fri Mar 21 04:00:22 2014 +0100
+
+    Updated Serbian translation
+
+ po/sr.po       | 174 +++++++++++++++++++++++++++++++++++++++++++++------------
+ po/sr@latin.po | 174 +++++++++++++++++++++++++++++++++++++++++++++------------
+ 2 files changed, 274 insertions(+), 74 deletions(-)
+
+commit a8c56f54d5f47e35921e50a63e2a59190da13ad0
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Thu Mar 20 10:23:36 2014 +0800
+
+    Visual Studio Builds: Don't Generate .def File
+    
+    The symbols for json-glib is now exported via a visibility-based method,
+    like GLib and GTK+, so do likewise for the Visual Studio builds, by using
+    __declspec(dllexport).  This will also mean that the .def file is no longer
+    needed to export the symbols for json-glib.
+
+ build/win32/config.h.win32.in                |  7 +++++
+ build/win32/vs10/json-glib-gen-srcs.props    |  7 -----
+ build/win32/vs10/json-glib.vcxproj.filtersin |  1 -
+ build/win32/vs10/json-glib.vcxprojin         | 18 -------------
+ build/win32/vs9/json-glib-gen-srcs.vsprops   |  7 -----
+ build/win32/vs9/json-glib.vcprojin           | 38 ----------------------------
+ 6 files changed, 7 insertions(+), 71 deletions(-)
+
+commit b177715f1cb21edf5716a0768d6678096443ad51
+Author: Ask H. Larsen <asklarsen@gmail.com>
+Date:   Wed Mar 19 22:31:43 2014 +0100
+
+    Updated Danish translation
+
+ po/da.po | 171 ++++++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 136 insertions(+), 35 deletions(-)
+
+commit 75f00bf9a9d3326444d77a400ca2d5a0378f8d32
+Author: Duarte Loreto <happyguy_pt@hotmail.com>
+Date:   Tue Mar 18 23:32:42 2014 +0000
+
+    Updated Portuguese translation
+
+ po/pt.po | 179 +++++++++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 140 insertions(+), 39 deletions(-)
+
+commit 7b9d72519777b313d094a0e63a9f138e3fafd54c
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 18 19:22:15 2014 +0000
+
+    build: Resync our copy of introspection.m4
+
+ build/autotools/introspection.m4 | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 5adb54c97fb5a87a609584727285f742cd0e2f09
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 18 18:41:40 2014 +0000
+
+    build: Include $(top_builddir)
+    
+    Fixes compilation in cases where builddir != srcdir.
+
+ json-glib/tests/Makefile.am | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit d3fcd43a73061a64dc5f8b7551c138849a32b719
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 18 18:10:14 2014 +0000
+
+    Remove conditional inclusion of config.h
+    
+    All the platforms and build system we support have a config.h header.
+
+ json-glib/json-array.c        | 2 --
+ json-glib/json-builder.c      | 2 --
+ json-glib/json-debug.c        | 2 --
+ json-glib/json-gboxed.c       | 2 --
+ json-glib/json-generator.c    | 2 --
+ json-glib/json-gobject.c      | 2 --
+ json-glib/json-gvariant.c     | 2 --
+ json-glib/json-node.c         | 2 --
+ json-glib/json-object.c       | 3 ---
+ json-glib/json-parser.c       | 2 --
+ json-glib/json-path.c         | 2 --
+ json-glib/json-reader.c       | 4 ----
+ json-glib/json-scanner.c      | 2 --
+ json-glib/json-serializable.c | 2 --
+ json-glib/json-value.c        | 2 --
+ json-glib/tests/generator.c   | 2 --
+ json-glib/tests/invalid.c     | 2 --
+ json-glib/tests/parser.c      | 2 --
+ 18 files changed, 39 deletions(-)
+
+commit 445b1c4c1efec99ed640c16b92a9b19a87b39082
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Mar 6 15:09:50 2014 +0000
+
+    Add version constants to introspection
+    
+    We need to let g-ir-scanner parse json-version.h.
+
+ json-glib/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit d3095c5f8fe91209cc98e1e2d7e75a8aad1e8d88
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Mar 6 15:09:04 2014 +0000
+
+    Reimplement JSON_VERSION_HEX as a macro call
+    
+    Add a JSON_ENCODE_VERSION macro and use it in JSON_VERSION_HEX.
+
+ doc/reference/json-glib-sections.txt |  1 +
+ json-glib/json-version.h.in          | 12 +++++++-----
+ 2 files changed, 8 insertions(+), 5 deletions(-)
+
+commit 794664746dcbe8894255f9615357dd51f7f836c3
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Mar 6 14:35:49 2014 +0000
+
+    Use compiler annotations to determine symbol visibility
+    
+    Instead of relying on a separate file that requires being update every
+    time we add a new public function we should use compiler annotations to
+    let the linker know which symbols are public and exported.
+    
+    In order to achieve this we have to:
+    
+     * check for the visibility=hidden attribute
+     * add -fvisibility=hidden to the linker flags
+     * add a macro to annotate all public symbols
+    
+    While we're at it, we should copy the versioned symbols macro layout
+    already used by GLib, GTK+, and other G* libraries, including the
+    ability to express the range of allowed versions of JSON-GLib that
+    third party code can compile against.
+
+ configure.ac                         |  31 ++++++
+ doc/reference/json-glib-sections.txt |  16 +++
+ json-glib/Makefile.am                |  47 ++++-----
+ json-glib/abicheck.sh                |   6 --
+ json-glib/json-builder.h             |  15 +++
+ json-glib/json-enum-types.h.in       |   2 +
+ json-glib/json-generator.h           |  13 +++
+ json-glib/json-glib.h                |   1 +
+ json-glib/json-glib.symbols          | 191 -----------------------------------
+ json-glib/json-gobject.h             |  26 ++++-
+ json-glib/json-gvariant.h            |   4 +
+ json-glib/json-parser.h              |  13 ++-
+ json-glib/json-path.h                |   6 ++
+ json-glib/json-reader.h              |  22 ++++
+ json-glib/json-types.h               | 103 +++++++++++++++++--
+ json-glib/json-version-macros.h      | 135 +++++++++++++++++++++++++
+ 16 files changed, 391 insertions(+), 240 deletions(-)
+
+commit 50bf9cd2f6bc9fb21d9793377f0fd534732d215d
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Mar 6 13:58:52 2014 +0000
+
+    docs: Drop the SGML mode
+    
+    The whole documentation is now MarkDown.
+
+ doc/reference/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 20c861f02f8e41cde2dec92f9d63d8266383c26b
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Mar 6 13:58:15 2014 +0000
+
+    docs: Port to MarkDown
+    
+    Drop the DocBook documentation, and move everything to the MarkDown
+    format used by modern gtk-doc.
+
+ json-glib/json-array.c        |   4 +-
+ json-glib/json-builder.c      |   2 +-
+ json-glib/json-builder.h      |   7 +-
+ json-glib/json-gboxed.c       |   2 +-
+ json-glib/json-generator.c    |   9 +-
+ json-glib/json-gobject.c      |   4 +-
+ json-glib/json-gobject.h      |   2 +-
+ json-glib/json-gvariant.c     |  64 ++++------
+ json-glib/json-node.c         |  13 +-
+ json-glib/json-object.c       |   9 +-
+ json-glib/json-path.c         | 268 +++++++++++++++++-------------------------
+ json-glib/json-path.h         |   9 +-
+ json-glib/json-reader.c       |  19 ++-
+ json-glib/json-reader.h       |   7 +-
+ json-glib/json-serializable.c |  10 +-
+ 15 files changed, 181 insertions(+), 248 deletions(-)
+
+commit ff018d7e560278d65a03c4de71c3cf11b22d3167
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Mar 4 18:30:31 2014 +0000
+
+    build: Bump up the requirement for gtk-doc
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 36872776b354d2b4b39f9da8e12dd51e949b6c90
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sun Mar 2 14:26:44 2014 +0000
+
+    scanner: Clean up the UTF-16 surrogate pairs decoding
+    
+    We over-assert() our pre-conditions, and the conversion is a bit
+    obfuscated. We should use a proper function, and de-obfuscate the
+    code so that the intent is clear.
+
+ json-glib/json-scanner.c | 42 ++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 36 insertions(+), 6 deletions(-)
+
+commit 16396ab205a5f9bfe7a68aec436fe916bbbee342
+Author: Seong-ho Cho <darkcircle.0426@gmail.com>
+Date:   Sun Mar 16 22:18:26 2014 +0900
+
+    Updated Korean translation
+
+ po/ko.po | 189 ++++++++++++++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 145 insertions(+), 44 deletions(-)
+
+commit 87804f9cf3d5cb643b1d92ee8b26547158fbf41a
+Author: Claude Paroz <claude@2xlibre.net>
+Date:   Tue Mar 11 22:44:07 2014 +0100
+
+    Updated French translation
+
+ po/fr.po | 185 +++++++++++++++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 139 insertions(+), 46 deletions(-)
+
+commit e2fd54326c3dfa3927c9e78d865ed349b022a7d3
+Author: Yuri Myasoedov <ymyasoedov@yandex.ru>
+Date:   Tue Mar 11 12:23:24 2014 +0400
+
+    Updated Russian translation
+
+ po/ru.po | 75 ++++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 37 insertions(+), 38 deletions(-)
+
+commit fd3ccd2c7c19305d099b98c62ad6c0dae536f6bc
+Author: Rūdolfs Mazurs <rudolfsm@src.gnome.org>
+Date:   Fri Mar 7 16:52:22 2014 +0200
+
+    Updated Latvian translation
+
+ po/lv.po | 170 ++++++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 135 insertions(+), 35 deletions(-)
+
+commit e76f0283c3605fb04fb03e5aee56200c1abece2e
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Thu Mar 6 18:47:47 2014 +0800
+
+    Visual Studio 2010 Projects: Add PlatformToolset Tag
+    
+    This adds a PlatformToolset tag to each configuration so that the projects
+    can be updated to Visual Studio 2012 or 2013 formats quite easily, using
+    Visual Studio's round-tripping feature which actually looks at this tag.
+    
+    This, for example, can be quite easily processed by a script to produce
+    the Visual Studio 2012 and 2013 projects.
+
+ build/win32/vs10/array.vcxproj              | 4 ++++
+ build/win32/vs10/boxed.vcxproj              | 4 ++++
+ build/win32/vs10/builder.vcxproj            | 4 ++++
+ build/win32/vs10/generator.vcxproj          | 4 ++++
+ build/win32/vs10/gvariant.vcxproj           | 4 ++++
+ build/win32/vs10/install.vcxproj            | 4 ++++
+ build/win32/vs10/invalid.vcxproj            | 4 ++++
+ build/win32/vs10/json-glib-format.vcxproj   | 4 ++++
+ build/win32/vs10/json-glib-validate.vcxproj | 4 ++++
+ build/win32/vs10/json-glib.vcxprojin        | 4 ++++
+ build/win32/vs10/node.vcxproj               | 4 ++++
+ build/win32/vs10/object.vcxproj             | 4 ++++
+ build/win32/vs10/parser.vcxproj             | 4 ++++
+ build/win32/vs10/path.vcxproj               | 4 ++++
+ build/win32/vs10/reader.vcxproj             | 4 ++++
+ build/win32/vs10/serialize-complex.vcxproj  | 4 ++++
+ build/win32/vs10/serialize-full.vcxproj     | 4 ++++
+ build/win32/vs10/serialize-simple.vcxproj   | 4 ++++
+ 18 files changed, 72 insertions(+)
+
+commit da66fd86764d12640ad2d53a869c77df31f5bd82
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Mon Mar 3 01:05:53 2014 +0100
+
+    Updated Polish translation
+
+ po/pl.po | 169 ++++++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 135 insertions(+), 34 deletions(-)
+
+commit a4d731db0780a87304c98be412d72d615b277592
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Tue Feb 25 13:09:32 2014 +0800
+
+    MSVC Builds: Update Introspection Build Process
+    
+    GObject-Introspection was recently changed to support acquiring the name of
+    the DLL from a library (.lib, etc) that was passed into g-ir-scanner on
+    Windows, like the *nix builds, instead of directly passing in the name of
+    the DLL.
+    
+    This updates the introspection build process, so that introspection files
+    for JSON-GLib can continue to be properly built.
+
+ build/win32/json-glib-introspection-msvc.mak | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
+
+commit 9dc47a1f4e66f871e435675ebe09b554b9fc9e8c
+Author: Sphinx Jiang <yishanj13@gmail.com>
+Date:   Sat Feb 22 01:28:27 2014 +0000
+
+    Updated Chinese (China) translation
+
+ po/zh_CN.po | 113 +++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 58 insertions(+), 55 deletions(-)
+
+commit 843b41e885c2528cb6f146f415a50582c07eaef6
+Author: Aurimas Černius <aurisc4@gmail.com>
+Date:   Fri Feb 21 23:18:30 2014 +0200
+
+    Updated Lithuanian translation
+
+ po/lt.po | 103 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 56 insertions(+), 47 deletions(-)
+
+commit d8de1631c41333ba72a11658a2102bb42fb15d09
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Fri Feb 14 17:56:10 2014 +0000
+
+    Add missing annotations
+    
+    JsonNode, JsonObject, and JsonArray have various constructors, so we
+    need to annotate them.
+
+ json-glib/json-array.c  | 10 +++++-----
+ json-glib/json-node.c   |  2 +-
+ json-glib/json-object.c |  6 +++---
+ 3 files changed, 9 insertions(+), 9 deletions(-)
+
+commit 4726ccc490a30aeff95b7c01fc6c44dbce36a7f4
+Author: Kjartan Maraas <kmaraas@gnome.org>
+Date:   Wed Feb 12 19:47:31 2014 +0100
+
+    Updated Norwegian bokmål translation
+
+ po/nb.po | 167 ++++++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 134 insertions(+), 33 deletions(-)
+
+commit d97be101490a46c72f919d3dc45f4bc06e625e0c
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Feb 7 11:39:29 2014 +0800
+
+    tools: Fix build on Visual Studio
+    
+    As unistd.h is not universally available, don't include it unconditionally
+    and include the corresponding Windows headers where necessary.  Also, use
+    gssize in place of ssize_t and define STDOUT_FILENO on Windows when we
+    don't have unistd.h, which is a constant that is defined in unistd.h.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=723813
+
+ json-glib/json-glib-format.c   | 11 ++++++++++-
+ json-glib/json-glib-validate.c |  2 ++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
+
+commit 0b1397ad168078bf2b588ab413ad921c04aab8a2
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Feb 7 18:55:32 2014 +0800
+
+    MSVC Builds: Rework Introspection Files Build
+    
+    Use a set of NMake Makefiles in place of custom Visual Studio Projects to
+    generate the introspection files for JSON-GLib.
+    
+    Although this means that one needs to build the introspection files in two
+    stages, namely using the projects to build the JSON-GLib DLL and then
+    running this NMake Makefile to generate the introspection files.  The
+    original approach required setting lots of environment variables for the
+    building of introspection files to work.  Using NMake Makefiles will make
+    it clearer to the one building the introspection files on what items and
+    variables are needed exactly to do the job
+
+ build/win32/Makefile.am                      |   4 +-
+ build/win32/detectenv_msvc.mak               |  65 +++++++++++++
+ build/win32/gengir_jsonglib.bat              | 132 ---------------------------
+ build/win32/introspection-msvc.mak           |  79 ++++++++++++++++
+ build/win32/json-glib-introspection-msvc.mak |  64 +++++++++++++
+ 5 files changed, 211 insertions(+), 133 deletions(-)
+
+commit ed7f9df3c09209749d0d1be0917a80ad6a4f7546
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Feb 7 18:33:32 2014 +0800
+
+    Overhaul the Visual Studio 2010 Projects
+    
+    Split up the property sheets used to build JSON-GLib. Also add projects to
+    build and "install" the json-glib-validate and json-glib-format tools.
+    
+    Move the introspection file generation out of the Visual Studio projects
+    to add an NMake Makefile later to generate the introspection files, to make
+    the process clearer to people.
+    
+    Stop installing the test programs, although they continue to be built from
+    the projects for now.
+
+ build/win32/vs10/Makefile.am                       |  20 ++-
+ build/win32/vs10/array.vcxproj                     |  12 +-
+ build/win32/vs10/array.vcxproj.filters             |   2 +-
+ build/win32/vs10/boxed.vcxproj                     |  10 +-
+ build/win32/vs10/boxed.vcxproj.filters             |   2 +-
+ build/win32/vs10/builder.vcxproj                   |  10 +-
+ build/win32/vs10/builder.vcxproj.filters           |   2 +-
+ build/win32/vs10/generator.vcxproj                 |  10 +-
+ build/win32/vs10/generator.vcxproj.filters         |   2 +-
+ build/win32/vs10/gengir.vcxproj                    | 104 -------------
+ build/win32/vs10/gvariant.vcxproj                  |  10 +-
+ build/win32/vs10/gvariant.vcxproj.filters          |   2 +-
+ build/win32/vs10/install.vcxproj                   |  76 ++--------
+ build/win32/vs10/invalid.vcxproj                   |  10 +-
+ build/win32/vs10/invalid.vcxproj.filters           |   2 +-
+ build/win32/vs10/json-glib-build-defines.props     |  30 ++++
+ build/win32/vs10/json-glib-format.vcxproj          | 162 +++++++++++++++++++++
+ build/win32/vs10/json-glib-format.vcxproj.filters  |  14 ++
+ build/win32/vs10/json-glib-gen-srcs.props          |  24 +++
+ build/win32/vs10/json-glib-install.props           |  60 ++++++++
+ build/win32/vs10/json-glib-validate.vcxproj        | 162 +++++++++++++++++++++
+ .../win32/vs10/json-glib-validate.vcxproj.filters  |  14 ++
+ build/win32/vs10/json-glib-version-paths.props     |  54 +++++++
+ build/win32/vs10/json-glib.props                   | 150 -------------------
+ build/win32/vs10/json-glib.sln                     |  50 ++++---
+ build/win32/vs10/json-glib.vcxproj.filtersin       |   3 +-
+ build/win32/vs10/json-glib.vcxprojin               |  28 ++--
+ build/win32/vs10/node.vcxproj                      |  10 +-
+ build/win32/vs10/node.vcxproj.filters              |   2 +-
+ build/win32/vs10/object.vcxproj                    |  10 +-
+ build/win32/vs10/object.vcxproj.filters            |   2 +-
+ build/win32/vs10/parser.vcxproj                    |  10 +-
+ build/win32/vs10/parser.vcxproj.filters            |   2 +-
+ build/win32/vs10/path.vcxproj                      |  10 +-
+ build/win32/vs10/path.vcxproj.filters              |   2 +-
+ build/win32/vs10/reader.vcxproj                    |  10 +-
+ build/win32/vs10/reader.vcxproj.filters            |   2 +-
+ build/win32/vs10/serialize-complex.vcxproj         |  10 +-
+ build/win32/vs10/serialize-complex.vcxproj.filters |   2 +-
+ build/win32/vs10/serialize-full.vcxproj            |  10 +-
+ build/win32/vs10/serialize-full.vcxproj.filters    |   2 +-
+ build/win32/vs10/serialize-simple.vcxproj          |  10 +-
+ build/win32/vs10/serialize-simple.vcxproj.filters  |   2 +-
+ 43 files changed, 680 insertions(+), 441 deletions(-)
+
+commit 1e0ef4493d485bfc211bcb2af2f212a3f26a800e
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Feb 7 11:52:48 2014 +0800
+
+    Fix Commit of Visual Studio 2008 Projects
+    
+    Left out the update to json-glib.vcprojin, oops :|
+
+ build/win32/vs9/json-glib.vcprojin | 58 +++++++++++++++++++++++++-------------
+ 1 file changed, 38 insertions(+), 20 deletions(-)
+
+commit 7053ea79f4c90f26e7e25c598a6a1617fbcea990
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Feb 7 11:35:47 2014 +0800
+
+    Overhaul the Visual Studio 2008 Projects
+    
+    Split up the property sheets used to build JSON-GLib, and make all the
+    projects (*.vcproj) and property sheets (*.vsprops) use UNIX line endings
+    to simplify future maintenance.  Also add projects to build and "install"
+    the json-glib-validate and json-glib-format tools.
+    
+    Move the introspection file generation out of the Visual Studio projects
+    to add an NMake Makefile later to generate the introspection files, to make
+    the process clearer to people.
+    
+    Stop installing the test programs, although they continue to be built from
+    the projects for now.
+    
+    Similar changes to the Visual Studio 2010 projects will follow.
+
+ build/win32/vs9/Makefile.am                     |  20 +-
+ build/win32/vs9/array.vcproj                    | 306 +++++++++++-----------
+ build/win32/vs9/boxed.vcproj                    |   8 +-
+ build/win32/vs9/builder.vcproj                  | 306 +++++++++++-----------
+ build/win32/vs9/generator.vcproj                | 306 +++++++++++-----------
+ build/win32/vs9/gengir.vcproj                   |  77 ------
+ build/win32/vs9/gvariant.vcproj                 |   8 +-
+ build/win32/vs9/install.vcproj                  | 160 ++++++------
+ build/win32/vs9/invalid.vcproj                  | 306 +++++++++++-----------
+ build/win32/vs9/json-glib-build-defines.vsprops |  25 ++
+ build/win32/vs9/json-glib-format.vcproj         | 151 +++++++++++
+ build/win32/vs9/json-glib-gen-srcs.vsprops      |  19 ++
+ build/win32/vs9/json-glib-install.vsprops       |  37 +++
+ build/win32/vs9/json-glib-validate.vcproj       | 151 +++++++++++
+ build/win32/vs9/json-glib-version-paths.vsprops |  53 ++++
+ build/win32/vs9/json-glib.sln                   |  75 +++---
+ build/win32/vs9/json-glib.vsprops               | 127 ----------
+ build/win32/vs9/node.vcproj                     | 306 +++++++++++-----------
+ build/win32/vs9/object.vcproj                   | 302 +++++++++++-----------
+ build/win32/vs9/parser.vcproj                   | 324 ++++++++++++------------
+ build/win32/vs9/path.vcproj                     |   8 +-
+ build/win32/vs9/reader.vcproj                   | 308 +++++++++++-----------
+ build/win32/vs9/serialize-complex.vcproj        |   8 +-
+ build/win32/vs9/serialize-full.vcproj           |   8 +-
+ build/win32/vs9/serialize-simple.vcproj         |   8 +-
+ 25 files changed, 1821 insertions(+), 1586 deletions(-)
+
+commit 7b865790ae3233a0636fdc780f843143a7e94a01
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Feb 7 10:23:40 2014 +0800
+
+    Update build/win32/config.h.win32.in
+    
+    Make its entries reflect the entries that are being checked by the
+    autotools build, and also make the entries reflect the situation on
+    non-Visual C++ and newer Visual Studio versions better.
+
+ build/win32/config.h.win32.in | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
+
+commit 4f7dd7f5b004f1bcd478572c1cb6f2dd6822add1
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon Feb 3 23:50:34 2014 +0000
+
+    Post-release version bump to 0.99.3
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 43f40339eae66e0f6545da7638f36c9b07de0bab
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon Feb 3 23:49:11 2014 +0000
+
+    Release JSON-GLib 0.99.2 (1.0.0-rc1)
+    
+    First release candidate for JSON-GLib.
+
+ NEWS         | 9 +++++++++
+ configure.ac | 4 ++--
+ 2 files changed, 11 insertions(+), 2 deletions(-)
+
+commit 3c627b1e44172184f54399b03d10c1637265649b
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon Feb 3 23:46:56 2014 +0000
+
+    build: Add missing file
+    
+    We need to dist the tap-test script.
+
+ build/autotools/Makefile.am | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit a482772a181c6ee3bd5a8d74c04b8ff9186b43f8
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon Feb 3 23:45:24 2014 +0000
+
+    build: Remove bogus rules
+    
+    We don't need check targets any more.
+
+ build/Makefile.am | 10 ----------
+ 1 file changed, 10 deletions(-)
+
+commit 627a1b3f0343666923e95ebead0c7be821d29148
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon Feb 3 23:33:44 2014 +0000
+
+    build: Remove type init option for gtk-doc
+    
+    We're building against a required version of GLib that does not need
+    type initialization.
+
+ doc/reference/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 501c9fb3805c9236fc008032295e0cdd87c4df47
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Sat Feb 1 22:52:27 2014 +0100
+
+    reader: When a read() fails, don't track back on end()
+    
+    When a call to json_reader_read_element() fails if the element
+    doesn't exist, we need to call json_reader_end_element() to clear
+    out any errors.
+    
+    But the _end_element() call will backtrack to the parent node,
+    when the _read_element() call did not set the child node.
+    
+    To fix this, leave early from _end_*() calls when an error has
+    been set.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=723428
+
+ json-glib/json-reader.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
+
+commit 40abd7add9e3fa7288fdd144fd96da5270a86663
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Sat Feb 1 23:31:02 2014 +0100
+
+    tests: Add new test for reader level bug
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=723428
+
+ json-glib/tests/reader.c | 43 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
+
+commit 440f735349aa30ce34957e50786a528e96335442
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Fri Dec 27 17:14:06 2013 +0100
+
+    reader: Fix example code for json_reader_read_member()
+    
+    Fix cut'n'paste error.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=721137
+
+ json-glib/json-reader.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit bce10169c945a551e589267ee698fd39917813c6
+Author: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>
+Date:   Sun Feb 2 20:40:35 2014 +0800
+
+    Updated Traditional Chinese translation(Hong Kong and Taiwan)
+
+ po/zh_HK.po | 174 +++++++++++++++++++++++++++++++++++++++++++++++-------------
+ po/zh_TW.po | 174 +++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 2 files changed, 274 insertions(+), 74 deletions(-)
+
+commit 3e9b53978f36543a1537da8075b7c74e1eb1ffcf
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:   Thu Jan 23 12:53:38 2014 +0100
+
+    Updated FSF's address
+
+ json-glib/json-scanner.c | 4 +---
+ json-glib/json-scanner.h | 4 +---
+ 2 files changed, 2 insertions(+), 6 deletions(-)
+
+commit 668975eac681d84a041d6da8df8ccc71b92bb971
+Author: Yosef Or Boczko <yoseforb@src.gnome.org>
+Date:   Sun Jan 26 05:32:33 2014 +0200
+
+    Added Hebrew translation
+    
+    Signed-off-by: Yosef Or Boczko <yoseforb@src.gnome.org>
+
+ po/he.po | 263 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 263 insertions(+)
+
+commit 5fb0b925adb517445c0347f04fe281952b614b37
+Author: Wylmer Wang <wantinghard@gmail.com>
+Date:   Fri Jan 24 21:40:10 2014 +0800
+
+    Update Chinese simplified translation
+
+ po/zh_CN.po | 175 +++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 138 insertions(+), 37 deletions(-)
+
+commit 7d1457e0f1c8d142647811005c9c348104c43287
+Author: Marek Černocký <marek@manet.cz>
+Date:   Sat Jan 18 22:46:35 2014 +0100
+
+    Updated Czech translation
+
+ po/cs.po | 175 +++++++++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 138 insertions(+), 37 deletions(-)
+
+commit 67571cf0b7b3dacb24726c05aa9fbc7a6d4060c1
+Author: Yuri Myasoedov <ymyasoedov@yandex.ru>
+Date:   Sun Jan 12 22:35:31 2014 +0400
+
+    Updated Russian translation
+
+ po/ru.po | 180 +++++++++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 141 insertions(+), 39 deletions(-)
+
+commit 8502517892c656b6f68034cc5f36254bae67cafc
+Author: Dimitris Spingos <dmtrs32@gmail.com>
+Date:   Tue Jan 7 09:53:59 2014 +0200
+
+    Updated Greek translation
+
+ po/el.po | 45 +++++++++++++++++++++++++++------------------
+ 1 file changed, 27 insertions(+), 18 deletions(-)
+
+commit e919cfbbdce0b684566a0cd6e60bdd87a654e718
+Author: Rafael Ferreira <rafael.f.f1@gmail.com>
+Date:   Fri Jan 3 06:05:58 2014 -0200
+
+    Updated Brazilian Portuguese translation
+
+ po/pt_BR.po | 48 +++++++++++++++++++++++++++++-------------------
+ 1 file changed, 29 insertions(+), 19 deletions(-)
+
+commit f16d9b82c4d36e949620f5ef6105985c087d438e
+Author: Andika Triwidada <andika@gmail.com>
+Date:   Thu Jan 2 23:39:49 2014 +0700
+
+    Updated Indonesian translation
+
+ po/id.po | 182 +++++++++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 141 insertions(+), 41 deletions(-)
+
+commit 314419676c5d7f4f2c19c530bcb9ced6972a8040
+Author: Victor Ibragimov <victor.ibragimov@gmail.com>
+Date:   Fri Dec 20 14:32:41 2013 +0500
+
+    Tajik translation updated
+
+ po/tg.po | 175 ++++++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 139 insertions(+), 36 deletions(-)
+
+commit 11fd007fcb4734b5640d1481407d6fa0c4943256
+Author: Fran Diéguez <fran.dieguez@mabishu.com>
+Date:   Thu Dec 19 01:13:28 2013 +0100
+
+    Updated Galician translations
+
+ po/gl.po | 39 ++++++++++++++++++++++++---------------
+ 1 file changed, 24 insertions(+), 15 deletions(-)
+
+commit 8bceaafd95ac36c531e1a1bf079c031d1c0785ab
+Author: Milo Casagrande <milo@ubuntu.com>
+Date:   Wed Dec 11 10:47:36 2013 +0100
+
+    [l10n] Updated Italian translation.
+
+ po/it.po | 173 ++++++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 138 insertions(+), 35 deletions(-)
+
+commit 0cba330f3b24d4c2fd8ba79cabddc23d6e7e8063
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:   Mon Dec 9 16:03:35 2013 +0100
+
+    Updated Spanish translation
+
+ po/es.po | 30 +++++++++++++++++++++---------
+ 1 file changed, 21 insertions(+), 9 deletions(-)
+
+commit 0d6a2da5775de27160f9fd0bad783cb7d45d8dac
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Wed Dec 4 12:43:37 2013 +0000
+
+    Make json-gvariant.h conform to the other headers
+    
+    Only include the necessary headers, and use a single-header inclusion
+    guard to prevent people from including only json-gvariant.h.
+
+ json-glib/json-gvariant.c | 5 +++++
+ json-glib/json-gvariant.h | 7 +++++--
+ 2 files changed, 10 insertions(+), 2 deletions(-)
+
+commit 0de776ea67869b692ee8bd709fd70c0e2368d9fc
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Wed Dec 4 12:41:06 2013 +0000
+
+    Move the single include guard after multiple inclusion one
+    
+    GCC (and other compilers) can optimise multiple inclusion of headers if
+    they find the:
+    
+      #ifndef FOO
+      #define FOO
+    
+      #endif
+    
+    pattern as the first thing inside a header. The single-header inclusion
+    guard was preventing that from happening, so we need to move it inside
+    the multiple inclusion guard.
+
+ json-glib/json-builder.h       | 6 +++---
+ json-glib/json-enum-types.h.in | 6 +++---
+ json-glib/json-generator.h     | 6 +++---
+ json-glib/json-parser.h        | 6 +++---
+ json-glib/json-path.h          | 6 +++---
+ json-glib/json-reader.h        | 6 +++---
+ json-glib/json-types.h         | 6 +++---
+ json-glib/json-version.h.in    | 6 +++---
+ 8 files changed, 24 insertions(+), 24 deletions(-)
+
+commit b3072da5a2e897b2b87f84d30485bf316c4476fb
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon Dec 2 14:34:20 2013 +0000
+
+    tests/gvariant: Use G_N_ELEMENTS
+    
+    Instead of sizeof(array)/sizeof(type).
+
+ json-glib/tests/gvariant.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+commit 64b4f936617e781e9a3677cf98b2abde94b8ef2a
+Author: Joseph Artsimovich <joseph.artsimovich@youview.com>
+Date:   Tue Sep 3 11:30:08 2013 +0100
+
+    Make JSON to GVariant conversion handle some string to number conversions.
+    
+    Consider the following JSON: ["123"]
+    Trying to convert it to GVariant with signature "(i)" would previously fail,
+    as string-to-number conversions weren't implemented. This patch implements
+    string-to-number and string-to-boolean conversions.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=707382
+
+ json-glib/json-gvariant.c  | 24 ++++++++++++++++++++++++
+ json-glib/tests/gvariant.c | 37 ++++++++++++++++++++++++++++++-------
+ 2 files changed, 54 insertions(+), 7 deletions(-)
+
+commit 35562f291b7bf1bae88d7e5f78d7be163ca263d6
+Author: bi <bisnard@antidot.net>
+Date:   Thu May 16 14:00:03 2013 +0200
+
+    Add tests for json paths (2 invalids, 1 valid)
+    
+    Signed-off-by: Emmanuele Bassi <ebassi@gnome.org>
+    
+    Conflicts:
+    	json-glib/tests/path.c
+
+ json-glib/tests/path.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+
+commit d82420c14b19f29a993b7754ff1128b3524c4ad7
+Author: bi <bisnard@antidot.net>
+Date:   Wed May 15 17:35:26 2013 +0200
+
+    Handle invalid path: invalid first character
+    
+    Signed-off-by: Emmanuele Bassi <ebassi@gnome.org>
+    
+    Conflicts:
+    	json-glib/json-path.c
+
+ json-glib/json-path.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+commit e4a054484774fd0849ca18617b6e20d15964fdd8
+Author: bi <bisnard@antidot.net>
+Date:   Wed May 15 16:19:55 2013 +0200
+
+    path: compile and query path '$' to retrieve root node
+    
+    Signed-off-by: Emmanuele Bassi <ebassi@gnome.org>
+
+ json-glib/json-path.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+commit b5570400cbd95f46373dfce2877c6599802bec21
+Author: bi <bisnard@antidot.net>
+Date:   Wed May 15 16:06:48 2013 +0200
+
+    Handle invalid path : missing member name after .
+    
+    Signed-off-by: Emmanuele Bassi <ebassi@gnome.org>
+
+ json-glib/json-path.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+commit 730761d0ab3b9a72cea0b5cf806e656ec93f8a11
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon Dec 2 11:11:25 2013 +0000
+
+    docs: Add wiki link to the README file
+
+ README.md | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 4df9e2a6157e9d874e6393f50143bb28bdef3ef8
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon Dec 2 11:05:53 2013 +0000
+
+    docs: Further clean ups of the README
+    
+    Reword the description, and fit everything on a 80 columns margin.
+
+ README.md | 48 ++++++++++++++++++++++++------------------------
+ 1 file changed, 24 insertions(+), 24 deletions(-)
+
+commit 567d6470f4fc88a650dd11ed28f414537dd4c6da
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon Dec 2 11:00:19 2013 +0000
+
+    Clean up the README
+    
+    Update the requirements, and clean up the text.
+
+ README.md | 47 +++++++++++++++++++++++++++--------------------
+ 1 file changed, 27 insertions(+), 20 deletions(-)
+
+commit 3c0ec689cdba1379791da3bcc1ad07c46416ac9a
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon Dec 2 10:46:57 2013 +0000
+
+    build: Move the pkg-config file under json-glib
+    
+    The pkg-config file for a library is tied to the source, so it should
+    not be in the top-level of the project.
+
+ Makefile.am               | 11 -----------
+ configure.ac              |  3 +--
+ json-glib.pc.in           | 11 -----------
+ json-glib/Makefile.am     | 10 ++++++++++
+ json-glib/json-glib.pc.in | 11 +++++++++++
+ 5 files changed, 22 insertions(+), 24 deletions(-)
+
+commit 287628bc003ae3d3e1893898c5e1a8959f895f52
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon Dec 2 10:41:37 2013 +0000
+
+    build: Drop unnecessary linker flags
+    
+    The -no-undefined linker flag is needed only when compiling for Windows,
+    and it's added conditionally. Except that we also add it unconditionally
+    in the LDFLAGS used for the libjson-glib-1.0 shared object. Whoopsie.
+    
+    We should also drop the unneeded -rpath: distributions will go out of
+    their way to patch it out in any case.
+
+ json-glib/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 7ab837c98a10cc1464318e4e4d04426b6fcc070b
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon Dec 2 10:40:43 2013 +0000
+
+    build: Fix syntax error in --enable-man define
+    
+    A missing comma was triggering a bad substitution and a warning when
+    running the configure script.
+
+ configure.ac | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 45e06f80b97e4b2dc0d6a1a6c806013a07113262
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon Dec 2 10:30:13 2013 +0000
+
+    build: Clean up unnecessary complications
+    
+    We don't need a custom Makefile for quiet rules: AM_V_GEN is pretty much
+    all we use anyway.
+    
+    The Makefile.am.gtest file is not included any longer, since we switched
+    to TAP and GLib's own rules for unit testing.
+
+ Makefile.am                           | 12 +++---
+ build/autotools/Makefile.am           |  1 -
+ build/autotools/Makefile.am.enums     |  4 +-
+ build/autotools/Makefile.am.gitignore |  2 +-
+ build/autotools/Makefile.am.gtest     | 74 -----------------------------------
+ build/autotools/Makefile.am.marshal   |  4 +-
+ build/autotools/Makefile.am.silent    | 11 ------
+ configure.ac                          |  2 -
+ doc/reference/Makefile.am             | 11 ------
+ json-glib/Makefile.am                 |  2 -
+ 10 files changed, 10 insertions(+), 113 deletions(-)
+
+commit 01614d512891057ed417768a85868a1382fd9bc0
+Author: Aurimas Černius <aurisc4@gmail.com>
+Date:   Sun Dec 1 18:07:23 2013 +0200
+
+    Updated Lithuanian translation
+
+ po/lt.po | 196 ++++++++++++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 143 insertions(+), 53 deletions(-)
+
+commit cda0a32cc6e2e45e4af58eb53a31fbfc0a9cc9ff
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sat Nov 23 12:45:59 2013 +0000
+
+    build: Use the correct TAP driver
+    
+    Re-sync with GLib's TAP harness.
+
+ build/autotools/Makefile.am   |   3 +-
+ build/autotools/glib-tap.mk   |   2 +-
+ build/autotools/tap-driver.sh | 652 ++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 655 insertions(+), 2 deletions(-)
+
+commit 36cc15ea015640a044d499cdf983f76e11184286
+Author: Dimitris Spingos <dmtrs32@gmail.com>
+Date:   Thu Nov 14 11:25:18 2013 +0200
+
+    Updated Greek translation
+
+ po/el.po | 169 ++++++++++++++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 130 insertions(+), 39 deletions(-)
+
+commit 9931570f6df75093e31c6770361f2f4544d846da
+Author: Fran Diéguez <fran.dieguez@mabishu.com>
+Date:   Fri Nov 1 15:29:07 2013 +0100
+
+    Updated Galician translations
+
+ po/gl.po | 164 +++++++++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 128 insertions(+), 36 deletions(-)
+
+commit e21f7de27c64748a44985af9165cbb9066b19bbc
+Author: Daniel Mustieles <daniel.mustieles@gmail.com>
+Date:   Thu Oct 31 18:23:18 2013 +0100
+
+    Updated Spanish translation
+
+ po/es.po | 178 +++++++++++++++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 133 insertions(+), 45 deletions(-)
+
+commit 80a6da1d5571f4a75a4de83ff7d63dd6668dbc94
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon Oct 28 12:55:43 2013 +0000
+
+    docs: Include tool man pages in the API reference
+    
+    The small utilities we ship should have their main pages included in the
+    API reference, similarly to what GLib does.
+
+ doc/reference/json-glib-docs.xml | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+commit 42c36ba1c5a04a60bf1a6ec221c722b6c0136562
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon Oct 28 11:17:06 2013 +0000
+
+    Improve consistency in error messages
+    
+    Use the same spacing and formatting rules.
+
+ json-glib/json-glib-format.c   | 4 ++--
+ json-glib/json-glib-validate.c | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+commit a6816327ece4edbce8903967780364638752616a
+Author: Enrico Nicoletto <liverig@gmail.com>
+Date:   Mon Oct 28 09:04:56 2013 -0200
+
+    Updated Brazilian Portuguese translation
+
+ po/pt_BR.po | 170 ++++++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 132 insertions(+), 38 deletions(-)
+
+commit 06ba2cd30373f2043fe1f09a12e11eae52aa5842
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Mon Oct 28 00:07:33 2013 +0000
+
+    po: Add utilities to the POTFILES
+    
+    They come with translatable strings.
+
+ po/POTFILES.in | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 15d5439f05ecf933258c19995fc684f709327541
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sun Oct 27 23:45:33 2013 +0000
+
+    Add abicheck.sh test output to the ignored files
+
+ .gitignore | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 8ec28bcaac3d5134670e5f51fbd8646ec741e8c7
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sun Oct 27 23:43:19 2013 +0000
+
+    build: Clean up configure summary
+
+ configure.ac | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+commit 436ed4f2b0ce86764c84af8e0ad4b1181a287050
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sun Oct 27 23:11:56 2013 +0000
+
+    docs: Add infrastructure to build man pages
+    
+    The small utilities we build and install should have their own manual
+    pages.
+
+ .gitignore                           |  2 +
+ build/autotools/Makefile.am          |  1 +
+ build/autotools/jh-catalog.m4        | 54 ++++++++++++++++++++++++
+ configure.ac                         | 50 ++++++++++++++++++++++
+ doc/reference/Makefile.am            | 31 ++++++++++++--
+ doc/reference/json-glib-format.xml   | 81 ++++++++++++++++++++++++++++++++++++
+ doc/reference/json-glib-validate.xml | 67 +++++++++++++++++++++++++++++
+ 7 files changed, 283 insertions(+), 3 deletions(-)
+
+commit 848e954addf5a9a54beb37d86f684b37d0d595f1
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sun Oct 27 16:43:54 2013 +0000
+
+    Add format tool
+    
+    A simple command line utility to format JSON data; it allows prettifying
+    and unprettifying JSON.
+
+ .gitignore                   |   1 +
+ json-glib/Makefile.am        |   5 +-
+ json-glib/json-glib-format.c | 211 +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 216 insertions(+), 1 deletion(-)
+
+commit 1fcc3dd0956ae381444f2b1808f39424a2192a6f
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sat Oct 26 20:44:31 2013 +0100
+
+    Add validation tool
+    
+    The json-glib-validate tool is a small utility that validates the data
+    found at the URIs passed on its command line.
+
+ .gitignore                     |   1 +
+ json-glib/Makefile.am          |   7 ++
+ json-glib/json-glib-validate.c | 171 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 179 insertions(+)
+
+commit a40e07510208456eeb52776a5ab1d8eb90625fbc
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sat Oct 26 20:43:36 2013 +0100
+
+    parser: Always perform UTF-8 validation
+    
+    JSON is defined to be encoded using UTF-8, so we should not rely on
+    the documentation saying so when parsing, but validate the input and
+    eventually provide a recoverable parsing error.
+
+ json-glib/json-parser.c | 9 +++++++++
+ json-glib/json-parser.h | 2 ++
+ 2 files changed, 11 insertions(+)
+
+commit e71d87eefe4fa51b9a391187c7b41d4c04333e02
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sat Oct 26 20:39:39 2013 +0100
+
+    parser: Always use a valid GError internally
+    
+    Do not just pass the GError through from the public-facing arguments: we
+    may want to perform error checking internally at any later date.
+
+ json-glib/json-parser.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
+
+commit 288f8300977c2f7fb3912c147395fef8e1fe016e
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Sat Oct 26 20:38:59 2013 +0100
+
+    build: Clean up the main Makefile.am
+
+ json-glib/Makefile.am | 44 ++++++++++++++++++++++++++++----------------
+ 1 file changed, 28 insertions(+), 16 deletions(-)
+
+commit ce46c06d9c088501c8cbab2dba51856be1a05592
+Author: Juan A. Suarez Romero <jasuarez@igalia.com>
+Date:   Wed Sep 18 17:52:17 2013 +0000
+
+    path: Check if JSONPath expression is NULL
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=708318
+
+ json-glib/json-path.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit a876adb3f3a20d87d76f3bf6902a64dd912c47cf
+Author: Jiro Matsuzawa <jmatsuzawa@gnome.org>
+Date:   Thu Sep 19 08:12:04 2013 +0900
+
+    l10n: Update Japanese translation
+
+ po/ja.po | 80 ++++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 40 insertions(+), 40 deletions(-)
+
+commit 17dbdd5cce26f257a522ba0c218a05753e1fa3b1
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Fri Aug 30 16:41:41 2013 +0800
+
+    Visual C++ Builds: Use Custom Build Rules
+    
+    ...so that the json-glib.def file can be regenerated as automatically
+    when the json-glib.symbols file is updated, and the json-glib.def can be
+    automatically deleted on a "clean" request.
+    
+    Also drop some unneeded items from the property sheets.
+
+ build/win32/vs10/json-glib.props             |  8 ++---
+ build/win32/vs10/json-glib.vcxproj.filtersin |  3 ++
+ build/win32/vs10/json-glib.vcxprojin         | 28 +++++++++-------
+ build/win32/vs9/json-glib.vcprojin           | 50 +++++++++++++++++++---------
+ build/win32/vs9/json-glib.vsprops            | 10 ++----
+ 5 files changed, 58 insertions(+), 41 deletions(-)
+
+commit 8e71b3e89d1852414ab27801e873f37e472fec12
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Wed Aug 28 11:57:45 2013 +0800
+
+    MSVC Builds: Build the invalid test program
+    
+    Add project files to build the "invalid" test program.
+
+ build/win32/vs10/Makefile.am             |   2 +
+ build/win32/vs10/install.vcxproj         |   4 +
+ build/win32/vs10/invalid.vcxproj         | 167 +++++++++++++++++++++++++++++++
+ build/win32/vs10/invalid.vcxproj.filters |  14 +++
+ build/win32/vs10/json-glib.sln           |  10 ++
+ build/win32/vs9/Makefile.am              |   1 +
+ build/win32/vs9/invalid.vcproj           | 153 ++++++++++++++++++++++++++++
+ build/win32/vs9/json-glib.sln            |  14 +++
+ 8 files changed, 365 insertions(+)
+
+commit 590a6ce8cecfd6fdfb22c7765bca20f5da3aa3d6
+Author: Chun-wei Fan <fanchunwei@src.gnome.org>
+Date:   Wed Aug 28 11:43:40 2013 +0800
+
+    MSVC Builds: Drop Unneeded Defines
+    
+    ...since we are using GLib APIs to locate test data files since
+    commit b8baa2a0
+
+ build/win32/vs10/parser.vcxproj | 8 ++++----
+ build/win32/vs9/parser.vcproj   | 8 ++++----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+
+commit df8ff199e2a56f5b0430dbe6c7a30addac5fcb42
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Aug 22 12:10:07 2013 +0100
+
+    Drop some more pointless GET_PRIVATE macros
+    
+    We can use the autogenerated get_instance_private() function.
+
+ json-glib/json-builder.c   |  8 +++-----
+ json-glib/json-generator.c | 11 +++++------
+ 2 files changed, 8 insertions(+), 11 deletions(-)
+
+commit 141b0a4a2b3b4ef7d9f8769aef5b43f7fb841edd
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Aug 22 12:02:01 2013 +0100
+
+    parser: Fix all occurances of TESTS_DATA_DIR
+    
+    And use g_test_build_filename().
+
+ json-glib/tests/parser.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
+
+commit b8baa2a07e6b125f38a3a9a0101cf9b887790ea5
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Aug 22 11:50:14 2013 +0100
+
+    parser: Use the proper GLib API to find test data files
+    
+    Instead of our homegrown solution. This should fix the regression in the
+    installed tests case.
+    
+    Original patch by: Colin Walters <walters@verbum.org>
+
+ json-glib/tests/Makefile.am | 1 -
+ json-glib/tests/parser.c    | 7 +------
+ 2 files changed, 1 insertion(+), 7 deletions(-)
+
+commit 66aa02b0da6d9964f38c4531f775f7c25b07af7d
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Aug 22 11:46:11 2013 +0100
+
+    parser: Drop a pointless macro
+    
+    The JSON_PARSER_GET_PRIVATE macro is pointless, now that we use the new
+    version of GLib.
+
+ json-glib/json-parser.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+commit 5b6ada6b362f3ff160608c00bcffbb8f2b8eff7b
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Wed Aug 21 12:16:10 2013 +0100
+
+    Remove compile time GLib version check
+    
+    We depend on a new version of GLib, so we can remove a bunch of old
+    version checks.
+
+ json-glib/json-builder.c            | 14 +-------------
+ json-glib/json-generator.c          | 14 +-------------
+ json-glib/json-gobject.c            |  8 --------
+ json-glib/json-parser.c             | 14 +-------------
+ json-glib/json-reader.c             | 13 -------------
+ json-glib/tests/array.c             |  4 ----
+ json-glib/tests/boxed.c             |  3 ---
+ json-glib/tests/builder.c           |  3 ---
+ json-glib/tests/generator.c         |  3 ---
+ json-glib/tests/gvariant.c          |  3 ---
+ json-glib/tests/invalid.c           |  3 ---
+ json-glib/tests/node.c              |  3 ---
+ json-glib/tests/object.c            |  3 ---
+ json-glib/tests/parser.c            |  3 ---
+ json-glib/tests/path.c              |  3 ---
+ json-glib/tests/reader.c            |  3 ---
+ json-glib/tests/serialize-complex.c |  3 ---
+ json-glib/tests/serialize-full.c    |  3 ---
+ json-glib/tests/serialize-simple.c  |  3 ---
+ 19 files changed, 3 insertions(+), 103 deletions(-)
+
+commit 361e427316cc50b52e4b8f0a71a2b29d1a02ed36
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Wed Aug 21 12:08:44 2013 +0100
+
+    path: Remove unused variable
+
+ json-glib/json-path.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 6c3f870f10465602c2570e0ba3d2311587437977
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Wed Aug 21 12:07:39 2013 +0100
+
+    tests: Use the new TAP support in GTest
+    
+    Instead of using the old GLib test harness, we should use the newly
+    added TAP support and the TAP driver inside autotools.
+
+ .gitignore                            |   1 +
+ build/autotools/Makefile.am           |  14 +---
+ build/autotools/Makefile.am.gitignore |   8 +-
+ build/autotools/glib-tap.mk           | 134 ++++++++++++++++++++++++++++++++++
+ build/autotools/glibtests.m4          |  28 +++++++
+ build/autotools/tap-test              |   5 ++
+ configure.ac                          |  11 +--
+ json-glib/Makefile.am                 |  10 +--
+ json-glib/tests/Makefile.am           |  52 ++-----------
+ 9 files changed, 189 insertions(+), 74 deletions(-)
+
+commit edfa380703f289c509a442d2467f1f8cfa189fff
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Wed Aug 21 12:01:32 2013 +0100
+
+    Require GLib >= 2.37.6
+    
+    We're going to need the latest snapshot.
+
+ configure.ac | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 577f7987896a3cfebe5e43d8ebbd94692ee34020
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Wed Aug 21 12:01:07 2013 +0100
+
+    Bump to 0.17.1
+    
+    Start a new development cycle.
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit f9012e0760aea54e652acde3a3ab9cc8e154e3b0
+Author: Fabio Tomat <f.t.public@gmail.com>
+Date:   Tue Aug 20 15:14:12 2013 +0200
+
+    Added Friulian translation
+
+ po/fur.po | 157 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 157 insertions(+)
+
+commit 3fd47359707dfc15277cef505d4008c10d8455e9
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Jul 11 17:04:13 2013 +0100
+
+    Use new macros when compiling against new GLib
+    
+    If we're being compiled against a newer version of GLib, we should use
+    the new macros that add instance private data.
+    
+    Since this is a stable branch, we cannot bump the GLib requirement; so
+    we use version checks to conditionally compile the new code.
+
+ json-glib/json-builder.c   | 15 ++++++++++++---
+ json-glib/json-generator.c | 15 ++++++++++++---
+ json-glib/json-parser.c    | 12 +++++++++++-
+ json-glib/json-reader.c    | 10 ++++++++++
+ 4 files changed, 45 insertions(+), 7 deletions(-)
+
+commit a9327484746820a5a2b8c1acf4a78470b004f0a0
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu Jul 11 16:49:14 2013 +0100
+
+    build: Add configure option to enable -Bsymbolic
+    
+    We should always compile with -Bsymbolic enabled to avoid intra-library
+    PLT jumps.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=703734
+
+ configure.ac | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+
+commit 8673d5abca21f4c1729c26d7ada1a409e5842572
+Author: Victor Ibragimov <victor.ibragimov@gmail.com>
+Date:   Wed Jul 17 13:47:38 2013 +0500
+
+    Tajik translation updated
+
+ po/tg.po | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
+
+commit 0d6d965d692d0863ee8f0114e2abdd66cdd69f21
+Author: Victor Ibragimov <victor.ibragimov@gmail.com>
+Date:   Wed Jun 5 14:31:15 2013 +0500
+
+    Tajik updated
+
+ po/tg.po | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
+
+commit 10930960f20a61478244187e290433558f0a1155
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Fri May 17 00:21:36 2013 +0100
+
+    build: Add ltp 1.10 to the whitelist
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 53431a7f034cbee724c9115783538c087dc07d31
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu May 16 23:37:05 2013 +0100
+
+    build: Remove INCLUDES
+    
+    It has been replaced by AM_CPPFLAGS for a while.
+
+ doc/reference/Makefile.am | 2 +-
+ json-glib/Makefile.am     | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+commit 3e9858cb9c34f492ad0859bd262c8c4691260b41
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu May 16 23:27:56 2013 +0100
+
+    build: Add --enable-installed-tests
+    
+    See https://live.gnome.org/GnomeGoals/InstalledTests for more
+    information.
+    
+    It's still possible to run `make check` with locally uninstalled tests.
+
+ .gitignore                  |  1 +
+ configure.ac                | 16 +++++++++++++++-
+ json-glib/tests/Makefile.am | 46 +++++++++++++++++++++++++++++++++++++--------
+ json-glib/tests/parser.c    | 24 ++++++++++++++++++++---
+ 4 files changed, 75 insertions(+), 12 deletions(-)
+
+commit a595c61dbd2dd6f16acc2549504f553c76551752
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu May 16 10:47:09 2013 +0100
+
+    tests: Improve the JsonPath suite
+    
+    Run each expression as a separate unit, so we can catch errors more
+    quickly and easily.
+
+ json-glib/tests/path.c | 182 ++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 121 insertions(+), 61 deletions(-)
+
+commit 72a3a8f71003d40087c59371d07df5b59f2df3a7
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu May 16 10:16:02 2013 +0100
+
+    debug: Clean up debug flags accessor
+    
+    Mark json_get_debug_flags() as an internal function, and drop the '_'
+    prefix; also, add a simple macro that we can use everywhere to mask the
+    function call.
+
+ json-glib/json-debug.c | 8 ++++----
+ json-glib/json-debug.h | 9 ++++++---
+ json-glib/json-path.c  | 7 ++++++-
+ 3 files changed, 16 insertions(+), 8 deletions(-)
+
+commit 5b89c6438b8c1bf7a7b1476305a4e20f2c34234b
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu May 16 10:05:51 2013 +0100
+
+    path: Move debug dump of the path into its own function
+    
+    The path parsing function is already pretty long, so we should isolate
+    the debugging code out of the way.
+
+ json-glib/json-path.c | 123 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 62 insertions(+), 61 deletions(-)
+
+commit c912213d05ea9cacb5ba87f25c76581737c6fbf6
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Thu May 16 10:02:50 2013 +0100
+
+    Use G_DEFINE_QUARK macro
+    
+    Instead of hand-writing the error domain function ourselves.
+
+ json-glib/json-parser.c | 10 +++-------
+ json-glib/json-path.c   |  8 ++------
+ json-glib/json-reader.c | 10 +++-------
+ 3 files changed, 8 insertions(+), 20 deletions(-)
+
+commit ff226427bd4ab911f30a985a2c60e3eaca51c066
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Wed May 15 21:51:09 2013 +0100
+
+    Update ignore file for autotools 1.13
+
+ .gitignore | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit e034cb033a6ba198cf22cd0601ab65bfd8c5b8dd
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Wed May 15 21:50:01 2013 +0100
+
+    tests/path: Start adding negative tests for JsonPath
+
+ json-glib/tests/path.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+commit 72909d28f48365f249e87ddb0ebea8ad0f0adac1
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Wed May 15 21:39:46 2013 +0100
+
+    tests/path: Allow testing for valid queries
+    
+    This will allow adding negative tests to JsonPath.
+    
+    The tests will only be caught when compiling the query; an invalid query
+    won't return a match, so there's no point to check matches.
+
+ json-glib/tests/path.c | 64 +++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 50 insertions(+), 14 deletions(-)
+
+commit 69d50a83b1def47bdb6e3d5e2ef8f59081515dd5
+Author: Emmanuele Bassi <ebassi@gnome.org>
+Date:   Tue Apr 16 20:02:18 2013 +0100
+
+    Post-release version bump to 0.16.1
+
+ configure.ac | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
 commit 2a0e59c07aaf3788ace907e62a1b5140e919992f
 Author: Emmanuele Bassi <ebassi@gnome.org>
 Date:   Tue Apr 16 19:56:26 2013 +0100

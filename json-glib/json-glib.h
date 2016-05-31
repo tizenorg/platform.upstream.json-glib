@@ -33,7 +33,9 @@
 #include <json-glib/json-parser.h>
 #include <json-glib/json-path.h>
 #include <json-glib/json-reader.h>
+#include <json-glib/json-utils.h>
 #include <json-glib/json-version.h>
+#include <json-glib/json-version-macros.h>
 
 #include <json-glib/json-enum-types.h>
 

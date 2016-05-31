@@ -1,3 +1,27 @@
+Overview of changes for 1.2
+==============================
+• Add simple wrapper functions for JsonGenerator and JsonParser to
+  write and read a string from and to a JsonNode, respectively
+• Drop use of deprecated GIO API
+• Bump the dependency on GLib to 2.46
+• Do not create `null` nodes for empty strings [#730803]
+• Documentation fixes [Philip Withnall - #754384]
+• Avoid crashes in the test suite [Iain Lane - #755977]
+• Add simple iterator object for JSON objects [Philip Withnall - #755509]
+• Detect missing commas in arrays
+• Add support for g_auto* macros
+• Allow making JSON types optionally immutable, in order to allow
+  efficient hashing and equality tests [Philip Withnal - #756121]
+
+Overview of changes for 1.0
+==============================
+• Bump the dependency on GLib to 2.38
+• Use the TAP driver for the test suite
+• Improve the syntax validation in JsonPath
+• Validate the JsonParser input to be UTF-8
+• Add command line tools for validating and formatting JSON
+• Improve documentation
+
 Overview of changes for 0.16.0
 ==============================
 • Fixes for building with VisualStudio. [Chun-wei Fan]

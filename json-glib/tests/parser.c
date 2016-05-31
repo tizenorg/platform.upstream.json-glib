@@ -1,6 +1,4 @@
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -655,24 +653,33 @@ test_stream_sync (void)
   GFileInputStream *stream;
   GError *error = NULL;
   JsonNode *root;
+  JsonArray *array;
+  char *path;
 
   parser = json_parser_new ();
 
-  file = g_file_new_for_path (TESTS_DATA_DIR "/stream-load.json");
+  path = g_test_build_filename (G_TEST_DIST, "stream-load.json", NULL);
+  file = g_file_new_for_path (path);
   stream = g_file_read (file, NULL, &error);
-  g_assert (error == NULL);
+  g_assert_no_error (error);
   g_assert (stream != NULL);
 
   json_parser_load_from_stream (parser, G_INPUT_STREAM (stream), NULL, &error);
-  g_assert (error == NULL);
+  g_assert_no_error (error);
 
   root = json_parser_get_root (parser);
   g_assert (root != NULL);
   g_assert (JSON_NODE_HOLDS_ARRAY (root));
 
+  array = json_node_get_array (root);
+  g_assert_cmpint (json_array_get_length (array), ==, 1);
+  g_assert (JSON_NODE_HOLDS_OBJECT (json_array_get_element (array, 0)));
+  g_assert (json_object_has_member (json_array_get_object_element (array, 0), "hello"));
+
   g_object_unref (stream);
   g_object_unref (file);
   g_object_unref (parser);
+  g_free (path);
 }
 
 static void
@@ -684,15 +691,19 @@ on_load_complete (GObject      *gobject,
   GMainLoop *main_loop = user_data;
   GError *error = NULL;
   JsonNode *root;
-  gboolean res;
+  JsonArray *array;
 
-  res = json_parser_load_from_stream_finish (parser, result, &error);
-  g_assert (res);
-  g_assert (error == NULL);
+  json_parser_load_from_stream_finish (parser, result, &error);
+  g_assert_no_error (error);
 
   root = json_parser_get_root (parser);
   g_assert (root != NULL);
   g_assert (JSON_NODE_HOLDS_ARRAY (root));
+
+  array = json_node_get_array (root);
+  g_assert_cmpint (json_array_get_length (array), ==, 1);
+  g_assert (JSON_NODE_HOLDS_OBJECT (json_array_get_element (array, 0)));
+  g_assert (json_object_has_member (json_array_get_object_element (array, 0), "hello"));
 
   g_main_loop_quit (main_loop);
 }
@@ -703,9 +714,13 @@ test_stream_async (void)
   GMainLoop *main_loop;
   GError *error = NULL;
   JsonParser *parser = json_parser_new ();
-  GFile *file = g_file_new_for_path (TESTS_DATA_DIR "/stream-load.json");
-  GFileInputStream *stream = g_file_read (file, NULL, &error);
+  GFile *file;
+  GFileInputStream *stream;
+  char *path;
 
+  path = g_test_build_filename (G_TEST_DIST, "stream-load.json", NULL);
+  file = g_file_new_for_path (path);
+  stream = g_file_read (file, NULL, &error);
   g_assert (error == NULL);
   g_assert (stream != NULL);
 
@@ -721,15 +736,13 @@ test_stream_async (void)
   g_object_unref (stream);
   g_object_unref (file);
   g_object_unref (parser);
+  g_free (path);
 }
 
 int
 main (int   argc,
       char *argv[])
 {
-#if !GLIB_CHECK_VERSION (2, 35, 1)
-  g_type_init ();
-#endif
   g_test_init (&argc, &argv, NULL);
 
   g_test_add_func ("/parser/empty-string", test_empty);

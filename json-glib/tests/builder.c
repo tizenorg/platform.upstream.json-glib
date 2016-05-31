@@ -157,13 +157,10 @@ int
 main (int   argc,
       char *argv[])
 {
-#if !GLIB_CHECK_VERSION (2, 35, 1)
-  g_type_init ();
-#endif
   g_test_init (&argc, &argv, NULL);
 
   g_test_add_func ("/builder/complex", test_builder_complex);
-  g_test_add_func ("/builder/complex", test_builder_empty);
+  g_test_add_func ("/builder/empty", test_builder_empty);
   g_test_add_func ("/builder/reset", test_builder_reset);
 
   return g_test_run ();
