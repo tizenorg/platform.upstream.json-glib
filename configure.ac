@@ -49,9 +49,6 @@ ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
 
 dnl === Versioning ============================================================
 
-# Honor aclocal flags
-ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
-
 JSON_MAJOR_VERSION=json_major_version
 JSON_MINOR_VERSION=json_minor_version
 JSON_MICRO_VERSION=json_micro_version
@@ -298,57 +295,6 @@ AM_CONDITIONAL(ENABLE_GCOV, test "x$use_gcov" = "xyes")
 dnl === Documentation =========================================================
 
 GTK_DOC_CHECK([1.20], [--flavour no-tmpl])
-
-AC_ARG_ENABLE([man,],
-              [AS_HELP_STRING([--enable-man], [generate man pages @<:@default=auto@:>@])],
-              [],
-              [enable_man=maybe])
-
-AS_IF([test "$enable_man" != no], [
-  AC_PATH_PROG([XSLTPROC], [xsltproc])
-  AS_IF([test -z "$XSLTPROC"], [
-    AS_IF([test "$enable_man" = yes], [
-      AC_MSG_ERROR([xsltproc is required for --enable-man])
-    ])
-    enable_man=no
-  ])
-])
-
-AS_IF([ test "$enable_man" != no ], [
-  dnl check for DocBook DTD in the local catalog
-  JH_CHECK_XML_CATALOG([-//OASIS//DTD DocBook XML V4.1.2//EN],
-     [DocBook XML DTD V4.1.2], [have_docbook_dtd=yes], [have_docbook_dtd=no])
-  AS_IF([test "$have_docbook_dtd" != yes], [
-    AS_IF([test "$enable_man" = yes ], [
-      AC_MSG_ERROR([DocBook DTD is required for --enable-man])
-    ])
-    enable_man=no
-  ])
-])
-
-AS_IF([test "$enable_man" != no], [
-  dnl check for DocBook XSL stylesheets in the local catalog
-  JH_CHECK_XML_CATALOG([http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl],
-     [DocBook XSL Stylesheets], [have_docbook_style=yes],[have_docbook_style=no])
-  AS_IF([ test "$have_docbook_dtd" != yes ], [
-    AS_IF([ test "$enable_man" = yes ], [
-      AC_MSG_ERROR([DocBook XSL Stylesheets are required for --enable-man])
-    ])
-    enable_man=no
-  ])
-])
-
-AM_CONDITIONAL(ENABLE_MAN, test "$enable_man" != no)
-
-AC_MSG_CHECKING([whether to generate man pages])
-AS_IF([ test "$enable_man" != no ], [
-  enable_man=yes
-  AC_MSG_RESULT([yes])
-], [
-  AC_MSG_RESULT([no])
-])
-
-dnl === Introspection =========================================================
 
 AC_ARG_ENABLE([man,],
               [AS_HELP_STRING([--enable-man], [generate man pages @<:@default=auto@:>@])],

@@ -371,8 +371,6 @@ json_path_compile (JsonPath    *path,
 
   g_return_val_if_fail (expression != NULL, FALSE);
 
-  g_return_val_if_fail (expression != NULL, FALSE);
-
   p = expression;
 
   while (*p != '\0')

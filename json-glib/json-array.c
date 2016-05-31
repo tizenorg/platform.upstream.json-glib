@@ -44,19 +44,6 @@
 
 G_DEFINE_BOXED_TYPE (JsonArray, json_array, json_array_ref, json_array_unref);
 
-GType
-json_array_get_type (void)
-{
-  static GType array_type = 0;
-
-  if (G_UNLIKELY (!array_type))
-    array_type = g_boxed_type_register_static (g_intern_static_string ("JsonArray"),
-                                               (GBoxedCopyFunc) json_array_ref,
-                                               (GBoxedFreeFunc) json_array_unref);
-
-  return array_type;
-}
-
 /**
  * json_array_new: (constructor)
  *
@@ -845,39 +832,4 @@ json_array_equal (gconstpointer a,
     }
 
   return TRUE;
-}
-
-/**
- * json_array_foreach_element:
- * @array: a #JsonArray
- * @func: (scope call): the function to be called on each element
- * @data: (closure): data to be passed to the function
- *
- * Iterates over all elements of @array and calls @func on
- * each one of them.
- *
- * It is safe to change the value of a #JsonNode of the @array
- * from within the iterator @func, but it is not safe to add or
- * remove elements from the @array.
- *
- * Since: 0.8
- */
-void
-json_array_foreach_element (JsonArray        *array,
-                            JsonArrayForeach  func,
-                            gpointer          data)
-{
-  gint i;
-
-  g_return_if_fail (array != NULL);
-  g_return_if_fail (func != NULL);
-
-  for (i = 0; i < array->elements->len; i++)
-    {
-      JsonNode *element_node;
-
-      element_node = g_ptr_array_index (array->elements, i);
-
-      (* func) (array, i, element_node, data);
-    }
 }

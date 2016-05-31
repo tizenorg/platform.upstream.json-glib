@@ -31,15 +31,6 @@
 /* Define if you have the iconv() function and it works. */
 #define HAVE_ICONV 1
 
-/* Whether you have gcov */
-/* #undef HAVE_GCOV */
-
-/* Define if the GNU gettext() function is already present or preinstalled. */
-#define HAVE_GETTEXT 1
-
-/* Define if you have the iconv() function and it works. */
-#define HAVE_ICONV 1
-
 /* Define to 1 if you have the <inttypes.h> header file. */
 #if !defined (_MSC_VER) || (_MSC_VER >= 1800)
 #define HAVE_INTTYPES_H 1
@@ -87,7 +78,7 @@
 #define PACKAGE_NAME "json-glib"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "json-glib 1.2.0"
+#define PACKAGE_STRING "json-glib @JSON_MAJOR_VERSION@.@JSON_MINOR_VERSION@.@JSON_MICRO_VERSION@"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "json-glib"
@@ -96,7 +87,7 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.2.0"
+#define PACKAGE_VERSION "@JSON_MAJOR_VERSION@.@JSON_MINOR_VERSION@.@JSON_MICRO_VERSION@"
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1

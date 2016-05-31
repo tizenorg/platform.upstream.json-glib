@@ -28,13 +28,6 @@
 #error "Only <json-glib/json-glib.h> can be included directly."
 #endif
 
-#ifndef __JSON_GENERATOR_H__
-#define __JSON_GENERATOR_H__
-
-#if !defined(__JSON_GLIB_INSIDE__) && !defined(JSON_COMPILATION)
-#error "Only <json-glib/json-glib.h> can be included directly."
-#endif
-
 #include <json-glib/json-types.h>
 #include <gio/gio.h>
 
