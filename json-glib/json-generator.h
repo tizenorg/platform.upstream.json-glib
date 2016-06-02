@@ -28,13 +28,6 @@
 #error "Only <json-glib/json-glib.h> can be included directly."
 #endif
 
-#ifndef __JSON_GENERATOR_H__
-#define __JSON_GENERATOR_H__
-
-#if !defined(__JSON_GLIB_INSIDE__) && !defined(JSON_COMPILATION)
-#error "Only <json-glib/json-glib.h> can be included directly."
-#endif
-
 #include <json-glib/json-types.h>
 #include <gio/gio.h>
 
@@ -121,6 +114,10 @@ gboolean        json_generator_to_stream        (JsonGenerator  *generator,
                                                  GOutputStream  *stream,
                                                  GCancellable   *cancellable,
                                                  GError        **error);
+
+#ifdef G_DEFINE_AUTOPTR_CLEANUP_FUNC
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (JsonGenerator, g_object_unref)
+#endif
 
 G_END_DECLS
 

@@ -440,7 +440,7 @@ json_gvariant_serialize_data (GVariant *variant, gsize *length)
 
   g_object_unref (generator);
 
-  json_node_free (json_node);
+  json_node_unref (json_node);
 
   return json;
 }
@@ -1143,14 +1143,6 @@ json_to_gvariant_recurse (JsonNode      *json_node,
         default:
           break;
         }
-    }
-
-  if (class == JSON_G_VARIANT_CLASS_DICTIONARY)
-    {
-      if (json_node_assert_type (json_node, JSON_NODE_OBJECT, 0, error))
-        variant = json_to_gvariant_dictionary (json_node, signature, error);
-
-      goto out;
     }
 
   switch (class)

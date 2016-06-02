@@ -49,19 +49,6 @@
 
 G_DEFINE_BOXED_TYPE (JsonObject, json_object, json_object_ref, json_object_unref);
 
-GType
-json_object_get_type (void)
-{
-  static GType object_type = 0;
-
-  if (G_UNLIKELY (!object_type))
-    object_type = g_boxed_type_register_static (g_intern_static_string ("JsonObject"),
-                                                (GBoxedCopyFunc) json_object_ref,
-                                                (GBoxedFreeFunc) json_object_unref);
-
-  return object_type;
-}
-
 /**
  * json_object_new: (constructor)
  * 
@@ -74,12 +61,12 @@ json_object_new (void)
 {
   JsonObject *object;
 
-  object = g_slice_new (JsonObject);
+  object = g_slice_new0 (JsonObject);
   
   object->ref_count = 1;
   object->members = g_hash_table_new_full (g_str_hash, g_str_equal,
                                            g_free,
-                                           (GDestroyNotify) json_node_free);
+                                           (GDestroyNotify) json_node_unref);
   object->members_ordered = NULL;
 
   return object;
@@ -100,7 +87,7 @@ json_object_ref (JsonObject *object)
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->ref_count > 0, NULL);
 
-  g_atomic_int_add (&object->ref_count, 1);
+  object->ref_count++;
 
   return object;
 }
@@ -119,7 +106,7 @@ json_object_unref (JsonObject *object)
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->ref_count > 0);
 
-  if (g_atomic_int_dec_and_test (&object->ref_count))
+  if (--object->ref_count == 0)
     {
       g_list_free (object->members_ordered);
       g_hash_table_destroy (object->members);
@@ -128,31 +115,6 @@ json_object_unref (JsonObject *object)
 
       g_slice_free (JsonObject, object);
     }
-}
-
-static inline void
-object_set_member_internal (JsonObject  *object,
-                            const gchar *member_name,
-                            JsonNode    *node)
-{
-  gchar *name = g_strdup (member_name);
-
-  if (g_hash_table_lookup (object->members, name) == NULL)
-    object->members_ordered = g_list_prepend (object->members_ordered, name);
-  else
-    {
-      GList *l;
-
-      /* if the member already exists then we need to replace the
-       * pointer to its name, to avoid keeping invalid pointers
-       * once we replace the key in the hash table
-       */
-      l = g_list_find_custom (object->members_ordered, name, (GCompareFunc) strcmp);
-      if (l != NULL)
-        l->data = name;
-    }
-
-  g_hash_table_replace (object->members, name, node);
 }
 
 /**
@@ -564,68 +526,7 @@ json_object_get_values (JsonObject *object)
  * inside a #JsonObject
  *
  * Return value: (transfer full): a copy of the node for the requested
- *   object member or %NULL. Use json_node_free() when done.
- *
- * Since: 0.6
- */
-JsonNode *
-json_object_dup_member (JsonObject  *object,
-                        const gchar *member_name)
-{
-  JsonNode *retval;
-
-  g_return_val_if_fail (object != NULL, NULL);
-  g_return_val_if_fail (member_name != NULL, NULL);
-
-  retval = json_object_get_member (object, member_name);
-  if (!retval)
-    return NULL;
-
-  return json_node_copy (retval);
-}
-
-static inline JsonNode *
-object_get_member_internal (JsonObject  *object,
-                            const gchar *member_name)
-{
-  return g_hash_table_lookup (object->members, member_name);
-}
-
-/**
- * json_object_get_values:
- * @object: a #JsonObject
- *
- * Retrieves all the values of the members of a #JsonObject.
- *
- * Return value: a #GList of #JsonNode<!-- -->s. The content of the
- *   list is owned by the #JsonObject and should never be modified
- *   or freed. When you have finished using the returned list, use
- *   g_list_free() to free the resources it has allocated.
- */
-GList *
-json_object_get_values (JsonObject *object)
-{
-  GList *values, *l;
-
-  g_return_val_if_fail (object != NULL, NULL);
-
-  values = NULL;
-  for (l = object->members_ordered; l != NULL; l = l->next)
-    values = g_list_prepend (values, g_hash_table_lookup (object->members, l->data));
-
-  return values;
-}
-
-/**
- * json_object_dup_member:
- * @object: a #JsonObject
- * @member_name: the name of the JSON object member to access
- *
- * Retrieves a copy of the #JsonNode containing the value of @member_name
- * inside a #JsonObject
- *
- * Return value: (transfer full) a copy of the node for the requested
- *   object member or %NULL. Use json_node_free() when done.
+ *   object member or %NULL. Use json_node_unref() when done.
  *
  * Since: 0.6
  */
@@ -667,160 +568,6 @@ JsonNode *
 json_object_get_member (JsonObject  *object,
                         const gchar *member_name)
 {
-  g_return_val_if_fail (object != NULL, NULL);
-  g_return_val_if_fail (member_name != NULL, NULL);
-
-  return object_get_member_internal (object, member_name);
-}
-
-/**
- * json_object_get_int_member:
- * @object: a #JsonObject
- * @member_name: the name of the member
- *
- * Convenience function that retrieves the integer value
- * stored in @member_name of @object
- *
- * See also: json_object_get_member()
- *
- * Return value: the integer value of the object's member
- *
- * Since: 0.8
- */
-gint64
-json_object_get_int_member (JsonObject  *object,
-                            const gchar *member_name)
-{
-  JsonNode *node;
-
-  g_return_val_if_fail (object != NULL, 0);
-  g_return_val_if_fail (member_name != NULL, 0);
-
-  node = object_get_member_internal (object, member_name);
-  g_return_val_if_fail (node != NULL, 0);
-  g_return_val_if_fail (JSON_NODE_TYPE (node) == JSON_NODE_VALUE, 0);
-
-  return json_node_get_int (node);
-}
-
-/**
- * json_object_get_double_member:
- * @object: a #JsonObject
- * @member_name: the name of the member
- *
- * Convenience function that retrieves the floating point value
- * stored in @member_name of @object
- *
- * See also: json_object_get_member()
- *
- * Return value: the floating point value of the object's member
- *
- * Since: 0.8
- */
-gdouble
-json_object_get_double_member (JsonObject  *object,
-                               const gchar *member_name)
-{
-  JsonNode *node;
-
-  g_return_val_if_fail (object != NULL, 0.0);
-  g_return_val_if_fail (member_name != NULL, 0.0);
-
-  node = object_get_member_internal (object, member_name);
-  g_return_val_if_fail (node != NULL, 0.0);
-  g_return_val_if_fail (JSON_NODE_TYPE (node) == JSON_NODE_VALUE, 0.0);
-
-  return json_node_get_double (node);
-}
-
-/**
- * json_object_get_boolean_member:
- * @object: a #JsonObject
- * @member_name: the name of the member
- *
- * Convenience function that retrieves the boolean value
- * stored in @member_name of @object
- *
- * See also: json_object_get_member()
- *
- * Return value: the boolean value of the object's member
- *
- * Since: 0.8
- */
-gboolean
-json_object_get_boolean_member (JsonObject  *object,
-                                const gchar *member_name)
-{
-  JsonNode *node;
-
-  g_return_val_if_fail (object != NULL, FALSE);
-  g_return_val_if_fail (member_name != NULL, FALSE);
-
-  node = object_get_member_internal (object, member_name);
-  g_return_val_if_fail (node != NULL, FALSE);
-  g_return_val_if_fail (JSON_NODE_TYPE (node) == JSON_NODE_VALUE, FALSE);
-
-  return json_node_get_boolean (node);
-}
-
-/**
- * json_object_get_null_member:
- * @object: a #JsonObject
- * @member_name: the name of the member
- *
- * Convenience function that checks whether the value
- * stored in @member_name of @object is null
- *
- * See also: json_object_get_member()
- *
- * Return value: %TRUE if the value is null
- *
- * Since: 0.8
- */
-gboolean
-json_object_get_null_member (JsonObject  *object,
-                             const gchar *member_name)
-{
-  JsonNode *node;
-
-  g_return_val_if_fail (object != NULL, FALSE);
-  g_return_val_if_fail (member_name != NULL, FALSE);
-
-  node = object_get_member_internal (object, member_name);
-  g_return_val_if_fail (node != NULL, FALSE);
-
-  if (JSON_NODE_HOLDS_NULL (node))
-    return TRUE;
-
-  if (JSON_NODE_HOLDS_OBJECT (node))
-    return json_node_get_object (node) == NULL;
-
-  if (JSON_NODE_HOLDS_ARRAY (node))
-    return json_node_get_array (node) == NULL;
-
-  return FALSE;
-}
-
-/**
- * json_object_get_string_member:
- * @object: a #JsonObject
- * @member_name: the name of the member
- *
- * Convenience function that retrieves the string value
- * stored in @member_name of @object
- *
- * See also: json_object_get_member()
- *
- * Return value: the string value of the object's member
- *
- * Since: 0.8
- */
-const gchar *
-json_object_get_string_member (JsonObject  *object,
-                               const gchar *member_name)
-{
-  JsonNode *node;
-
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (member_name != NULL, NULL);
 
@@ -1158,6 +905,102 @@ json_object_foreach_member (JsonObject        *object,
 }
 
 /**
+ * json_object_hash:
+ * @key: (type JsonObject): a JSON object to hash
+ *
+ * Calculate a hash value for the given @key (a #JsonObject).
+ *
+ * The hash is calculated over the object and all its members, recursively. If
+ * the object is immutable, this is a fast operation; otherwise, it scales
+ * proportionally with the number of members in the object.
+ *
+ * Returns: hash value for @key
+ * Since: 1.2
+ */
+guint
+json_object_hash (gconstpointer key)
+{
+  JsonObject *object = (JsonObject *) key;
+  guint hash = 0;
+  JsonObjectIter iter;
+  const gchar *member_name;
+  JsonNode *node;
+
+  g_return_val_if_fail (object != NULL, 0);
+
+  /* If the object is immutable, use the cached hash. */
+  if (object->immutable)
+    return object->immutable_hash;
+
+  /* Otherwise, calculate from scratch. */
+  json_object_iter_init (&iter, object);
+
+  while (json_object_iter_next (&iter, &member_name, &node))
+    hash ^= (json_string_hash (member_name) ^ json_node_hash (node));
+
+  return hash;
+}
+
+/**
+ * json_object_equal:
+ * @a: (type JsonObject): a JSON object
+ * @b: (type JsonObject): another JSON object
+ *
+ * Check whether @a and @b are equal #JsonObjects, meaning they have the same
+ * set of members, and the values of corresponding members are equal.
+ *
+ * Returns: %TRUE if @a and @b are equal; %FALSE otherwise
+ * Since: 1.2
+ */
+gboolean
+json_object_equal (gconstpointer  a,
+                   gconstpointer  b)
+{
+  JsonObject *object_a, *object_b;
+  guint size_a, size_b;
+  JsonObjectIter iter_a;
+  JsonNode *child_a, *child_b;  /* unowned */
+  const gchar *member_name;
+
+  object_a = (JsonObject *) a;
+  object_b = (JsonObject *) b;
+
+  /* Identity comparison. */
+  if (object_a == object_b)
+    return TRUE;
+
+  /* Check sizes. */
+  size_a = json_object_get_size (object_a);
+  size_b = json_object_get_size (object_b);
+
+  if (size_a != size_b)
+    return FALSE;
+
+  /* Check member names and values. Check the member names first
+   * to avoid expensive recursive value comparisons which might
+   * be unnecessary. */
+  json_object_iter_init (&iter_a, object_a);
+
+  while (json_object_iter_next (&iter_a, &member_name, NULL))
+    {
+      if (!json_object_has_member (object_b, member_name))
+        return FALSE;
+    }
+
+  json_object_iter_init (&iter_a, object_a);
+
+  while (json_object_iter_next (&iter_a, &member_name, &child_a))
+    {
+      child_b = json_object_get_member (object_b, member_name);
+
+      if (!json_node_equal (child_a, child_b))
+        return FALSE;
+    }
+
+  return TRUE;
+}
+
+/**
  * json_object_iter_init:
  * @iter: an uninitialised #JsonObjectIter
  * @object: the #JsonObject to iterate over
@@ -1176,7 +1019,7 @@ json_object_foreach_member (JsonObject        *object,
  *   }
  * ]|
  *
- * Since: UNRELEASED
+ * Since: 1.2
  */
 void
 json_object_iter_init (JsonObjectIter  *iter,
@@ -1210,7 +1053,7 @@ json_object_iter_init (JsonObjectIter  *iter,
  * Returns: %TRUE if @member_name and @member_node are valid; %FALSE if the end
  *    of the object has been reached
  *
- * Since: UNRELEASED
+ * Since: 1.2
  */
 gboolean
 json_object_iter_next (JsonObjectIter  *iter,
@@ -1226,60 +1069,4 @@ json_object_iter_next (JsonObjectIter  *iter,
   return g_hash_table_iter_next (&iter_real->members_iter,
                                  (gpointer *) member_name,
                                  (gpointer *) member_node);
-}
-
-typedef struct _ForeachClosure  ForeachClosure;
-
-struct _ForeachClosure
-{
-  JsonObject *object;
-
-  JsonObjectForeach func;
-  gpointer data;
-};
-
-      if (g_strcmp0 (name, member_name) == 0)
-        {
-          object->members_ordered = g_list_delete_link (object->members_ordered, l);
-          break;
-        }
-    }
-
-  g_hash_table_remove (object->members, member_name);
-}
-
-/**
- * json_object_foreach_member:
- * @object: a #JsonObject
- * @func: the function to be called on each member
- * @data: data to be passed to the function
- *
- * Iterates over all members of @object and calls @func on
- * each one of them.
- *
- * It is safe to change the value of a #JsonNode of the @object
- * from within the iterator @func, but it is not safe to add or
- * remove members from the @object.
- *
- * Since: 0.8
- */
-void
-json_object_foreach_member (JsonObject        *object,
-                            JsonObjectForeach  func,
-                            gpointer           data)
-{
-  GList *members, *l;
-
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (func != NULL);
-
-  /* the list is stored in reverse order to have constant time additions */
-  members = g_list_last (object->members_ordered);
-  for (l = members; l != NULL; l = l->prev)
-    {
-      const gchar *member_name = l->data;
-      JsonNode *member_node = g_hash_table_lookup (object->members, member_name);
-
-      func (object, member_name, member_node, data);
-    }
 }

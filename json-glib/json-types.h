@@ -28,13 +28,6 @@
 #error "Only <json-glib/json-glib.h> can be included directly."
 #endif
 
-#ifndef __JSON_TYPES_H__
-#define __JSON_TYPES_H__
-
-#if !defined(__JSON_GLIB_INSIDE__) && !defined(JSON_COMPILATION)
-#error "Only <json-glib/json-glib.h> can be included directly."
-#endif
-
 #include <glib-object.h>
 #include <json-glib/json-version-macros.h>
 
@@ -102,15 +95,6 @@ G_BEGIN_DECLS
 #define JSON_TYPE_NODE          (json_node_get_type ())
 #define JSON_TYPE_OBJECT        (json_object_get_type ())
 #define JSON_TYPE_ARRAY         (json_array_get_type ())
-
-/**
- * JsonNode:
- *
- * A generic container of JSON data types. The contents of the #JsonNode
- * structure are private and should only be accessed via the provided
- * functions and never directly.
- */
-typedef struct _JsonNode        JsonNode;
 
 /**
  * JsonNode:
@@ -229,18 +213,6 @@ JsonNode *            json_node_copy            (JsonNode     *node);
 JSON_AVAILABLE_IN_1_0
 void                  json_node_free            (JsonNode     *node);
 
-JSON_AVAILABLE_IN_1_0
-JsonNodeType          json_node_get_node_type   (JsonNode     *node);
-JSON_AVAILABLE_IN_1_0
-GType                 json_node_get_value_type  (JsonNode     *node);
-JSON_AVAILABLE_IN_1_0
-void                  json_node_set_parent      (JsonNode     *node,
-                                                 JsonNode     *parent);
-JSON_AVAILABLE_IN_1_0
-JsonNode *            json_node_get_parent      (JsonNode     *node);
-JSON_AVAILABLE_IN_1_0
-const gchar *         json_node_type_name       (JsonNode     *node);
-
 JSON_AVAILABLE_IN_1_2
 JsonNode *            json_node_ref             (JsonNode     *node);
 JSON_AVAILABLE_IN_1_2
@@ -308,6 +280,25 @@ JSON_AVAILABLE_IN_1_0
 gboolean              json_node_get_boolean     (JsonNode     *node);
 JSON_AVAILABLE_IN_1_0
 gboolean              json_node_is_null         (JsonNode     *node);
+
+JSON_AVAILABLE_IN_1_2
+void                  json_node_seal            (JsonNode     *node);
+gboolean              json_node_is_immutable    (JsonNode     *node);
+
+JSON_AVAILABLE_IN_1_2
+guint                 json_string_hash            (gconstpointer  key);
+JSON_AVAILABLE_IN_1_2
+gboolean              json_string_equal           (gconstpointer  a,
+                                                   gconstpointer  b);
+JSON_AVAILABLE_IN_1_2
+gint                  json_string_compare         (gconstpointer  a,
+                                                   gconstpointer  b);
+
+JSON_AVAILABLE_IN_1_2
+guint                 json_node_hash              (gconstpointer  key);
+JSON_AVAILABLE_IN_1_2
+gboolean              json_node_equal             (gconstpointer  a,
+                                                   gconstpointer  b);
 
 /*
  * JsonObject
@@ -401,6 +392,17 @@ void                  json_object_foreach_member     (JsonObject  *object,
                                                       JsonObjectForeach func,
                                                       gpointer     data);
 
+JSON_AVAILABLE_IN_1_2
+void                  json_object_seal               (JsonObject  *object);
+JSON_AVAILABLE_IN_1_2
+gboolean              json_object_is_immutable       (JsonObject  *object);
+
+JSON_AVAILABLE_IN_1_2
+guint                 json_object_hash               (gconstpointer key);
+JSON_AVAILABLE_IN_1_2
+gboolean              json_object_equal              (gconstpointer a,
+                                                      gconstpointer b);
+
 /**
  * JsonObjectIter:
  *
@@ -412,7 +414,7 @@ void                  json_object_foreach_member     (JsonObject  *object,
  * All the fields in the #JsonObjectIter structure are private and should
  * never be accessed directly.
  *
- * Since: UNRELEASED
+ * Since: 1.2 
  */
 typedef struct {
   /*< private >*/
@@ -500,6 +502,22 @@ JSON_AVAILABLE_IN_1_0
 void                  json_array_foreach_element     (JsonArray   *array,
                                                       JsonArrayForeach func,
                                                       gpointer     data);
+JSON_AVAILABLE_IN_1_2
+void                  json_array_seal                (JsonArray   *array);
+JSON_AVAILABLE_IN_1_2
+gboolean              json_array_is_immutable        (JsonArray   *array);
+
+JSON_AVAILABLE_IN_1_2
+guint                 json_array_hash                (gconstpointer key);
+JSON_AVAILABLE_IN_1_2
+gboolean              json_array_equal               (gconstpointer a,
+                                                      gconstpointer b);
+
+#ifdef G_DEFINE_AUTOPTR_CLEANUP_FUNC
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (JsonArray, json_array_unref)
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (JsonObject, json_object_unref)
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (JsonNode, json_node_free)
+#endif
 
 G_END_DECLS
 
