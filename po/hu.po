@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: json-glib master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=json-"
-"glib&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-03-19 10:19+0000\n"
+"glib\n"
+"POT-Creation-Date: 2016-03-22 16:14+0000\n"
 "PO-Revision-Date: 2014-03-21 18:09+0100\n"
 "Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
@@ -20,199 +20,175 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 1.4\n"
 
-#: ../json-glib/json-glib-format.c:50
+#: json-glib/json-glib-format.c:50
 msgid "Prettify output"
 msgstr "Kimenet csinosítása"
 
-#: ../json-glib/json-glib-format.c:51
+#: json-glib/json-glib-format.c:51
 msgid "Indentation spaces"
 msgstr "Behúzási szóközök"
 
-#. Translators: the first %s is the program name, the second one
-#. * is the URI of the file, the third is the error message.
-#.
-#: ../json-glib/json-glib-format.c:77 ../json-glib/json-glib-validate.c:63
+#: json-glib/json-glib-format.c:77 json-glib/json-glib-validate.c:63
 #, c-format
 msgid "%s: %s: error opening file: %s\n"
 msgstr "%s: %s: hiba a fájl megnyitásakor: %s\n"
 
-#. Translators: the first %s is the program name, the second one
-#. * is the URI of the file, the third is the error message.
-#.
-#: ../json-glib/json-glib-format.c:89 ../json-glib/json-glib-validate.c:75
+#: json-glib/json-glib-format.c:89 json-glib/json-glib-validate.c:75
 #, c-format
 msgid "%s: %s: error parsing file: %s\n"
 msgstr "%s: %s: hiba a fájl feldolgozásakor: %s\n"
 
-#. Translators: the first %s is the program name, the
-#. * second one is the URI of the file.
-#.
-#: ../json-glib/json-glib-format.c:108
+#: json-glib/json-glib-format.c:108
 #, c-format
 msgid "%s: %s: error writing to stdout"
 msgstr "%s: %s: hiba a szabványos kimenetre íráskor"
 
-#. Translators: the first %s is the program name, the second one
-#. * is the URI of the file, the third is the error message.
-#.
-#: ../json-glib/json-glib-format.c:128 ../json-glib/json-glib-validate.c:87
+#: json-glib/json-glib-format.c:129 json-glib/json-glib-validate.c:87
 #, c-format
 msgid "%s: %s: error closing: %s\n"
 msgstr "%s: %s: hiba a következő lezárásakor: %s\n"
 
-#: ../json-glib/json-glib-format.c:157 ../json-glib/json-glib-validate.c:115
+#: json-glib/json-glib-format.c:158 json-glib/json-glib-validate.c:115
 msgid "FILE"
 msgstr "FÁJL"
 
-#. Translators: this message will appear after the usage string
-#. and before the list of options.
-#: ../json-glib/json-glib-format.c:160
+#: json-glib/json-glib-format.c:161
 msgid "Format JSON files."
 msgstr "JSON fájlok formázása."
 
-#: ../json-glib/json-glib-format.c:161
+#: json-glib/json-glib-format.c:162
 msgid "json-glib-format formats JSON resources."
 msgstr "A json-glib-format JSON erőforrásokat formáz."
 
-#. Translators: the %s is the program name. This error message
-#. * means the user is calling json-glib-validate without any
-#. * argument.
-#.
-#: ../json-glib/json-glib-format.c:178 ../json-glib/json-glib-validate.c:136
+#: json-glib/json-glib-format.c:179 json-glib/json-glib-validate.c:136
 #, c-format
 msgid "Error parsing commandline options: %s\n"
 msgstr "Hiba a parancssori kapcsolók feldolgozásakor: %s\n"
 
-#: ../json-glib/json-glib-format.c:180 ../json-glib/json-glib-format.c:194
-#: ../json-glib/json-glib-validate.c:138 ../json-glib/json-glib-validate.c:152
+#: json-glib/json-glib-format.c:181 json-glib/json-glib-format.c:195
+#: json-glib/json-glib-validate.c:138 json-glib/json-glib-validate.c:152
 #, c-format
 msgid "Try \"%s --help\" for more information."
 msgstr "További információkért adja ki a következő parancsot: „%s --help”."
 
-#. Translators: the %s is the program name. This error message
-#. * means the user is calling json-glib-validate without any
-#. * argument.
-#.
-#: ../json-glib/json-glib-format.c:192 ../json-glib/json-glib-validate.c:150
+#: json-glib/json-glib-format.c:193 json-glib/json-glib-validate.c:150
 #, c-format
 msgid "%s: missing files"
 msgstr "%s: hiányzó fájlok"
 
-#. Translators: this message will appear after the usage string
-#. and before the list of options.
-#: ../json-glib/json-glib-validate.c:118
+#: json-glib/json-glib-validate.c:118
 msgid "Validate JSON files."
 msgstr "JSON fájlok ellenőrzése."
 
-#: ../json-glib/json-glib-validate.c:119
+#: json-glib/json-glib-validate.c:119
 msgid "json-glib-validate validates JSON data at the given URI."
 msgstr ""
 "A json-glib-validate a megadott URI-n található JSON adatokat ellenőrzi."
 
-#: ../json-glib/json-gobject.c:915
+#: json-glib/json-gobject.c:943
 #, c-format
 msgid "Expecting a JSON object, but the root node is of type `%s'"
 msgstr "A várt JSON objektum helyett a gyökérobjektum „%s” típusú"
 
-#: ../json-glib/json-gvariant.c:523
+#: json-glib/json-gvariant.c:523
 #, c-format
 msgid "Unexpected type '%s' in JSON node"
 msgstr "Váratlan „%s” típus a JSON csomópontban"
 
-#: ../json-glib/json-gvariant.c:593
+#: json-glib/json-gvariant.c:593
 msgid "Missing elements in JSON array to conform to a tuple"
 msgstr "A JSON tömbből hiányzó elemek miatt a tuple nem teljes"
 
-#: ../json-glib/json-gvariant.c:621
+#: json-glib/json-gvariant.c:621
 msgid "Missing closing symbol ')' in the GVariant tuple type"
 msgstr "Hiányzó „)” szimbólum a GVariant tuple típusban"
 
-#: ../json-glib/json-gvariant.c:629
+#: json-glib/json-gvariant.c:629
 msgid "Unexpected extra elements in JSON array"
 msgstr "Váratlan extra elemek a JSON tömbben"
 
-#: ../json-glib/json-gvariant.c:908
+#: json-glib/json-gvariant.c:908
 msgid "Invalid string value converting to GVariant"
 msgstr "Érvénytelen karakterláncérték a GVariant-tá alakítás közben"
 
-#: ../json-glib/json-gvariant.c:964
+#: json-glib/json-gvariant.c:964
 msgid ""
 "A GVariant dictionary entry expects a JSON object with exactly one member"
 msgstr "Egy GVariant szótárbejegyzés pontosan egy tagú JSON objektumot vár"
 
-#: ../json-glib/json-gvariant.c:1244
+#: json-glib/json-gvariant.c:1248
 #, c-format
 msgid "GVariant class '%c' not supported"
 msgstr "A(z) „%c” GVariant osztály nem támogatott"
 
-#: ../json-glib/json-gvariant.c:1292
+#: json-glib/json-gvariant.c:1296
 msgid "Invalid GVariant signature"
 msgstr "Érvénytelen GVariant aláírás"
 
-#: ../json-glib/json-gvariant.c:1340
+#: json-glib/json-gvariant.c:1344
 msgid "JSON data is empty"
 msgstr "A JSON adatok üresek"
 
-#: ../json-glib/json-parser.c:815
+#: json-glib/json-parser.c:914
 #, c-format
 msgid "%s:%d:%d: Parse error: %s"
 msgstr "%s:%d:%d: feldolgozási hiba: %s"
 
-#: ../json-glib/json-parser.c:883
+#: json-glib/json-parser.c:997
 msgid "JSON data must be UTF-8 encoded"
 msgstr "A JSON adatoknak UTF-8 kódolásúnak kell lenniük"
 
-#: ../json-glib/json-path.c:388
+#: json-glib/json-path.c:388
 msgid "Only one root node is allowed in a JSONPath expression"
 msgstr "Csak egy gyökércsomópont engedélyezett a JSONPath kifejezésben"
 
-#: ../json-glib/json-path.c:397
+#: json-glib/json-path.c:397
 #, c-format
 msgid "Root node followed by invalid character '%c'"
 msgstr "A gyökércsomópontot érvénytelen karakter követi: „%c”"
 
-#: ../json-glib/json-path.c:437
+#: json-glib/json-path.c:437
 msgid "Missing member name or wildcard after . character"
 msgstr "Hiányzó tagnév vagy helyettesítő karakter a . után"
 
-#: ../json-glib/json-path.c:511
+#: json-glib/json-path.c:511
 #, c-format
 msgid "Malformed slice expression '%*s'"
 msgstr "Hibás szeletkifejezés: „%*s”"
 
-#: ../json-glib/json-path.c:555
+#: json-glib/json-path.c:555
 #, c-format
 msgid "Invalid set definition '%*s'"
 msgstr "Érvénytelen halmazdefiníció: „%*s”"
 
-#: ../json-glib/json-path.c:608
+#: json-glib/json-path.c:608
 #, c-format
 msgid "Invalid slice definition '%*s'"
 msgstr "Érvénytelen szeletdefiníció: „%*s”"
 
-#: ../json-glib/json-path.c:636
+#: json-glib/json-path.c:636
 #, c-format
 msgid "Invalid array index definition '%*s'"
 msgstr "Érvénytelen tömbindex-definíció: „%*s”"
 
-#: ../json-glib/json-path.c:655
+#: json-glib/json-path.c:655
 #, c-format
 msgid "Invalid first character '%c'"
 msgstr "Érvénytelen első karakter: „%c”"
 
-#: ../json-glib/json-reader.c:456
+#: json-glib/json-reader.c:473
 #, c-format
 msgid ""
 "The current node is of type '%s', but an array or an object was expected."
 msgstr "A jelenlegi csomópont „%s” típusú a várt tömb vagy objektum helyett."
 
-#: ../json-glib/json-reader.c:468
+#: json-glib/json-reader.c:485
 #, c-format
 msgid ""
 "The index '%d' is greater than the size of the array at the current position."
 msgstr "A(z) „%d” index nagyobb az aktuális pozícióban lévő tömb méreténél."
 
-#: ../json-glib/json-reader.c:485
+#: json-glib/json-reader.c:502
 #, c-format
 msgid ""
 "The index '%d' is greater than the size of the object at the current "
@@ -220,43 +196,42 @@ msgid ""
 msgstr ""
 "A(z) „%d” index nagyobb az aktuális pozícióban lévő objektum méreténél."
 
-#: ../json-glib/json-reader.c:570 ../json-glib/json-reader.c:724
-#: ../json-glib/json-reader.c:775 ../json-glib/json-reader.c:813
-#: ../json-glib/json-reader.c:851 ../json-glib/json-reader.c:889
-#: ../json-glib/json-reader.c:927 ../json-glib/json-reader.c:972
-#: ../json-glib/json-reader.c:1008 ../json-glib/json-reader.c:1034
+#: json-glib/json-reader.c:586 json-glib/json-reader.c:750
+#: json-glib/json-reader.c:801 json-glib/json-reader.c:839
+#: json-glib/json-reader.c:877 json-glib/json-reader.c:915
+#: json-glib/json-reader.c:953 json-glib/json-reader.c:998
+#: json-glib/json-reader.c:1034 json-glib/json-reader.c:1060
 msgid "No node available at the current position"
 msgstr "Nem érhető el csomópont az aktuális pozícióban"
 
-#: ../json-glib/json-reader.c:577
+#: json-glib/json-reader.c:593
 #, c-format
 msgid "The current position holds a '%s' and not an array"
 msgstr "Az aktuális pozícióban „%s” található tömb helyett"
 
-#: ../json-glib/json-reader.c:640
+#: json-glib/json-reader.c:669
 #, c-format
 msgid "The current node is of type '%s', but an object was expected."
 msgstr "A jelenlegi csomópont „%s” típusú a várt objektum helyett."
 
-#: ../json-glib/json-reader.c:647
+#: json-glib/json-reader.c:676
 #, c-format
 msgid "The member '%s' is not defined in the object at the current position."
 msgstr ""
 "A(z) „%s” tag nincs definiálva az aktuális pozícióban lévő objektumban."
 
-#: ../json-glib/json-reader.c:731 ../json-glib/json-reader.c:782
+#: json-glib/json-reader.c:757 json-glib/json-reader.c:808
 #, c-format
 msgid "The current position holds a '%s' and not an object"
 msgstr "Az aktuális pozícióban „%s” található objektum helyett"
 
-#: ../json-glib/json-reader.c:822 ../json-glib/json-reader.c:860
-#: ../json-glib/json-reader.c:898 ../json-glib/json-reader.c:936
-#: ../json-glib/json-reader.c:981
+#: json-glib/json-reader.c:848 json-glib/json-reader.c:886
+#: json-glib/json-reader.c:924 json-glib/json-reader.c:962
+#: json-glib/json-reader.c:1007
 #, c-format
 msgid "The current position holds a '%s' and not a value"
 msgstr "Az aktuális pozícióban „%s” található érték helyett"
 
-#: ../json-glib/json-reader.c:944
+#: json-glib/json-reader.c:970
 msgid "The current position does not hold a string type"
 msgstr "Az aktuális pozícióban nem karakterlánc típus található"
-

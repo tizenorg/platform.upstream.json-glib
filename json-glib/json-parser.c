@@ -4,6 +4,7 @@
  *
  * Copyright © 2007, 2008, 2009 OpenedHand Ltd
  * Copyright © 2009, 2010 Intel Corp.
+ * Copyright © 2015 Collabora Ltd.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,6 +21,7 @@
  *
  * Author:
  *   Emmanuele Bassi  <ebassi@linux.intel.com>
+ *   Philip Withnall  <philip.withnall@collabora.co.uk>
  */
 
 /**
@@ -58,6 +60,7 @@ struct _JsonParserPrivate
 
   guint has_assignment : 1;
   guint is_filename    : 1;
+  guint is_immutable   : 1;
 };
 
 static const gchar symbol_names[] =
@@ -96,6 +99,14 @@ enum
 
 static guint parser_signals[LAST_SIGNAL] = { 0, };
 
+enum
+{
+  PROP_IMMUTABLE = 1,
+  PROP_LAST
+};
+
+static GParamSpec *parser_props[PROP_LAST] = { NULL, };
+
 G_DEFINE_QUARK (json-parser-error-quark, json_parser_error)
 
 G_DEFINE_TYPE_WITH_PRIVATE (JsonParser, json_parser, G_TYPE_OBJECT)
@@ -123,7 +134,7 @@ json_parser_clear (JsonParser *parser)
 
   if (priv->root)
     {
-      json_node_free (priv->root);
+      json_node_unref (priv->root);
       priv->root = NULL;
     }
 }
@@ -155,12 +166,71 @@ json_parser_finalize (GObject *gobject)
 }
 
 static void
+json_parser_set_property (GObject      *gobject,
+                          guint         prop_id,
+                          const GValue *value,
+                          GParamSpec   *pspec)
+{
+  JsonParserPrivate *priv = JSON_PARSER (gobject)->priv;
+
+  switch (prop_id)
+    {
+    case PROP_IMMUTABLE:
+      /* Construct-only. */
+      priv->is_immutable = g_value_get_boolean (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (gobject, prop_id, pspec);
+      break;
+    }
+}
+
+static void
+json_parser_get_property (GObject    *gobject,
+                          guint       prop_id,
+                          GValue     *value,
+                          GParamSpec *pspec)
+{
+  JsonParserPrivate *priv = JSON_PARSER (gobject)->priv;
+
+  switch (prop_id)
+    {
+    case PROP_IMMUTABLE:
+      g_value_set_boolean (value, priv->is_immutable);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (gobject, prop_id, pspec);
+      break;
+    }
+}
+
+static void
 json_parser_class_init (JsonParserClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
+  gobject_class->set_property = json_parser_set_property;
+  gobject_class->get_property = json_parser_get_property;
   gobject_class->dispose = json_parser_dispose;
   gobject_class->finalize = json_parser_finalize;
+
+  /**
+   * JsonParser:immutable:
+   *
+   * Whether the #JsonNode tree built by the #JsonParser should be immutable
+   * when created. Making the output immutable on creation avoids the expense
+   * of traversing it to make it immutable later.
+   *
+   * Since: 1.2
+   */
+  parser_props[PROP_IMMUTABLE] =
+    g_param_spec_boolean ("immutable",
+                          "Immutable Output",
+                          "Whether the parser output is immutable.",
+                          FALSE,
+                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE);
+
+  g_object_class_install_properties (gobject_class, PROP_LAST, parser_props);
 
   /**
    * JsonParser::parse-start:
@@ -990,7 +1060,10 @@ json_scanner_create (JsonParser *parser)
                                      GINT_TO_POINTER (symbols[i].token));
     }
 
-  return scanner;
+  if (priv->is_immutable && *node != NULL)
+    json_node_seal (*node);
+
+  return G_TOKEN_NONE;
 }
 
 static guint
@@ -1055,7 +1128,7 @@ json_parse_array (JsonParser *parser,
         {
           /* the json_parse_* functions will have set the error code */
           json_array_unref (array);
-          json_node_free (priv->current_node);
+          json_node_unref (priv->current_node);
           priv->current_node = old_current;
 
           return token;
@@ -1063,40 +1136,60 @@ json_parse_array (JsonParser *parser,
 
       next_token = json_scanner_peek_next_token (scanner);
 
+      /* look for missing commas */
+      if (next_token != G_TOKEN_COMMA && next_token != G_TOKEN_RIGHT_BRACE)
+        {
+          priv->error_code = JSON_PARSER_ERROR_MISSING_COMMA;
+
+          json_array_unref (array);
+          json_node_free (priv->current_node);
+          json_node_free (element);
+          priv->current_node = old_current;
+
+          return G_TOKEN_COMMA;
+        }
+
+      /* look for trailing commas */
       if (next_token == G_TOKEN_COMMA)
         {
           token = json_scanner_get_next_token (scanner);
           next_token = json_scanner_peek_next_token (scanner);
 
-          /* look for trailing commas */
           if (next_token == G_TOKEN_RIGHT_BRACE)
             {
               priv->error_code = JSON_PARSER_ERROR_TRAILING_COMMA;
 
               json_array_unref (array);
-              json_node_free (priv->current_node);
-              json_node_free (element);
+              json_node_unref (priv->current_node);
+              json_node_unref (element);
               priv->current_node = old_current;
 
               return G_TOKEN_RIGHT_BRACE;
             }
         }
 
-      JSON_NOTE (PARSER, "Array element %d completed", idx + 1);
+      JSON_NOTE (PARSER, "Array element %d completed", idx);
       json_node_set_parent (element, priv->current_node);
+      if (priv->is_immutable)
+        json_node_seal (element);
       json_array_add_element (array, element);
 
       g_signal_emit (parser, parser_signals[ARRAY_ELEMENT], 0,
                      array,
                      idx);
 
+      idx += 1;
       token = next_token;
     }
 
 array_done:
   json_scanner_get_next_token (scanner);
 
+  json_array_seal (array);
+
   json_node_take_array (priv->current_node, array);
+  if (priv->is_immutable)
+    json_node_seal (priv->current_node);
   json_node_set_parent (priv->current_node, old_current);
 
   g_signal_emit (parser, parser_signals[ARRAY_END], 0, array);
@@ -1149,7 +1242,7 @@ json_parse_object (JsonParser   *parser,
           priv->error_code = JSON_PARSER_ERROR_INVALID_BAREWORD;
 
           json_object_unref (object);
-          json_node_free (priv->current_node);
+          json_node_unref (priv->current_node);
           priv->current_node = old_current;
 
           return G_TOKEN_STRING;
@@ -1165,7 +1258,7 @@ json_parse_object (JsonParser   *parser,
           priv->error_code = JSON_PARSER_ERROR_EMPTY_MEMBER_NAME;
 
           json_object_unref (object);
-          json_node_free (priv->current_node);
+          json_node_unref (priv->current_node);
           priv->current_node = old_current;
 
           return G_TOKEN_STRING;
@@ -1183,7 +1276,7 @@ json_parse_object (JsonParser   *parser,
 
           g_free (name);
           json_object_unref (object);
-          json_node_free (priv->current_node);
+          json_node_unref (priv->current_node);
           priv->current_node = old_current;
 
           return ':';
@@ -1219,7 +1312,7 @@ json_parse_object (JsonParser   *parser,
           /* the json_parse_* functions will have set the error code */
           g_free (name);
           json_object_unref (object);
-          json_node_free (priv->current_node);
+          json_node_unref (priv->current_node);
           priv->current_node = old_current;
 
           return token;
@@ -1237,8 +1330,8 @@ json_parse_object (JsonParser   *parser,
               priv->error_code = JSON_PARSER_ERROR_TRAILING_COMMA;
 
               json_object_unref (object);
-              json_node_free (member);
-              json_node_free (priv->current_node);
+              json_node_unref (member);
+              json_node_unref (priv->current_node);
               priv->current_node = old_current;
 
               return G_TOKEN_RIGHT_BRACE;
@@ -1249,8 +1342,8 @@ json_parse_object (JsonParser   *parser,
           priv->error_code = JSON_PARSER_ERROR_MISSING_COMMA;
 
           json_object_unref (object);
-          json_node_free (member);
-          json_node_free (priv->current_node);
+          json_node_unref (member);
+          json_node_unref (priv->current_node);
           priv->current_node = old_current;
 
           return G_TOKEN_COMMA;
@@ -1258,6 +1351,8 @@ json_parse_object (JsonParser   *parser,
 
       JSON_NOTE (PARSER, "Object member '%s' completed", name);
       json_node_set_parent (member, priv->current_node);
+      if (priv->is_immutable)
+        json_node_seal (member);
       json_object_set_member (object, name, member);
 
       g_signal_emit (parser, parser_signals[OBJECT_MEMBER], 0,
@@ -1271,7 +1366,11 @@ json_parse_object (JsonParser   *parser,
 
   json_scanner_get_next_token (scanner);
 
+  json_object_seal (object);
+
   json_node_take_object (priv->current_node, object);
+  if (priv->is_immutable)
+    json_node_seal (priv->current_node);
   json_node_set_parent (priv->current_node, old_current);
 
   g_signal_emit (parser, parser_signals[OBJECT_END], 0, object);
@@ -1675,6 +1774,10 @@ JsonNode *
 json_parser_get_root (JsonParser *parser)
 {
   g_return_val_if_fail (JSON_IS_PARSER (parser), NULL);
+
+  /* Sanity check. */
+  g_return_val_if_fail (!parser->priv->is_immutable ||
+                        json_node_is_immutable (parser->priv->root), NULL);
 
   return parser->priv->root;
 }

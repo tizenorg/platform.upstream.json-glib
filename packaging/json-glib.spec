@@ -3,20 +3,20 @@
 %define run_tests 0
 %if %{run_tests}
     # check is defined off at .rpmmacros file.
-    %undefine check
+    %define check %%check
 %endif
 
 Name:           json-glib
-Version:        1.1.1
+Version:        1.2.0
 Release:        0
 License:        LGPL-2.1
 Summary:        Library for JavaScript Object Notation format
 Url:            http://live.gnome.org/JsonGlib
 Group:          System/Libraries
 #X-Vcs-Url:     git://git.gnome.org/json-glib
-Source0:        http://download.gnome.org/sources/json-glib/%{version}/%{name}-%{version}.tar.xz
+Source0:        http://download.gnome.org/sources/json-glib/1.2/%{name}-%{version}.tar.xz
 Source99:       baselibs.conf
-Source1001: 	json-glib.manifest
+Source1001:     json-glib.manifest
 %if %{with introspection}
 BuildRequires:  gobject-introspection-devel
 %endif
@@ -80,8 +80,8 @@ Requires:       libjson-glib = %{version}
 %if %{with introspection}
 Requires:       typelib-Json = %{version}
 %endif
-BuildRequires:	gettext
-BuildRequires:	gtk-doc
+BuildRequires:  gettext
+BuildRequires:  gtk-doc
 
 %description devel
 JSON is a lightweight data-interchange format.It is easy for humans to
@@ -105,10 +105,8 @@ json-glib library.
 cp %{SOURCE1001} .
 
 %build
-NOCONFIGURE=1
-%autogen
-%reconfigure --disable-man
-make %{?_smp_mflags}
+%configure --disable-man
+%__make %{?jobs:-j%jobs}
 
 %check
 %if %{run_tests}
@@ -120,6 +118,7 @@ make %{?_smp_mflags}
 %find_lang %{name}-1.0
 
 mv %{name}-1.0.lang %{name}.lang
+%__rm -rf %{buildroot}%{_datadir}/gtk-doc
 
 %post -n libjson-glib -p /sbin/ldconfig
 
@@ -150,3 +149,4 @@ mv %{name}-1.0.lang %{name}.lang
 %endif
 
 %changelog
+
